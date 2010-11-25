@@ -36,3 +36,4 @@ int main(void)
    // cleanup
    free(a_h); free(b_h); 
    cudaFree(a_d); cudaFree(b_d);
+}
