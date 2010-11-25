@@ -19,18 +19,18 @@ __global__ void add ( int a, int b, int *c ) {
 	*c = a + b;
 }
 
-int main ( void  ) {
-	int  c;
+int main ( int argc, char *argv[]  ) {
+	int a, b, c;
 	int *dev_c;
 	
 	//pointer to a pointer and sizeof
 	HANDLE_ERROR( cudaMalloc ( (void**) &dev_c, sizeof(int) ) );
 
 	//kernel call
-	add<<<1,1>>>( 5, 26, dev_c);
+	add<<<1,1>>>( a, b, dev_c);
 
 	HANDLE_ERROR( cudaMemcpy ( &c, dev_c, sizeof(int), cudaMemcpyDeviceToHost ) );
-	printf( "5 + 26 = %d\n", c);
+	printf( "%d + %d = %d\n", a, b, c);
 	cudaFree (dev_c);
 
 	return 0;
