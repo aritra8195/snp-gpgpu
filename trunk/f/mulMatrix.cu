@@ -6,27 +6,48 @@
 
 //#define Width 4
 
-//Matrix multiplication kernel
-__global__ void MatrixMulKernel ( float  *Md, float *Nd, float *Pd, int Width ){
+/*
+** START of auxiliary functions
+*/
+
+//Matrix multiplication kernel function
+__global__ void MatrixMulKernel ( int  *Md, int *Nd, int *Pd, int Width ){
 	//2D thread ID
 	int tx = threadIdx.x;
 	int ty = threadIdx.y;
 
 	//Pvalue stores Pd element computed by thread
-	float Pvalue = 0;
+	int Pvalue = 0;
 	for ( int k = 0; k < Width; ++k ){
-		float Mdelement = Md[ ty * Width + k ];
-		float Ndelement = Nd[ k * Width + tx ];
+		int Mdelement = Md[ ty * Width + k ];
+		int Ndelement = Nd[ k * Width + tx ];
 		Pvalue += Mdelement * Ndelement;
 	}
 
 	//Write matrix to device memory; each thread writes one element
 	Pd[ ty * Width + tx  ] = Pvalue;
-}
+}// End of Matrix multiplication kernel function
 
-void MatrixMul( float *M, float *N, float  *P, int Width ){
-	int size = Width * Width * sizeof( float );
-	float *Md, *Nd, *Pd;
+//function to print matrix
+void printMatrix ( int *M, int rows, int columns ){
+	//assumes matrix is in row-major format
+	
+	printf ( " %s: ", "M" );
+	printf ( " \n " );
+	for ( int v = 0; v < rows; v++  ){
+		//assumes a square matrix
+		for ( int w = 0; w < columns; w++   ) {
+		printf ( " %03d ", M[ w ]  );
+		}
+		printf ( " \n " );
+	}
+}//End of printMatrix function
+
+//Matrix multiplication function
+// assumes a SQUARE matrix for now
+void MatrixMul( int *M, int *N, int *P, int Width ){
+	int size = Width * Width * sizeof( int );
+	int *Md, *Nd, *Pd;
 
 	//Transfer M, N to device
 	cudaMalloc( (void**) &Md, size );
@@ -48,35 +69,145 @@ void MatrixMul( float *M, float *N, float  *P, int Width ){
 	//Print matrix P
 	for ( int w = 0; w < Width * Width; w++ ){
 		printf( "\n" );
-		printf( " %d: %f  ", w, P[w] );
+		printf( " %d: %d  ", w, P[w] );
 		printf( "\n" );
 	}
 
+	printMatrix( P, 4, 4 );
+
 	//Free device matrices
 	cudaFree( Md ); cudaFree( Nd ); cudaFree ( Pd );
-}
+}//End of MatrixMul function
 
-int main ( void ) {
+
+//Start of getMatWidth => Get width i.e. # of columns
+int getMatWidth( char *filename ){
+	int width;
+	//assumes space separate integer values e.g. -1 23 4 -56 6 77
+	//assumes first integer in file is row, 2nd integer is column
+	FILE *ptr = fopen( filename, "r" );
+	if ( ptr == 0 ){
+		printf( "\n could not open file %s \n", filename );
+		width = 0;
+	}
+	else{
+		fscanf( ptr, "%d", &width  );
+	}
+	fclose( ptr );
+	return width;
+}//end of getMatWidth function
+
+//Start of getMatHeight => Get height i.e. # of rows
+int getMatHeight( char *filename ){
+	int height, dummy;
+	//assumes space separate integer values e.g. -1 23 4 -56 6 77
+	//assumes first integer in file is row, 2nd integer is column
+	FILE *ptr = fopen( filename, "r" );
+	if ( ptr == 0 ){
+		printf( "\n could not open file %s \n", filename );
+		height = 0;
+	}
+	else{
+		for ( int count = 1; count < 3; count++ ){
+			if ( count != 2 )
+				fscanf( ptr, "%d", &dummy );
+			else
+				fscanf( ptr, "%d", &dummy  );
+				height = dummy;
+		}
+	}
+	fclose( ptr );
+	return height;
+}//end of getMatHeight function
+
+void loadMatrixFile( char *filename, int *matrix ) {
+	//assumes space separate integer values e.g. -1 23 4 -56 6 77
+	int x, y, z;
+	FILE *ptr = fopen( filename, "r" );
+	if ( ptr == 0 )
+		printf( "\n could not open file %s \n", filename );
+	else{
+		y = 1;
+		z = 0;
+		fscanf( ptr, "%d", &x );
+		while( !feof( ptr ) ) {
+			if ( y < 5 )
+				fscanf( ptr, "%d", &x );
+			else {
+				fscanf( ptr, "%d", &x );
+				&matrix[ z ] = x;
+				z++;
+			}
+			y++;
+		}
+		//matrix = x; //can't do this!!!
+	}
+	fclose( ptr );
+}	
+/*
+** END OF Auxiliary functions
+*/
+
+
+/*
+** START OF MAIN FUNCTION
+*/
+
+int main ( int argc, char *argv[ ] ) {
 	int Width = 4;
-	float A[ Width * Width ];
+	
+	//populate arrays to multiply
+	int A[ Width * Width ];
 
 	for ( int x = 0; x < Width * Width; x++ ){
-		A[ x ] = 2;
+		A[ x ] = 1;
 	}
 	
-	float B[ Width * Width ];
+	int B[ Width * Width ];
 	for ( int z = 0; z < Width * Width; z++ ){
 		B[ z ] = 2;
 	}
 	
-	float C[ Width * Width ];
-	//= { 1, 1, 1, 1,1,1,1,1,1,1,1,1,1,1,1,1  };
-	//float B[ Width * Width ] = { 1, 1, 1, 1,1,1,1,1,1,1,1,1,1,1,1,1  };
-	//float C[ Width * Width ] = { 1, 1, 1, 1,1,1,1,1,1,1,1,1,1,1,1,1  };
-
-	MatrixMul( A, B, C, Width );
-}
-
-void printMatrix ( float *A, float *B, float *C, int Width, int Height ){
+	int C[ Width * Width ];
 	
+	char *filename1 = argv[ 1 ];
+	char *filename2 = argv[ 2 ];
+	int *matA; //holds first matrix
+	int *matB; //holds sencond matrix
+
+	if ( argc != 3 ) /* argc should be 4 for correct execution */ {
+		/* We print argv[0] assuming it is the program name */
+		printf( "\nusage: %s matrixFile1 matrixFile2 \n\n", argv [0 ] );
+	}
+	else {
+
+		//returns # of cols of matrix, zero otherwise
+		int matWidthA = getMatWidth ( filename1  );
+		//get # of rows of matrix, zero otherwise
+		int matHeightA = getMatHeight( filename1 );
+
+		//returns # of cols of matrix, zero otherwise
+		int matWidthB = getMatWidth ( filename2  );
+		//get # of rows of matrix, zero otherwise
+		int matHeightB = getMatHeight( filename2 );
+		
+		//load matrices from files
+		loadMatrixFile( filename1, matA );
+		//loadMatrixFile( filename2, matB );
+
+        //Print matrix P
+	        for ( int w = 0; w < matWidthA * matWidthA; w++ ){
+		        printf( "\n" );
+			printf( " %d: %d  ", w, matA[ w ] );
+			printf( "\n" );
+		}
+		//printMatrix( matA, matWidthA, matHeightA );
+
+		//printf( " widht of matrix A: %d \n ", matWidthA );
+		//printf( "height of matrix A: %d \n\n", matHeightA );
+	}
+	//MatrixMul( A, B, C, Width );
 }
+/*
+** END OF MAIN FUNCTION
+*/
