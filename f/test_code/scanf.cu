@@ -3,11 +3,14 @@
 int main ( void ) {
 	int x;
 	while( x != 3) {
-	printf( " Type \n 1 for 1 \n 2 for 2 \n 3 to quit \n: " );
+	printf( "\n Type \n 1 to enter filename \n 2 for 2 \n 3 to quit \n: " );
 	scanf( "%d", &x );
 	switch( x ){
 		case 1:
-			printf( " You entered 1 \n" );
+			char *str;
+			printf( " Please enter filename: \n" );
+			scanf( "%s", str );
+			printf( " You entered the filename %s ", str );
 			break;
                 case 2: 
                         printf( " You entered 2 \n" );
@@ -16,7 +19,7 @@ int main ( void ) {
                         printf( " You entered quit. Bye! \n" );
                         break;
 		default:
-			printf( " You entered an invalid choice " );
+			printf( " You entered an invalid choice \n" );
 			break;
 	}
 	}
