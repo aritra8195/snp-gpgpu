@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main ( int argc, char *argv[ ] ) {
-	int x;
+	int x, y, *z;
 
     	if ( argc != 2 ) /* argc should be 4 for correct execution */
     	{
@@ -14,11 +14,23 @@ int main ( int argc, char *argv[ ] ) {
 		if ( ptr == 0 )
 			printf( "\n could not open file %s \n", argv[ 1 ] );
 		else
-		{
+		{	
+			y = 1;
+			//int w = 0;
 			fscanf( ptr, "%d", &x  );
 			while( !feof( ptr ) ){
-				printf( "\n %d \n", x );
-				fscanf( ptr, "%d", &x );
+				if ( y < 3 ){
+					fscanf( ptr, "%d", &x );
+					printf( "\n A: y: %d MatEl: %d \n", y, x );
+				}
+				else {
+					printf( "\n B: y: %d MatEl: %d ", y, x );
+					fscanf( ptr, "%d", &z[ y - 3 ]  );
+					printf( " z[ w ]: %d \n", z[ y - 3 ] );
+					//w++;
+					//z[ y - 3 ] = x;
+				}
+				y++;
 			}
 		}
 	fclose( ptr );
