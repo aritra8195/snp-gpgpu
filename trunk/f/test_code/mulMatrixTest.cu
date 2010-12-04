@@ -26,8 +26,7 @@ __global__ void MatrixMulKernel ( int  *Md, int *Nd, int *Pd, int Width ){
 //function to print matrix
 void printMatrix ( int *M, int rows, int columns ){
 	//assumes matrix is in row-major format
-	printf ( " %s: ", "M" );
-	printf ( " \n " );
+	printf ( "\n %s: \n", "M" );
 	for ( int v = 0; v < rows; v++  ){
 		//assumes a square matrix
 		for ( int w = 0; w < columns; w++   ) {
@@ -61,13 +60,13 @@ void MatrixMul( int *M, int *N, int *P, int Width ){
 	cudaMemcpy( P, Pd, size, cudaMemcpyDeviceToHost );
 
 	//Print matrix P
-	for ( int w = 0; w < Width * Width; w++ ){
+/*	for ( int w = 0; w < Width * Width; w++ ){
 		printf( "\n" );
-		printf( " %d: %d  ", w, P[w] );
+		printf( " %d: %d  ", w, P[ w ] );
 		printf( "\n" );
-	}
+	} */
 
-	printMatrix( P, 4, 4 );
+	//printMatrix( P, 4, 4 );
 
 	//Free device matrices
 	cudaFree( Md ); cudaFree( Nd ); cudaFree ( Pd );
@@ -146,9 +145,10 @@ int  *loadMatrixFile( FILE *ptr, int cols, int rows ) {
 int main ( int argc, char *argv[ ] ) {
 	
 	char *filename1 = argv[ 1 ];
-//	char *filename2 = argv[ 2 ];
+	char *filename2 = argv[ 2 ];
 	int *matA; //holds first matrix
-//	int *matB; //holds sencond matrix
+	int *matB; //holds sencond matrix
+	int *matC, sqWidth;
 
 	if ( argc != 3 ) /* argc should be 4 for correct execution */ {
 		/* We print argv[0] assuming it is the program name */
@@ -162,18 +162,21 @@ int main ( int argc, char *argv[ ] ) {
 		int matHeightA = getMatHeight( filename1 );
 
 		//returns # of cols of matrix, zero otherwise
-		//int matWidthB = getMatWidth ( filename2  );
+		int matWidthB = getMatWidth ( filename2  );
 		//get # of rows of matrix, zero otherwise
-		//int matHeightB = getMatHeight( filename2 );
+		int matHeightB = getMatHeight( filename2 );
 		
 		//load matrices from files
-		FILE *ptr = fopen( argv[ 1 ], "r" );
-		if ( ptr == 0 )
-			printf( "\n could not open file %s \n", argv[ 1 ] );
+		FILE *ptr1 = fopen( argv[ 1 ], "r" );
+		FILE *ptr2 = fopen( argv[ 2 ], "r" );
+		if ( ptr1 == 0 && ptr2 == 0 )
+			printf( "\n could not open one of the following files: %s %s \n", argv[ 1 ], argv[ 2 ] );
 		else
 		{	
-			matA = loadMatrixFile( ptr, matWidthA, matHeightA );
-			fclose( ptr );
+			matA = loadMatrixFile( ptr1, matWidthA, matHeightA );
+			matB = loadMatrixFile( ptr2, matWidthB, matHeightB );
+			fclose( ptr1 );
+			fclose( ptr2 );
 	      //Print matrix P
 		        for ( int w = 0; w < matWidthA * matWidthA; w++ ){
 			        printf( "\n" );
@@ -182,10 +185,17 @@ int main ( int argc, char *argv[ ] ) {
 			}
 		}
 		printMatrix( matA, matWidthA, matHeightA );
-		printf( "\n DEBUG \n" );
+		printMatrix( matB, matWidthB, matHeightB );
 
+		if ( matWidthB > matWidthA )
+			sqWidth = matWidthB;
+		else
+			sqWidth = matWidthB;
+		printf( "\n DEBUG \n" );
+		//make matrices square ones first before multiplying
+		//MatrixMul( matA, matB, matC, sqWidth );
+		printMatrix( matC, sqWidth, sqWidth );
 	}
-	//MatrixMul( A, B, C, Width );
 }
 /*
 ** END OF MAIN FUNCTION
