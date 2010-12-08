@@ -49,12 +49,6 @@ void MatrixMul( int *M, int *N, int  *P, int Width ){
 
 	cudaMemcpy( P, Pd, size, cudaMemcpyDeviceToHost );
 
-	for ( int w = 0; w < Width * Width; w++ ){
-		printf( "\n" );
-		printf( " %d: %f  ", w, P[w] );
-		printf( "\n" );
-	}
-
 	cudaFree( Md ); cudaFree( Nd ); cudaFree ( Pd );
 }
 //End of Matrix multiplication function
