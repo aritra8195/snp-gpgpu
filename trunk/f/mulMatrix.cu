@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <cuda.h>
-#include "cuda_runtime_api.h"
-#include <stdint.h>
-#include <stdlib.h>
+//#include <cuda.h>
+//#include "cuda_runtime_api.h"
+//#include <stdint.h>
+//#include <stdlib.h>
 
 //#define Width 4
 
@@ -31,13 +31,11 @@ __global__ void MatrixMulKernel ( int  *Md, int *Nd, int *Pd, int Width ){
 //function to print matrix
 void printMatrix ( int *M, int rows, int columns ){
 	//assumes matrix is in row-major format
-	
-	printf ( " %s: ", "M" );
-	printf ( " \n " );
+	printf ( "\n %s: \n", "M" );
 	for ( int v = 0; v < rows; v++  ){
-		//assumes a square matrix
+	//assumes a square matrix
 		for ( int w = 0; w < columns; w++   ) {
-		printf ( " %03d ", M[ w ]  );
+			printf ( " %03d ", M[ v * columns + w ]  );
 		}
 		printf ( " \n " );
 	}
@@ -65,7 +63,7 @@ void MatrixMul( int *M, int *N, int *P, int Width ){
 
 	//transfer from device to host
 	cudaMemcpy( P, Pd, size, cudaMemcpyDeviceToHost );
-
+/*
 	//Print matrix P
 	for ( int w = 0; w < Width * Width; w++ ){
 		printf( "\n" );
@@ -73,12 +71,11 @@ void MatrixMul( int *M, int *N, int *P, int Width ){
 		printf( "\n" );
 	}
 
-	printMatrix( P, 4, 4 );
+	printMatrix( P, 4, 4 ); */
 
 	//Free device matrices
 	cudaFree( Md ); cudaFree( Nd ); cudaFree ( Pd );
-}//End of MatrixMul function
-
+}//End of MatrixMul function	
 
 //Start of getMatWidth => Get width i.e. # of columns
 int getMatWidth( char *filename ){
@@ -120,30 +117,39 @@ int getMatHeight( char *filename ){
 	return height;
 }//end of getMatHeight function
 
-void loadMatrixFile( char *filename, int *matrix ) {
+//START of loadMatrixFile function
+void loadMatrixFile( char *filename, int *array, int cols, int rows ) {
 	//assumes space separate integer values e.g. -1 23 4 -56 6 77
-	int x, y, z;
-	FILE *ptr = fopen( filename, "r" );
-	if ( ptr == 0 )
+	int x, y, *dummy;
+	FILE *matFile = fopen( filename, "r" );
+	if ( matFile == 0 ){
 		printf( "\n could not open file %s \n", filename );
+	}
 	else{
 		y = 1;
-		z = 0;
-		fscanf( ptr, "%d", &x );
-		while( !feof( ptr ) ) {
-			if ( y < 5 )
-				fscanf( ptr, "%d", &x );
+		int offset = 4;
+		//z = 0;
+		fscanf( matFile, "%d", &x );
+		while( !feof( matFile ) && y <  rows * cols + offset ) {
+			if ( y < offset ){
+				fscanf( matFile, "%d", &x );
+				printf( " A: y = %d x = %d \n ", y, x );
+			}
 			else {
-				fscanf( ptr, "%d", &x );
-				&matrix[ z ] = x;
-				z++;
+				fscanf( matFile, "%d", &dummy[ y - offset ] );
+				//fscanf( matFile, "%d", &x );
+				//printf( " B: y = %d x = %d \n", y, x );
+				printf( " B: y = %d dummy[ z ] = %d \n", y, dummy[ y - offset ] );
+				//z++;
+				//array[ y - offset ] = x;
 			}
 			y++;
-		}
-		//matrix = x; //can't do this!!!
+		} 
 	}
-	fclose( ptr );
-}	
+	fclose( matFile ); 
+	//return array; 
+}//END of loadMatrixFile function
+
 /*
 ** END OF Auxiliary functions
 */
@@ -192,7 +198,7 @@ int main ( int argc, char *argv[ ] ) {
 		int matHeightB = getMatHeight( filename2 );
 		
 		//load matrices from files
-		loadMatrixFile( filename1, matA );
+		loadMatrixFile( filename1, matA, matWidthA, matHeightA );
 		//loadMatrixFile( filename2, matB );
 
         //Print matrix P
