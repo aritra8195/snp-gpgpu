@@ -13,28 +13,26 @@ Done:
 - working array passing from main to auxiliary (loadMatrixFile) function :)
 - fixed printing of matrix
 - fixed erroneous matrix values by moving loading into host matrix multiplication function!
+- basic move towards SN P simulation: multiplication of s0 and Msnp
 
 Problems:
 - (fixed)  MatA and MatB values are overlapping and erroneous
 */
 
 
-// START of AUXILIARY functions
+// START of Auxiliary functions
 
 //START vector addition kernel function
-__global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int N ){
-        int tid = blockIdx.x; //thred id
-	if ( tid < N )
-		Pd[ tid ] = Md[ tid ] + Nd[ tid ];
-/*        int tx = threadIdx.x;
+__global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int Width ){
+        int tx = threadIdx.x;
 	int ty = threadIdx.y;
 	int Pvalue = 0;
 	for ( int k = 0; k < Width; ++k ){
 		int Mdelement = Md[ ty * Width + k ];
 		int Ndelement = Nd[ k * Width + tx ];
-		Pvalue = Mdelement + Ndelement;
+		Pvalue += Mdelement + Ndelement;
 	}
-        Pd[ ty * Width + tx  ] = Pvalue; */
+        Pd[ ty * Width + tx  ] = Pvalue;
 }							
 //END of kernel addition
 
@@ -71,6 +69,47 @@ void printMatrix ( int *M, int rows, int columns ){
 	}
 }//End of printMatrix function
 
+//Start of getMatWidth => Get width i.e. # of columns
+int getMatWidth( char *filename ){
+	int width;
+	//assumes space separate integer values e.g. -1 23 4 -56 6 77
+	//assumes first integer in file is row, 2nd integer is column
+	FILE *ptr = fopen( filename, "r" );
+	if ( ptr == 0 ){
+		printf( "\n could not open file %s \n", filename );
+		width = 0;
+	}
+	else{
+		fscanf( ptr, "%d", &width  );
+	}
+	fclose( ptr );
+	return width;
+}//end of getMatWidth function
+
+
+//Start of getMatHeight => Get height i.e. # of rows
+int getMatHeight( char *filename ){
+	int height, dummy;
+	//assumes space separate integer values e.g. -1 23 4 -56 6 77
+	//assumes first integer in file is row, 2nd integer is column
+	FILE *ptr = fopen( filename, "r" );
+	if ( ptr == 0 ){
+		printf( "\n could not open file %s \n", filename );
+		height = 0;
+	}
+	else{
+		for ( int count = 1; count < 3; count++ ){
+			if ( count != 2 )
+				fscanf( ptr, "%d", &dummy );
+		else
+			fscanf( ptr, "%d", &dummy  );
+			height = dummy;
+		}
+	}
+	fclose( ptr );
+	return height;
+}//end of getMatHeight function
+
 
 //START of loadMatrixFile
 void loadMatrixFile( char *filename, int *z, int matWidth, int matHeight ){
@@ -102,30 +141,50 @@ void loadMatrixFile( char *filename, int *z, int matWidth, int matHeight ){
 
 
 //Start of matrix multiplication host function MatrixMul
-void MatrixMul( char *filename0, char *filename1, char *filename2, int Width /*, int *M, int *N, int  *P, int Width*/ ){
+void MatrixMul( char *filename1, char *filename2, int Width /*, int *M, int *N, int  *P, int Width*/ ){
 	int size = Width * Width * sizeof( int );
 	int *Md, *Nd, *Pd;
 
 	dim3 dimBlock( Width, Width );
 	dim3 dimGrid( 1, 1 );
 
-	int *matA = ( int * )malloc( size );
-	//printf( "Width and height of Matrix A: %d %d and init values are\n", Width, Width );
-	//printMatrix( matA, Width, Width );
-	loadMatrixFile( filename1, matA, Width, Width );
+			//load matrices from files
+			//get heigh/rows and width/columns of matrices
+/*			int matWidthA = getMatWidth ( filename1  );
+			int matHeightA = getMatHeight ( filename1  );
+			
+			int matWidthB = getMatWidth ( filename2  );
+			int matHeightB = getMatHeight ( filename2  ); */
+			
+			int *matA = ( int * )malloc( size );
+			//printf( "Width and height of Matrix A: %d %d and init values are\n", Width, Width );
+			//printMatrix( matA, Width, Width );
+			loadMatrixFile( filename1, matA, Width, Width );
 
-	printf( " \ns after loading from file: \n" );
-	printMatrix( matA, Width, Width );
+			printf( " \nMatrix A after loading from file: \n" );
+			printMatrix( matA, Width, Width );
 			
-	int *matB = ( int * )malloc( size );
-	loadMatrixFile( filename2, matB, Width, Width );
+			int *matB = ( int * )malloc( size );
+			//printf( "Width and height of Matrix B: %d %d and init values are\n", Width, Width );
+			//printMatrix( matB, Width, Width );
+			loadMatrixFile( filename2, matB, Width, Width );
 		
-	printf( " \nM after loading from file: \n" );
-	printMatrix( matB, Width, Width );
+			printf( " \nMatrix B after loading from file: \n" );
+			printMatrix( matB, Width, Width );
 			
-	//assumes a square matrix
-	int *matC = ( int * )malloc( size );
-	
+			//assumes a square matrix
+			int *matC = ( int * )malloc( size );
+			
+/*			printf( "A: \n" );
+			for ( int w = 0; w < Width * Width + 10; w++ ){
+			        printf( "%d: %d \n",w,  matA[ w ] );
+			}
+			printf( "\n" );
+*/
+			//printf( " \nMatrix C initially: \n" );
+			//printMatrix( matC, Width, Width );
+
+
 	cudaMalloc( (void**) &Md, size );
 	cudaMemcpy( Md, matA, size, cudaMemcpyHostToDevice );
 	cudaMalloc( (void**) &Nd, size );
@@ -133,12 +192,11 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width /*,
 	cudaMalloc( (void**) &Pd, size );	
 	
 	MatrixMulKernel<<< dimGrid, dimBlock >>>( Md, Nd, Pd, Width );
-	//MatrixAddKernel<<< N, 1 >>>( Md, Nd, Pd );
 
 	cudaMemcpy( matC, Pd, size, cudaMemcpyDeviceToHost );
 
-	printf( " \ns * M: \n" );
-	printMatrix( matC, Width, Width );
+			printf( " \nMatrix C finally: \n" );
+			printMatrix( matC, Width, Width );
 
 	free( matA ); free( matB ); free( matC );
 	cudaFree( Md ); cudaFree( Nd ); cudaFree ( Pd );
@@ -146,10 +204,10 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width /*,
 //End of Matrix multiplication function MatrixMul
 
 
-//END of AUXILIARY functions
+//END of Auxiliary functions
 
 
-//START of MAIN function
+//START of Main function
 int main ( int argc, char *argv[ ] ) {
 	int offset = 2;
 
@@ -172,9 +230,9 @@ int main ( int argc, char *argv[ ] ) {
 		if ( ptr1 == 0 && ptr2 == 0 && ptr3 == 0 )
 			printf( "\n could not open one of the following files: %s %s \n", argv[ 1 ], argv[ 2 ] );
 		else {
-			MatrixMul( confVec, spikVec, spikTransMat, width );
+			MatrixMul( spikVec, spikTransMat, width );
 		}
 		fclose( ptr1 ); fclose( ptr2 ); fclose( ptr3 );
 	}
 }
-//END of MAIN function
+//END of Main function
