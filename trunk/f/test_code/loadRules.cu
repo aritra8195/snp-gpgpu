@@ -6,7 +6,7 @@ int main ( int argc, char *argv[ ] ){
 		printf( "\n Usage \n%s filetoread \n", argv[ 0 ] );
 	else {
 		char x; 
-		int rules[ 50 ]; //length of rules that can be read
+		int rules[ 100 ]; //length of rules that can be read
 		int a = 0;
 		char *filename = argv[ 1 ];
 		FILE *ptr1 = fopen( filename, "r" );
@@ -30,14 +30,31 @@ int main ( int argc, char *argv[ ] ){
 	// Rules on load: |2 |-1 |2 |-1 |-1 |-1 |1 |-1 |-1 |-1 |1 |-1 |2 |-1 |
 		printf( "\n" );
 		int oneCnt = 1;
+		int ruleCnt = 1;
 		int neuron = 1;
-		printf( "Neuron %d rule/s:\n", neuron );
+		// Find out how many rules are there.
 		for( int x = 0; rules[ x ] != 0; x++) {
 			//printf( "%d |", rules[ x ] );
 			if ( rules[ x ] > 0 && oneCnt < 4 ){
-				printf( " %d ", rules[ x ] );
 				oneCnt = 1;
-//				printf( " A " );
+			}
+			else if ( rules[ x ] < 0 && oneCnt < 3 ) {
+				oneCnt = oneCnt + 1;
+			}
+			else if ( rules[ x ] < 0 && oneCnt == 3 ) {
+				oneCnt = 1;
+				ruleCnt = ruleCnt + 1;
+			}
+		}
+		oneCnt = 1;
+		printf( "\nThere are %d rules loaded\n", ruleCnt );
+		int rulePrint = 1;
+		printf( "Neuron %d rule/s:\n", neuron );
+		for( int x = 0; rulePrint <= ruleCnt && rules[ x ] != 0; x++) {
+			//printf( "%d |", rules[ x ] );
+			if ( rules[ x ] > 0 && oneCnt < 4 ){
+				printf( " %d ", rules[ x ], oneCnt, rulePrint );
+				oneCnt = 1;
 			}
 			else if ( rules[ x ] < 0 && oneCnt < 3 ) {
 				oneCnt = oneCnt + 1;
@@ -47,6 +64,7 @@ int main ( int argc, char *argv[ ] ){
 				neuron = neuron + 1;
 				printf( "\nNeuron %d rule/s:\n", neuron );
 				oneCnt = 1;
+				rulePrint = rulePrint + 1;
 //				printf( " C " );
 			}
 		} 
