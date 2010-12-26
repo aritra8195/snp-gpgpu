@@ -24,7 +24,7 @@ Problems:
 - (fixed)  MatA and MatB values are overlapping and erroneous
 
 TODOS:
-- write Ck+1 to an output file
+- write Ck+1 to an output file ( done )
 - error checking of switch case input ( scanf of int and char )
 - use multiple files + make file
 - see code comments
@@ -90,7 +90,7 @@ void writeMatFile( char *filename, int *matrix, int Width ) {
 		x++;		
 	}
 	fclose( fp );
-	printf( "\nMatrix was successfully written to filename: %s\n", filename );
+//	printf( "\nMatrix was successfully written to filename: %s\n", filename );
 }
 
 //Start of function to print matrix
@@ -144,18 +144,18 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, ch
 
 	int *matA = ( int * )malloc( size );//spikVec
 	loadMatrixFile( filename1, matA, Width, Width );
-	printf( " \n%s after loading from file: \n", filename1 );
-	printMatrix( matA, Width, Width );
+//	printf( " \n%s after loading from file: \n", filename1 );
+//	printMatrix( matA, Width, Width );
 			
 	int *matB = ( int * )malloc( size );//spikTransMat
 	loadMatrixFile( filename2, matB, Width, Width );		
-	printf( " \n%s after loading from file: \n", filename2 );
-	printMatrix( matB, Width, Width );
+//	printf( " \n%s after loading from file: \n", filename2 );
+//	printMatrix( matB, Width, Width );
 
 	int *matD = ( int * )malloc( size );//confVec
 	loadMatrixFile( filename0, matD, Width, Width );		
-	printf( " \n%s after loading from file: \n", filename0 );
-	printMatrix( matD, Width, Width );
+//	printf( " \n%s after loading from file: \n", filename0 );
+//	printMatrix( matD, Width, Width );
 			
 	//assumes a square matrix
 	int *matC = ( int * )malloc( size );
@@ -188,8 +188,8 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, ch
 	MatrixAddKernel<<< dimGrid, dimBlock >>>( Od, Pd, Qd, Width );
 
 	cudaMemcpy( matE, Qd, size, cudaMemcpyDeviceToHost );
-	printf( " \n%s + %s * %s : \n", filename0, filename1, filename2 );
-	printMatrix( matE, Width, Width );
+//	printf( " \n%s + %s * %s : \n", filename0, filename1, filename2 );
+//	printMatrix( matE, Width, Width );
 
 	writeMatFile( Cnext, matE, Width );
 
@@ -227,11 +227,11 @@ int main ( int argc, char *argv[ ] ) {
 					//*confVec = NULL; // doesn't work
 	}
 	else {
-					printf( " You entered the file %s for the spiking vector \n", spikVec );
-					printf( " You entered the file %s for the configuration vector \n", confVec );
-					printf( " You entered the file %s for the spiking transition matrix \n ", spikTransMat );
+	//				printf( " You entered the file %s for the spiking vector \n", spikVec );
+	//				printf( " You entered the file %s for the configuration vector \n", confVec );
+	//				printf( " You entered the file %s for the spiking transition matrix \n ", spikTransMat );
 		
-					printf( "\nYou have entered files %s, %s, and %s and square matrix width %d \n", spikVec, confVec, spikTransMat, width );
+	//				printf( "\nYou have entered files %s, %s, and %s and square matrix width %d \n", spikVec, confVec, spikTransMat, width );
 
 					//load matrices from files
 					FILE *ptr1 = fopen( confVec, "r" );
@@ -240,6 +240,7 @@ int main ( int argc, char *argv[ ] ) {
 
 					if ( ptr1 == 0 && ptr2 == 0 && ptr3 == 0 ) {
 						printf( "\n could not open one of the following files: %s %s %s \n", spikVec, confVec, spikTransMat );
+						//should return something here
 					}
 					else {
 						MatrixMul( confVec, spikVec, spikTransMat, width, Cnext );
