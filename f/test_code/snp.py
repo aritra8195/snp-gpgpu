@@ -17,9 +17,9 @@ if ( len( sys.argv ) < 5 ) :
 	print '\n Program usage:\n'+sys.argv[ 0 ] + ' confVec spikVec spikTransMat rules\n'
 
 else :
-	confVec = sys.argv[ 1 ]
-	spikVec = sys.argv[ 2 ]
-	spikTransMat  = sys.argv[ 3 ]
-	rules = sys.argv[ 4 ]
-	print ' \nConfiguration vector is:\n' + importVec( confVec ) #works
-
+	confVec = importVec( sys.argv[ 1 ] )
+	spikVec = importVec( sys.argv[ 2 ] )
+	spikTransMat  = importVec( sys.argv[ 3 ] )
+	rules = importVec( sys.argv[ 4 ] )
+	print ' \nconfVec:\n' + confVec +'\nspikVec:\n'+spikVec+'\nspikTransMat:\n'+spikTransMat+'\nrules:\n'+rules #works
+	
