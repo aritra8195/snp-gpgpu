@@ -41,6 +41,30 @@ def genSpikVec( confVec, rules  ) :
 
 #END of function
 
+#START of function
+def genSpikRuleList( confVec, rules ) :
+	spikRuleList = [ ]
+	y = 0	
+	z = 1
+	w = 0
+	#print spikRuleList
+	for conf in confVec[ 2 : 2 + neurNum ] :
+		spikRuleList.append( [ conf ] ) #append first conf for first neuron
+		for rule in rules[ w: ] :
+			if rule == '$' :
+				w += 1
+				break
+			else :
+				#print z
+				spikRuleList[ y ].append( rule ) #append rules to neuron's spike in the list
+				#print spikRuleList
+			w += 1
+		if conf == '0' :
+			break
+		y += 1
+	return spikRuleList
+#END of function
+
 ###
 #END of AUX functions
 ###
@@ -79,27 +103,8 @@ else :
 
 	#see if spikes in Neuron1 confVec match a rule criteria in Neuron1 rules
 	#genSpikVec( confVec, rules )
-	#goal is to create [ [spike, rule1 criteria1, rule1 criteria2, ...], ... ]
-	spikRuleList = [ ]
-	y = 0	
-	z = 1
-	w = 0
-	print spikRuleList
-	for conf in confVec[ 2 : 2 + neurNum ] :
-		spikRuleList.append( [ conf ] ) #append first conf for first neuron
-		for rule in rules[ w: ] :
-			if rule == '$' :
-				w += 1
-				break
-			else :
-				#print z
-				spikRuleList[ y ].append( rule ) #append rules to neuron's spike in the list
-				print spikRuleList
-			w += 1
-		if conf == '0' :
-			break
-		y += 1
-	print ' Final \n'
+	#generate list of list of form [ [spike, rule1 criteria1, rule1 criteria2, ...], ... ]
+	spikRuleList = genSpikRuleList( confVec, rules )
 	print spikRuleList
 
 	v = 1
