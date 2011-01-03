@@ -15,6 +15,32 @@ def importVec( filename ) :
 	return Vec.split( )
 #END of function to import vectors/matrices from file/s	
 
+#START of function
+def getNeurNum( confVec ) :
+	cnt = 0
+#	print confVec[ 2: ]
+	for conf in confVec[ 2: ] :
+		if conf != '0' :
+			#print conf
+			cnt = cnt + 1
+	return cnt
+#END of function
+
+#START of function
+def genSpikVec( confVec, rules  ) :
+	y = 1
+	for conf in confVec[ 2: ] : #run through each neuron's configuration, cross-checking them w/ their own rules
+		for rule in rules :
+			if rule == conf :
+				print ' Neuron %d can use rule ' % ( y )  #assumes total ordering of rules
+			elif rule == '$' :
+				break
+		#if not ruleDone :
+		#	break
+		y += 1
+
+#END of function
+
 ###
 #END of AUX functions
 ###
@@ -47,17 +73,41 @@ else :
 	#		print rule #works
 
 #proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
+	#first, determine number of neurons
+	neurNum = getNeurNum( confVec )
+	print ' Number of neurons is %d ' % ( neurNum )
+
 	#see if spikes in Neuron1 confVec match a rule criteria in Neuron1 rules
-	y = 1
-	#print 'test'
-	#for conf in confVec[ 2: ] : #run through each neuron's configuration, cross-checking them w/ their own rules
-	for idx, rule in enumerate( rules ) :
-		if rule == '$' :
-			print 'iff'
-			continue #stop current loop and go to next neuron and its rules
-		elif rule == '2' :
-			print ' Neuron %d can use rule %d' % ( y, idx )  #assumes total ordering of rules
-	#y += 1
+	#genSpikVec( confVec, rules )
+	#goal is to create [ [spike, rule1 criteria1, rule1 criteria2, ...], ... ]
+	spikRuleList = [ ]
+	y = 0	
+	z = 1
+	w = 0
+	print spikRuleList
+	for conf in confVec[ 2 : 2 + neurNum ] :
+		spikRuleList.append( [ conf ] ) #append first conf for first neuron
+		for rule in rules[ w: ] :
+			if rule == '$' :
+				w += 1
+				break
+			else :
+				#print z
+				spikRuleList[ y ].append( rule ) #append rules to neuron's spike in the list
+				print spikRuleList
+			w += 1
+		if conf == '0' :
+			break
+		y += 1
+	print ' Final \n'
+	print spikRuleList
+
+	v = 1
+	for neuron in spikRuleList :
+		print ' Neuron %d ' % ( v ) + ' rules \n'
+		for rule in neuron[ 1: ] :
+			print rule
+		v += 1	
 
 ###
 #END of MAIN Program Flow
