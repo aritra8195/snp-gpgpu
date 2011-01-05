@@ -48,7 +48,7 @@ def genSpikRuleList( confVec, rules ) :
 	z = 1
 	w = 0
 	#print spikRuleList
-	for conf in confVec[ 2 : 2 + neurNum ] :
+	for conf in confVec[ 2 : 2 + neurNum ] : #loop starts @ index 2
 		spikRuleList.append( [ conf ] ) #append first conf for first neuron
 		for rule in rules[ w: ] :
 			if rule == '$' :
@@ -63,6 +63,18 @@ def genSpikRuleList( confVec, rules ) :
 			break
 		y += 1
 	return spikRuleList
+#END of function
+
+#START of function
+def prNeurons( spikeRuleList ) :
+	v = w = 1
+	for neuron in spikRuleList :
+		print ' \nNeuron %d ' % ( v ) + ' rules criteria and total order '
+		for rule in neuron[ 1: ] :
+			print ' (%d) ' % ( w ) + rule
+			w += 1
+		v += 1	
+
 #END of function
 
 ###
@@ -85,16 +97,6 @@ else :
 	#spikVec = importVec( sys.argv[ 2 ] )
 	spikTransMat  = importVec( sys.argv[ 2 ] )
 	rules = importVec( sys.argv[ 3 ] )
-	#print ' \nconfVec:\n' + confVec +'\nspikVec:\n'+spikVec+'\nspikTransMat:\n'+spikTransMat+'\nrules:\n'+rules #works
-	#for elem in confVec[ 2: ] : # the 2: is so that the loop starts @ index 2
-	#x = 1	
-	#print 'Neuron %d' % ( x )	
-	#for rule in rules : #for loop works
-	#	if rule == '$' :
-	#		x += 1
-	#		print ' Neuron %d' % ( x )
-	#	else :
-	#		print rule #works
 
 #proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
 	#first, determine number of neurons
@@ -103,16 +105,31 @@ else :
 
 	#see if spikes in Neuron1 confVec match a rule criteria in Neuron1 rules
 	#genSpikVec( confVec, rules )
-	#generate list of list of form [ [spike, rule1 criteria1, rule1 criteria2, ...], ... ]
+	#generate list of list of form [ [spike/s, rule1 criteria1, rule1 criteria2, ...], ... ]
 	spikRuleList = genSpikRuleList( confVec, rules )
 	print spikRuleList
+	
+	#function to print neurons + rules criteria and total order
+	#prNeurons( spikRuleList )
 
-	v = 1
+	tmpList = spikRuleList
+	print tmpList
+	x = sameCnt = 0
+	y = 1
 	for neuron in spikRuleList :
-		print ' Neuron %d ' % ( v ) + ' rules \n'
+		spike = neuron[ x ]
 		for rule in neuron[ 1: ] :
-			print rule
-		v += 1	
+			if rule == spike :
+				print ' A %d %d ' % ( x, y )
+				sameCnt += 1
+				tmpList[ x ][ y ] = sameCnt
+			else :
+				print ' B %d %d ' % ( x, y )
+				tmpList[ x ][ y ] = 0
+			y += 1
+		x += 1
+		y = 1
+		sameCnt = 0
 
 ###
 #END of MAIN Program Flow
