@@ -119,7 +119,7 @@ else :
 	for neuron in spikRuleList :
 		spike = neuron[ x ]
 		for rule in neuron[ 1: ] :
-			if rule == spike :
+			if spike <= rule :
 				print ' A %d %d ' % ( x, y )
 				sameCnt += 1
 				tmpList[ x ][ y ] = sameCnt
