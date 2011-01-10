@@ -77,6 +77,37 @@ def prNeurons( spikeRuleList ) :
 
 #END of function
 
+#START of function
+def genPotentialSpikrule( spikRuleList ) :
+	#generate a list of spikes + rules they are applicable to via, in order
+	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
+	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
+	tmpList = spikRuleList
+	#print tmpList
+	x = sameCnt = 0
+	y = 1
+	for neuron in spikRuleList :
+		spike = neuron[ 0 ]
+		#print spike
+		for rule in neuron[ 1: ] :
+			#print int( rule ) + spike
+			if int( rule ) <= int( spike ) :
+				print ' A %d %d ' % ( x, y )
+				#print tmpList
+				sameCnt += 1
+				tmpList[ x ][ y ] = sameCnt
+			else :
+				print ' B %d %d ' % ( x, y )
+				#print tmpList
+				tmpList[ x ][ y ] = 0
+			y += 1
+		x += 1
+		y = 1
+		sameCnt = 0
+	return tmpList
+
+#END of function
+
 ###
 #END of AUX functions
 ###
@@ -105,6 +136,7 @@ else :
 
 	#see if spikes in Neuron1 confVec match a rule criteria in Neuron1 rules
 	#genSpikVec( confVec, rules )
+	
 	#generate list of list of form [ [spike/s, rule1 criteria1, rule1 criteria2, ...], ... ]
 	spikRuleList = genSpikRuleList( confVec, rules )
 	print spikRuleList
@@ -112,24 +144,12 @@ else :
 	#function to print neurons + rules criteria and total order
 	#prNeurons( spikRuleList )
 
-	tmpList = spikRuleList
-	print tmpList
-	x = sameCnt = 0
-	y = 1
-	for neuron in spikRuleList :
-		spike = neuron[ x ]
-		for rule in neuron[ 1: ] :
-			if spike <= rule :
-				print ' A %d %d ' % ( x, y )
-				sameCnt += 1
-				tmpList[ x ][ y ] = sameCnt
-			else :
-				print ' B %d %d ' % ( x, y )
-				tmpList[ x ][ y ] = 0
-			y += 1
-		x += 1
-		y = 1
-		sameCnt = 0
+	#generate a list of spikes + rules they are applicable to via, in order
+	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
+	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
+
+	print genPotentialSpikrule( spikRuleList )
+	#print tmpList
 
 ###
 #END of MAIN Program Flow
