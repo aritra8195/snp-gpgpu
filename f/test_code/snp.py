@@ -97,6 +97,7 @@ def genPotentialSpikrule( spikRuleList ) :
 		#print spike
 		for rule in neuron[ 1: ] :
 			#print int( rule ) + spike
+			# currently the SRS
 			if int( rule ) <= int( spike ) :
 				#print ' A %d %d ' % ( x, y )
 				#print tmpList
@@ -167,12 +168,13 @@ else :
 	
 	#generate all possible + valid 10 strings per neuron	
 	x = 0
+	tmp3 = [ ]
 	# loop over total number of neurons ( x )
 	while x < neurNum :
 		print ' x = ', x #works - 
 		y = 1
 		#get the max number of elements of tmpList that satisfy the SRS criterion
-		
+		tmp4 = [ ]
 		# loop over total number of rules ( y )
 		while y <= max( tmpList[ x ][ 1: ] ) :
 			print '\ty = ', y			
@@ -182,16 +184,20 @@ else :
 			# idx = tmpList.index( y )
 			#genSpikVecStr( tmpList, y )
 			z = 1
+			spikStr = ''
 			while z <= len( tmpList[ x ][ 1: ] ) :
-				print '\t\tz =', z #, range( len( tmpList[ x ] ) )
-#				print int( tmpList[ x ][ i ] )
-#				if int( tmpList[ x ][ i ] ) == y :
-#					print 'IF'
-#					tmpList[ x ][ i ] = '1'
-#				else :
-#					print 'ELSE'
-#					tmpList[ x ][ i ] = '0'
+				#print '\t\tz =', z #, range( len( tmpList[ x ] ) )
+				#print '\t\t tmpList[ x ][ z ] =', int( tmpList[ x ][ z ] )
+				if int( tmpList[ x ][ z ] ) == y :
+#					print 'IF', int( tmpList[ x ][ z ] )
+					spikStr = spikStr + '1'
+				else :
+#					print 'ELSE', int( tmpList[ x ][ z ] )
+					spikStr = spikStr + '0'
 				z += 1
+			#print '\t\t', spikStr
+			tmp4[ y - 1: ] = [ spikStr ]
+			print '\t\t', tmp4
 
 			#create function to implement the spike-rule selection (SRS) criterion
 			#QUESTION: how to implement
@@ -205,9 +211,10 @@ else :
 			
 
 			#print '\tB' #works
-			y += 1 		
+			y += 1 	
+		tmp3[ x: ] = [ tmp4 ]	
 		x += 1
-
+		print tmp3
 	
 ###
 #END of MAIN Program Flow
