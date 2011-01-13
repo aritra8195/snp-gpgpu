@@ -170,7 +170,7 @@ def genNeurSpikVecStr( tmpList, neurNum ) :
 			y += 1 	
 		tmp3[ x: ] = [ tmp4 ]	
 		x += 1
-		#print tmp3
+		#print tmp3tmp = [ '01', '10 ] tmp2 = [ '1' ] then tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
 	return tmp3
 #END of function
 
@@ -200,7 +200,7 @@ else :
 	neurNum = getNeurNum( confVec )
 	print ' Number of neurons is %d ' % ( neurNum )
 
-	#see if spikes in Neuron1 confVec match a rule criterion in Neuron1 rules
+	#see if spikes in Neuron1 confVec match a rule criterion (SRS) in Neuron1 rules
 	#genSpikVec( confVec, rules )
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
@@ -220,9 +220,20 @@ else :
 	# get min/max values in a list: min( list) and max( list )
 	
 	# generate all possible + valid 10 strings PER neuron
+	# if tmp = [ '01', '10 ], tmp2 = [ '1' ], returns tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
 	tmpList = genNeurSpikVecStr( tmpList, neurNum )
 
 	print ' tmpList = ', tmpList
+
+	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
+	
+	x = 0
+	while x < len( tmpList ) - 1 :
+		print ' pair ', x + 1
+		print tmpList[ x ], tmpList[ x + 1 ]
+		# exhaustively pair up elements of each neuron
+		
+		x += 1
 ###
 #END of MAIN Program Flow
 ###
