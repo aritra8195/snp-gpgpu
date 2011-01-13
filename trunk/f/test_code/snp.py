@@ -42,6 +42,7 @@ def genSpikVec( confVec, rules  ) :
 #END of function
 
 #START of function
+	#generate list of list of form [ [spike/s, rule1 criteria1, rule1 criteria2, ...], ... ]
 def genSpikRuleList( confVec, rules ) :
 	spikRuleList = [ ]
 	y = 0	
@@ -66,6 +67,7 @@ def genSpikRuleList( confVec, rules ) :
 #END of function
 
 #START of function
+	#function to print neurons + rules criteria and total order
 def prNeurons( spikeRuleList ) :
 	v = w = 1
 	for neuron in spikRuleList :
@@ -78,6 +80,10 @@ def prNeurons( spikeRuleList ) :
 #END of function
 
 #START of function
+	#generate a list of spikes + rules they are applicable to, in order
+	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
+	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
+
 def genPotentialSpikrule( spikRuleList ) :
 	#generate a list of spikes + rules they are applicable to via, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
@@ -92,12 +98,12 @@ def genPotentialSpikrule( spikRuleList ) :
 		for rule in neuron[ 1: ] :
 			#print int( rule ) + spike
 			if int( rule ) <= int( spike ) :
-				print ' A %d %d ' % ( x, y )
+				#print ' A %d %d ' % ( x, y )
 				#print tmpList
 				sameCnt += 1
 				tmpList[ x ][ y ] = sameCnt
 			else :
-				print ' B %d %d ' % ( x, y )
+				#print ' B %d %d ' % ( x, y )
 				#print tmpList
 				tmpList[ x ][ y ] = 0
 			y += 1
@@ -139,17 +145,29 @@ else :
 	
 	#generate list of list of form [ [spike/s, rule1 criteria1, rule1 criteria2, ...], ... ]
 	spikRuleList = genSpikRuleList( confVec, rules )
-	print spikRuleList
+	#print spikRuleList
 	
 	#function to print neurons + rules criteria and total order
 	#prNeurons( spikRuleList )
 
-	#generate a list of spikes + rules they are applicable to via, in order
+	#generate a list of spikes + rules they are applicable to, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 
-	print genPotentialSpikrule( spikRuleList )
-	#print tmpList
+	tmpList = genPotentialSpikrule( spikRuleList )
+	print tmpList
+
+	# get min/max values in a list: min( list) and max( list )
+	
+	#generate all possible + valid 10 strings per neuron	
+	x = 0
+	while x < neurNum :
+		print 'A'
+		y = 1
+		while y <= max( tmpList[ x ][ 1: ] ) :
+			print '\tB'
+			y += 1 		
+		x += 1
 
 ###
 #END of MAIN Program Flow
