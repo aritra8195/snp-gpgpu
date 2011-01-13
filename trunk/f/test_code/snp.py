@@ -42,7 +42,7 @@ def genSpikVec( confVec, rules  ) :
 #END of function
 
 #START of function
-	#generate list of list of form [ [spike/s, rule1 criteria1, rule1 criteria2, ...], ... ]
+	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 def genSpikRuleList( confVec, rules ) :
 	spikRuleList = [ ]
 	y = 0	
@@ -67,11 +67,11 @@ def genSpikRuleList( confVec, rules ) :
 #END of function
 
 #START of function
-	#function to print neurons + rules criteria and total order
+	#function to print neurons + rules criterion and total order
 def prNeurons( spikeRuleList ) :
 	v = w = 1
 	for neuron in spikRuleList :
-		print ' \nNeuron %d ' % ( v ) + ' rules criteria and total order '
+		print ' \nNeuron %d ' % ( v ) + ' rules criterion and total order '
 		for rule in neuron[ 1: ] :
 			print ' (%d) ' % ( w ) + rule
 			w += 1
@@ -114,6 +114,12 @@ def genPotentialSpikrule( spikRuleList ) :
 
 #END of function
 
+
+#START of function
+#def genSpikVecStr( tmpList, idx ) :
+	
+#END of function
+
 ###
 #END of AUX functions
 ###
@@ -140,14 +146,14 @@ else :
 	neurNum = getNeurNum( confVec )
 	print ' Number of neurons is %d ' % ( neurNum )
 
-	#see if spikes in Neuron1 confVec match a rule criteria in Neuron1 rules
+	#see if spikes in Neuron1 confVec match a rule criterion in Neuron1 rules
 	#genSpikVec( confVec, rules )
 	
-	#generate list of list of form [ [spike/s, rule1 criteria1, rule1 criteria2, ...], ... ]
+	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 	spikRuleList = genSpikRuleList( confVec, rules )
 	#print spikRuleList
 	
-	#function to print neurons + rules criteria and total order
+	#function to print neurons + rules criterion and total order
 	#prNeurons( spikRuleList )
 
 	#generate a list of spikes + rules they are applicable to, in order
@@ -155,20 +161,54 @@ else :
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 
 	tmpList = genPotentialSpikrule( spikRuleList )
-	print tmpList
+	print ' tmpList = ', tmpList
 
 	# get min/max values in a list: min( list) and max( list )
 	
 	#generate all possible + valid 10 strings per neuron	
 	x = 0
+	# loop over total number of neurons ( x )
 	while x < neurNum :
-		print 'A'
+		print ' x = ', x #works - 
 		y = 1
+		#get the max number of elements of tmpList that satisfy the SRS criterion
+		
+		# loop over total number of rules ( y )
 		while y <= max( tmpList[ x ][ 1: ] ) :
-			print '\tB'
+			print '\ty = ', y			
+			# to get index of a certain value val in list, use index() e.g. x = list.index( val )
+			# replace with 1, the value of tmpList whose index is equal to y, 0 on ever other element
+			# find which index has value == x
+			# idx = tmpList.index( y )
+			#genSpikVecStr( tmpList, y )
+			z = 1
+			while z <= len( tmpList[ x ][ 1: ] ) :
+				print '\t\tz =', z #, range( len( tmpList[ x ] ) )
+#				print int( tmpList[ x ][ i ] )
+#				if int( tmpList[ x ][ i ] ) == y :
+#					print 'IF'
+#					tmpList[ x ][ i ] = '1'
+#				else :
+#					print 'ELSE'
+#					tmpList[ x ][ i ] = '0'
+				z += 1
+
+			#create function to implement the spike-rule selection (SRS) criterion
+			#QUESTION: how to implement
+			# 1) a( aa )+ ( a bit more elaborate reg ex)
+			# 2) a^2/a -> a	(reg ex not equal to spikes consumed)
+			# 3) a^2 -> a ???
+
+			#chkSRS (check SRS). Currently only type 3) are implemented here
+
+			# do something like tmp = [ '01', '10 ] tmp2 = [ '1' ] then tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
+			
+
+			#print '\tB' #works
 			y += 1 		
 		x += 1
 
+	
 ###
 #END of MAIN Program Flow
 ###
