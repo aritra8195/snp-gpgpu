@@ -213,7 +213,7 @@ def genNeurPairs( tmpList ) :
 		x += 1
 		tmp5[ y: ] = [ tmp6 ]
 	#delete excess/unnecessary lists generated from above, retain only the last generated list
-	#del tmp5[ x - 1 ]
+	del tmp5[ : x - 1 ]
 	#print 'tmp5 ', tmp5
 	return tmp5
 #END of function
