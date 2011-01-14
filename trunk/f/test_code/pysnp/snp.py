@@ -1,5 +1,6 @@
 import sys
 import os
+import math
 
 #TODOs:
 #load confVec c0 (Ck+1 several times), spikVec s0 (Program must determine this!),
@@ -323,14 +324,19 @@ else :
 #using all generated valid spiking vector files, 'feed' the files to the CUDA C program
 	
 	#print confVec
-	print concatConfVec( confVec )
+	sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) )
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
 	for spikVec in  allValidSpikVec[ 0 ] :
-		print spikVec		
+		Ck_1_str = concatConfVec( confVec ) # string concatenation of the configVec, Ck-1
+		#print spikVec		
 		#form the filenames of the Cks and the Sks
-		Ck = 'c_' + spikVec
-		#Sk = 's_' +  + '_' + spikVec
-		#os.popen
+		Ck = 'c_' + Ck_1_str + '_' + spikVec
+		Ck_1 = 'c_' + Ck_1_str
+		Sk = 's_' + spikVec
+		#print Ck, Sk #works!
+		cudaCmd = './snp-v12.26.10.1-emu ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
+		#print type ( cudaCmd )		
+		os.popen( cudaCmd )
 
 ###
 #END of MAIN Program Flow
