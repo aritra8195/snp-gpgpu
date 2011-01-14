@@ -1,4 +1,5 @@
 import sys
+import os
 
 #TODOs:
 #load confVec c0 (Ck+1 several times), spikVec s0 (Program must determine this!),
@@ -219,6 +220,30 @@ def genNeurPairs( tmpList ) :
 	return tmp5
 #END of function
 
+#START of function
+def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
+	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
+	fileStrLen = len( spikTransMat )
+	print ' length of spikTransMat is ', fileStrLen
+	for spikVec in  allValidSpikVec[ 0 ] :
+		x =  0
+		spikVecFile = 's_' + spikVec 
+		outfile = open( spikVecFile, "w" )
+		#create function to turn spikVec e.g. 10110 to a format 'understood' by C CUDA program, padded w/ 0s 
+		#and 1 white space apart. Total length of file must be same as spikTransMat (the matrix file)
+		outfile.write( spikTransMat[ 0 ] + ' ' + spikTransMat[ 1 ] )
+		for spik in  spikVec  :
+			outfile.write( ' ' + spik )
+		
+		while x < fileStrLen - len( spikVec ) - 2 :
+			#print '\t', x
+			outfile.write( ' ' + '0' )
+			x += 1
+		#outfile.write( spikVec )
+		outfile.close( )
+		print spikVecFile + ' file created and written into ' 
+#END of function
+
 ###
 #END of AUX functions
 ###
@@ -242,6 +267,7 @@ else :
 
 #proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
 #works for rules of type 3) only for now
+
 	#first, determine number of neurons
 	neurNum = getNeurNum( confVec )
 	print ' Number of neurons is %d ' % ( neurNum )
@@ -276,26 +302,12 @@ else :
 	print ' All valid 10 strings i.e. spiking vectors are ', allValidSpikVec
 	
 	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
-	fileStrLen = len( spikTransMat )
-	print ' length of spikTransMat is ', fileStrLen
-	for spikVec in  allValidSpikVec[ 0 ] :
-		x =  0
-		spikVecFile = 's_' + spikVec 
-		outfile = open( spikVecFile, "w" )
-		#create function to turn spikVec e.g. 10110 to format 'understood' by C CUDA program, padded w/ 0s 
-		#and 1 blank space apart. Total length of file must be same as spikTransMat (the matrix file)
-		outfile.write( spikTransMat[ 0 ] + ' ' + spikTransMat[ 1 ] )
-		for spik in  spikVec  :
-			outfile.write( ' ' + spik )
-		
-		while x < fileStrLen - len( spikVec ) - 2 :
-			#print '\t', x
-			outfile.write( ' ' + '0' )
-			x += 1
-		#outfile.write( spikVec )
-		outfile.close( )
-		print spikVecFile + ' file created and written into ' 
-#
+	createSpikVecFiles( spikTransMat, allValidSpikVec )
+
+
+#using all generated valid spiking vector files, 'feed' the files to the CUDA C program
+
+	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0')
 
 ###
 #END of MAIN Program Flow
