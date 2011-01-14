@@ -294,7 +294,7 @@ else :
 			x += 1
 		#outfile.write( spikVec )
 		outfile.close( )
-		print spikVecFile + ' file created and written into '
+		print spikVecFile + ' file created and written into ' 
 #
 
 ###
