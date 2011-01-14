@@ -244,6 +244,17 @@ def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 		print spikVecFile + ' file created and written into ' 
 #END of function
 
+#START of function
+def concatConfVec( lst ):
+	index = 2
+	confVec = ''
+	while index < len( lst[ 2: ] ):
+		if lst[ index ] != '0' :
+			confVec += lst[ index ]
+		index += 1
+	return confVec
+#END of function
+
 ###
 #END of AUX functions
 ###
@@ -260,10 +271,14 @@ if ( len( sys.argv ) < 4 ) :
 
 #if correct, proceed
 else :
-	confVec = importVec( sys.argv[ 1 ] )
+	confVecFile = sys.argv[ 1 ]
+	spikTransMatFile = sys.argv[ 2 ]
+	rulesFile = sys.argv[ 3 ]
+	
+	confVec = importVec( confVecFile )
 	#spikVec = importVec( sys.argv[ 2 ] )
-	spikTransMat  = importVec( sys.argv[ 2 ] )
-	rules = importVec( sys.argv[ 3 ] )
+	spikTransMat  = importVec( spikTransMatFile )
+	rules = importVec( rulesFile )
 
 #proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
 #works for rules of type 3) only for now
@@ -299,15 +314,23 @@ else :
 
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 	allValidSpikVec = genNeurPairs( tmpList )
-	print ' All valid 10 strings i.e. spiking vectors are ', allValidSpikVec
+	print ' All valid 10 strings i.e. spiking vectors are in allValidSpikVec =', allValidSpikVec
 	
 	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
 	createSpikVecFiles( spikTransMat, allValidSpikVec )
 
 
 #using all generated valid spiking vector files, 'feed' the files to the CUDA C program
-
-	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0')
+	
+	#print confVec
+	print concatConfVec( confVec )
+	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
+	for spikVec in  allValidSpikVec[ 0 ] :
+		print spikVec		
+		#form the filenames of the Cks and the Sks
+		Ck = 'c_' + spikVec
+		#Sk = 's_' +  + '_' + spikVec
+		#os.popen
 
 ###
 #END of MAIN Program Flow
