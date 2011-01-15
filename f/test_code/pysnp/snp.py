@@ -18,6 +18,7 @@ import math
 # (1)	CK = Ck-1 + Sk-1 * Msnp
 #
 
+
 ########################
 #START of AUX functions#
 ########################
@@ -263,10 +264,15 @@ def concatConfVec( lst ):
 #END of function
 
 #START of function
-def genCks( allValidSpikVec, sqrMatWidth ) :
+def genCks( allValidSpikVec, sqrMatWidth, configVec, allGenCk ) :
+	#using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
 	for spikVec in  allValidSpikVec[ 0 ] :
-		Ck_1_str = concatConfVec( confVec ) # string concatenation of the configVec, Ck-1
+		# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
+		# to configVec = 211 <string>
+		Ck_1_str = concatConfVec( configVec ) 
+		#write into total list of Cks
+		allGenCk = addTotalCk( allGenCk, Ck_1_str )
 		#print spikVec		
 		#form the filenames of the Cks and the Sks
 		Ck = 'c_' + Ck_1_str + '_' + spikVec
@@ -276,6 +282,16 @@ def genCks( allValidSpikVec, sqrMatWidth ) :
 		cudaCmd = './snp-v12.26.10.1-emu ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
 		#print type ( cudaCmd )		
 		os.popen( cudaCmd )
+
+#END of function
+
+#START of function
+def addTotalCk( allGenCk, Ck_1_str ) :
+	if Ck_1_str in allGenCk :
+		return allGenCk
+	else :
+		allGenCk += [ Ck_1_str ]
+		return allGenCk
 
 #END of function
 
@@ -354,8 +370,17 @@ else :
 #{3}#	using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
 #####	
 
+	#create total (not global) list of all generated Ck to prevent loops in the computation tree
+	allGenCk = [ ]	
+	
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
-	genCks( allValidSpikVec, sqrMatWidth )
+	genCks( allValidSpikVec, sqrMatWidth, confVec, allGenCk )
+
+#####
+#{4}#	From {3}, exhaustively repeat steps {1} to {3} on all generated Ck/c_xxxx
+#####
+
+	print 'All generated Cks are ', allGenCk
 
 ##########################
 #END of MAIN Program Flow#
