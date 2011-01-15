@@ -2,19 +2,25 @@ import sys
 import os
 import math
 
+#
 #TODOs:
 #load confVec c0 (Ck+1 several times), spikVec s0 (Program must determine this!),
 # spikTransMat M (once), and rules r (once)
 # works for rules of type 3) only for now
 #create function to implement the spike-rule selection (SRS) criterion
+#
 #QUESTION: how to implement
 # 1) a( aa )+ ( a bit more elaborate reg ex)
 # 2) a^2/a -> a	(reg ex not equal to spikes consumed)
 # 3) a^2 -> a ???
+#
+#CUDA C program evaluates
+# (1)	CK = Ck-1 + Sk-1 * Msnp
+#
 
-###
-#START of AUX functions
-###
+########################
+#START of AUX functions#
+########################
 
 #START of function to import vectors/matrices from file/s
 def importVec( filename ) :
@@ -256,15 +262,32 @@ def concatConfVec( lst ):
 	return confVec
 #END of function
 
-###
-#END of AUX functions
-###
+#START of function
+def genCks( allValidSpikVec, sqrMatWidth ) :
+	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
+	for spikVec in  allValidSpikVec[ 0 ] :
+		Ck_1_str = concatConfVec( confVec ) # string concatenation of the configVec, Ck-1
+		#print spikVec		
+		#form the filenames of the Cks and the Sks
+		Ck = 'c_' + Ck_1_str + '_' + spikVec
+		Ck_1 = 'c_' + Ck_1_str
+		Sk = 's_' + spikVec
+		#print Ck, Sk #works!
+		cudaCmd = './snp-v12.26.10.1-emu ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
+		#print type ( cudaCmd )		
+		os.popen( cudaCmd )
+
+#END of function
+
+######################
+#END of AUX functions#
+######################
 
 
 
-###
-#START of MAIN Program Flow
-###
+############################
+#START of MAIN Program Flow#
+############################
 
 #Check if correct number of cl args are entered
 if ( len( sys.argv ) < 4 ) :
@@ -275,14 +298,18 @@ else :
 	confVecFile = sys.argv[ 1 ]
 	spikTransMatFile = sys.argv[ 2 ]
 	rulesFile = sys.argv[ 3 ]
-	
+
+#####
+#{1}#	Input Ck (C0 initially), spiking transition matrix, rules
+#####	
 	confVec = importVec( confVecFile )
 	#spikVec = importVec( sys.argv[ 2 ] )
 	spikTransMat  = importVec( spikTransMatFile )
 	rules = importVec( rulesFile )
 
-#proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
-#works for rules of type 3) only for now
+#####
+#{2}#	proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
+#####	works for rules of type 3) only for now
 
 	#first, determine number of neurons
 	neurNum = getNeurNum( confVec )
@@ -320,25 +347,17 @@ else :
 	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
 	createSpikVecFiles( spikTransMat, allValidSpikVec )
 
-
-#using all generated valid spiking vector files, 'feed' the files to the CUDA C program
-	
 	#print confVec
 	sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) )
-	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
-	for spikVec in  allValidSpikVec[ 0 ] :
-		Ck_1_str = concatConfVec( confVec ) # string concatenation of the configVec, Ck-1
-		#print spikVec		
-		#form the filenames of the Cks and the Sks
-		Ck = 'c_' + Ck_1_str + '_' + spikVec
-		Ck_1 = 'c_' + Ck_1_str
-		Sk = 's_' + spikVec
-		#print Ck, Sk #works!
-		cudaCmd = './snp-v12.26.10.1-emu ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
-		#print type ( cudaCmd )		
-		os.popen( cudaCmd )
 
-###
-#END of MAIN Program Flow
-###
+#####
+#{3}#	using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
+#####	
+
+	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
+	genCks( allValidSpikVec, sqrMatWidth )
+
+##########################
+#END of MAIN Program Flow#
+##########################
 
