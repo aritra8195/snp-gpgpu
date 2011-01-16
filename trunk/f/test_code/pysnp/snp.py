@@ -396,6 +396,7 @@ else :
 	neurNum = getNeurNum( confVec )
 
 	#preliminary prints
+	print '\n********************************SN P system simulation run STARTS here********************************\n'
 	print '\nSpiking transition Matrix: '
 	printMatrix( spikTransMat )
 	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
@@ -509,6 +510,7 @@ else :
 		#if isConfVecZero( Ck ) or Ck == '214': #works
 		if isConfVecZero( Ck ) : #works
 			print '\tZero Ck/spikes or Stopping Criterion/Critera reached. Stop.'
+			print '\n********************************SN P system simulation run ENDS here***********************************\n'
 			allGenCkFilePtr.close( )
 			break
 		else :
@@ -575,6 +577,7 @@ else :
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
+	print '\n********************************SN P system simulation run ENDS here***********************************\n'
 		#addTotalCk( allGenCk, '214' )
 		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
 
