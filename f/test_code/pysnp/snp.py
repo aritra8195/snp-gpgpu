@@ -91,7 +91,7 @@ def genSpikRuleList( confVec, rules ) :
 def prNeurons( spikeRuleList ) :
 	v = w = 1
 	for neuron in spikRuleList :
-		print ' \nNeuron %d ' % ( v ) + ' rules criterion and total order '
+		print ' \nNeuron %d ' % ( v ) + ' rules criterion/criteria and total order '
 		for rule in neuron[ 1: ] :
 			print ' (%d) ' % ( w ) + rule
 			w += 1
@@ -148,7 +148,7 @@ def genNeurSpikVecStr( tmpList, neurNum ) :
 		#get the max number of elements of tmpList that satisfy the SRS criterion
 		tmp4 = [ ]
 		# loop over total number of rules ( y )
-		print 'x', x
+		#print 'x', x
 		if max( tmpList[ x ][ 1: ] ) == 0 :
 			maxConfSpikMatch = 1 
 		else :
@@ -260,7 +260,7 @@ def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 			x += 1
 		#outfile.write( spikVec )
 		outfile.close( )
-		print spikVecFile + ' file created and written into ' 
+		#print spikVecFile + ' file written into ' 
 #END of function
 
 #START of function
@@ -286,7 +286,7 @@ def createConfVecFiles( spikTransMat, Ck_vec ) :
 			x += 1
 		#outfile.write( spikVec )
 		outfile.close( )
-		print confVecFile + ' file created and written into ' 
+		#print confVecFile + ' file written into ' 
 #END of function
 
 #START of function
@@ -392,16 +392,22 @@ else :
 	spikTransMat  = importVec( spikTransMatFile )
 	rules = importVec( rulesFile )
 
+	#first, determine number of neurons
+	neurNum = getNeurNum( confVec )
+
 	#preliminary prints
+	print '\nSpiking transition Matrix: '
 	printMatrix( spikTransMat )
+	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
+	print '\nRules of the form a^n/a^m -> a^i or a^n ->a^i loaded:\n', rules
+	print '\nInitial configuration vector:\n', concatConfVec( confVec )
+
 
 #####
 #{2}#	proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
 #####	works for rules of type 3) only for now
 
-	#first, determine number of neurons
-	neurNum = getNeurNum( confVec )
-	print ' Number of neurons is %d ' % ( neurNum )
+	print '\nNumber of neurons for the SN P system is %d ' % ( neurNum )
 
 	#see if spikes in Neuron1 confVec match a rule criterion (SRS) in Neuron1 rules
 	#genSpikVec( confVec, rules )
@@ -411,7 +417,8 @@ else :
 	#print spikRuleList
 	
 	#function to print neurons + rules criterion and total order
-	#prNeurons( spikRuleList )
+	prNeurons( spikRuleList )
+	print '\n'
 
 	#generate a list of spikes + rules they are applicable to, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
@@ -429,10 +436,11 @@ else :
 
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 	allValidSpikVec = genNeurPairs( tmpList )
-	print ' All valid 10 strings i.e. spiking vectors are in allValidSpikVec =', allValidSpikVec
+	print ' All valid 10 strings i.e. spiking vectors: allValidSpikVec =', allValidSpikVec
 
-	#create total (not global) list of all generated Ck to prevent loops in the computation tree
-	allGenCk = [ ]	
+	#create total (not global) list of all generated Ck + Sk to prevent loops in the computation tree +extra file creation
+	allGenCk = [ ]
+	allGenSk = [ ]	
 	allGenCkFile = "allGenCkFile.txt"
 	#create allGenCkFile file w/o writing anything into it for now
 	totalCkFile = open( allGenCkFile, 'w' )
@@ -472,7 +480,7 @@ else :
 		addTotalCk( allGenCk, C_k )
 
 	print ' allGenCk ', allGenCk
-	print ' End of C0 \n**************************************** '
+	print ' End of C0 \n**\n**\n**'
 
 #####
 #{4}#	From {3}, exhaustively repeat steps {1} to {3} on all generated Ck/c_xxxx except C0
@@ -496,7 +504,7 @@ else :
 	strlen = len( Ck )
 	while Ck != '' :
 		Ck = Ck[ : strlen - 1 ]
-		print Ck
+		#print Ck
 		#no more spikes to be used by the P system
 		#if isConfVecZero( Ck ) or Ck == '214': #works
 		if isConfVecZero( Ck ) : #works
@@ -508,7 +516,7 @@ else :
 			#print ' allGenCk ', allGenCk
 			createConfVecFiles( spikTransMat, allGenCk )
 
-			print '\tspikVec', spikVec, 'Ck', Ck
+			print 'Current spikVec:', spikVec, ' and Ck:', Ck
 			#build filename string for the Ck to be loaded from file
 			strn = 'c_' +  Ck
 
@@ -518,7 +526,7 @@ else :
 
 			#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 			spikRuleList = genSpikRuleList( C_k_vec, rules )
-			print '\tList of lists w/ spike + rule criterion, spikRuleList ', spikRuleList, ' for Ck ', C_k
+			print '\tList of lists w/ spike + rule criterion, spikRuleList = ', spikRuleList, ' for Ck = ', C_k
 
 			#generate a list of spikes + rules they are applicable to, in order
 			#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
@@ -542,7 +550,7 @@ else :
 			sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) )
 
 			#write all valid config vectors onto each of their own files e.g. given 211, create file c_211 and write 211 in it
-			print ' allGenCk ', allGenCk
+			print ' All currently generated config vectors/Cks are allGenCk = ', allGenCk
 			createConfVecFiles( spikTransMat, allGenCk )
 
 			#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
@@ -555,15 +563,15 @@ else :
 				#import/load Cks generated by Ck-1 from files
 				C_k_vec = importVec( strn )
 				C_k = concatConfVec( C_k_vec )
-				print '\t\t imported strn ', strn, ' and concat it to C_k ', C_k
+				print '\t\tLoaded file ', strn, ' and concat it to C_k ', C_k
 				#add the generated Ck-1 to the total list of generated Cks
 				addTotalCk( allGenCk, C_k )
 
-			print '\t\t generated Ck from Sk-1 of ', spikVec, 'and Ck-1 of', Ck, 'is', C_k
+			print '\t\tGenerated from Sk-1 = ', spikVec, 'and Ck-1 =', Ck, 'is Ck = ', C_k
 			addTotalCk( allGenCk, C_k )
 
 			print '\tAll generated Cks are allGenCk =', allGenCk	
-			print '**************************************** '		
+			print '\n**\n**\n**'		
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
