@@ -315,17 +315,21 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 		Sk = 's_' + spikVec
 		#print Ck, Sk #works!
 		cudaCmd = './snp-v12.26.10.1-emu ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
-		print  cudaCmd 		
+		#print  cudaCmd 		
 		os.popen( cudaCmd )
 
 #END of function
 
 #START of function
+#add a Ck <type 'str'> into total list of generated Cks + write it into file \n separated
 def addTotalCk( allGenCk, Ck_1_str ) :
 	if Ck_1_str in allGenCk :
 		return allGenCk
 	else :
 		allGenCk += [ Ck_1_str ]
+		totalCkFile = open( allGenCkFile, 'a' )
+		totalCkFile.write( Ck_1_str + '\n' )
+		totalCkFile.close( )
 		return allGenCk
 
 #END of function
@@ -406,6 +410,10 @@ else :
 
 	#create total (not global) list of all generated Ck to prevent loops in the computation tree
 	allGenCk = [ ]	
+	allGenCkFile = "allGenCkFile.txt"
+	#create allGenCkFile file w/o writing anything into it for now
+	totalCkFile = open( allGenCkFile, 'w' )
+	totalCkFile.close( )
 
 	# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
 	# to configVec = 211 <string>
@@ -425,7 +433,6 @@ else :
 #####	
 
 	#write all valid config vectors onto each of their own files e.g. given 211, create file c_211 and write 211 in it
-	print ' allGenCk ', allGenCk
 	createConfVecFiles( spikTransMat, allGenCk )
 	
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
@@ -440,6 +447,8 @@ else :
 		C_k = concatConfVec( C_k_vec )
 		#add the generated Ck-1 to the total list of generated Cks
 		addTotalCk( allGenCk, C_k )
+
+	print ' allGenCk ', allGenCk
 	print ' End of C0 \n**************************************** '
 
 #####
@@ -449,6 +458,7 @@ else :
 	#Ck = confVec
 	print ' initial total Ck list is ', allGenCk
 	#exhaustively loop through total Ck list/list of all the generated Ck except C0
+	#x = 0
 	for Ck in allGenCk[ 1: ] :
 		print Ck
 		#no more spikes to be used by the P system
@@ -514,7 +524,7 @@ else :
 			print '\t\t generated Ck from Sk-1 of ', spikVec, 'and Ck-1 of', Ck, 'is', C_k
 			addTotalCk( allGenCk, C_k )
 
-			print '\tAll generated Cks are ', allGenCk	
+			print '\tAll generated Cks are allGenCk =', allGenCk	
 			print '**************************************** '				
 		#addTotalCk( allGenCk, '214' )
 		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
