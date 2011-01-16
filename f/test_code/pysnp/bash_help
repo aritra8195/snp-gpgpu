@@ -1,3 +1,5 @@
+//printing multiple files
 for file in c_212_*; do cat $file && echo ' '; done
 
-
+//stdout output + to a file
+python snp.py c0 M r | tee pysnp-output.tx

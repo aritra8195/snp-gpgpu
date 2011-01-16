@@ -577,7 +577,7 @@ else :
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
-	print '\n********************************SN P system simulation run ENDS here***********************************\n'
+	print '\nNo more Cks to use. Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
 		#addTotalCk( allGenCk, '214' )
 		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
 
