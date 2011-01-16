@@ -12,6 +12,7 @@ import math
 # spikTransMat M (once), and rules r (once)
 # 2. works for rules of type 3) only for now
 # 3. Whenever both types are usable, spiking rules are preferred over forgetting rules
+# 4. Loops over vector and matrix lists start at index 2 (1st two indices have the dimensions of the Msnp )
 #
 #QUESTION: how to implement
 # 1) a( aa )+ ( a bit more elaborate reg ex)
@@ -69,7 +70,7 @@ def genSpikRuleList( confVec, rules ) :
 	w = 0
 	#print spikRuleList
 	for conf in confVec[ 2 : 2 + neurNum ] : #loop starts @ index 2
-		spikRuleList.append( [ conf ] ) #append first conf for first neuron
+		spikRuleList.append( [ conf ] ) #append first conf/spike for first neuron
 		for rule in rules[ w: ] :
 			if rule == '$' :
 				w += 1
@@ -79,8 +80,8 @@ def genSpikRuleList( confVec, rules ) :
 				spikRuleList[ y ].append( rule ) #append rules to neuron's spike in the list
 				#print spikRuleList
 			w += 1
-		if conf == '0' :
-			break
+		#if conf == '0' :
+		#	break
 		y += 1
 	return spikRuleList
 #END of function
@@ -116,7 +117,7 @@ def genPotentialSpikrule( spikRuleList ) :
 		#print spike
 		for rule in neuron[ 1: ] :
 			#print int( rule ) + spike
-			# currently the SRS
+			# currently the SRS for rules of type 1) for now...
 			if int( rule ) <= int( spike ) :
 				#print ' A %d %d ' % ( x, y )
 				#print tmpList
@@ -143,10 +144,11 @@ def genNeurSpikVecStr( tmpList, neurNum ) :
 	tmp3 = [ ]
 	# loop over total number of neurons ( x )
 	while x < neurNum :
-		y = 1 #1
+		y = 1 
 		#get the max number of elements of tmpList that satisfy the SRS criterion
 		tmp4 = [ ]
 		# loop over total number of rules ( y )
+		print 'x', x
 		if max( tmpList[ x ][ 1: ] ) == 0 :
 			maxConfSpikMatch = 1 
 		else :
@@ -476,8 +478,9 @@ else :
 		Ck = Ck[ : strlen - 1 ]
 		print Ck
 		#no more spikes to be used by the P system
-		if isConfVecZero( Ck ) or Ck == '214':
-			print '\tZero Ck/spikes reached. Stop.'
+		#if isConfVecZero( Ck ) or Ck == '214': #works
+		if isConfVecZero( Ck ) : #works
+			print '\tZero Ck/spikes or Stopping Criterion/Critera reached. Stop.'
 			allGenCkFilePtr.close( )
 			break
 		else :
