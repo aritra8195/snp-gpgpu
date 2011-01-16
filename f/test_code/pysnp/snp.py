@@ -347,6 +347,23 @@ def isConfVecZero( Ck ) :
 	return True
 #END of function
 
+#START of function
+def printMatrix( spikTransMat ) :
+#takes as input a matrix in row-major format of <type 'list'> and prints the matrix 'nicely'
+	#get dimensions of matrix
+	matRows = int( spikTransMat[ 0 ] )
+	matCols = int( spikTransMat[ 1 ] )
+	x = 0
+	while x < matRows :
+		y = 2
+		matRowElms = ' '
+		while y < matCols :
+			matRowElms += spikTransMat[ x * matCols + y ] + ' '
+			y += 1
+		print matRowElms
+		x += 1
+#END of function
+
 ######################
 #END of AUX functions#
 ######################
@@ -374,6 +391,9 @@ else :
 	#spikVec = importVec( sys.argv[ 2 ] )
 	spikTransMat  = importVec( spikTransMatFile )
 	rules = importVec( rulesFile )
+
+	#preliminary prints
+	printMatrix( spikTransMat )
 
 #####
 #{2}#	proceed to determining spikVec from loaded rules + confVec, then invoke CUDA C code
