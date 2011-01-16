@@ -330,6 +330,7 @@ def addTotalCk( allGenCk, Ck_1_str ) :
 		totalCkFile = open( allGenCkFile, 'a' )
 		totalCkFile.write( Ck_1_str + '\n' )
 		totalCkFile.close( )
+		print 'Ck ', Ck_1_str, 'was written into file', allGenCkFile
 		return allGenCk
 
 #END of function
@@ -458,12 +459,26 @@ else :
 	#Ck = confVec
 	print ' initial total Ck list is ', allGenCk
 	#exhaustively loop through total Ck list/list of all the generated Ck except C0
-	#x = 0
-	for Ck in allGenCk[ 1: ] :
+
+#infile = open( 'newline', 'rb' )
+#Ck = infile.readline( )
+#strlen = len( Ck )
+#while Ck != '' :
+#	print Ck[ : strlen - 1 ]
+#	Ck = infile.readline( )
+#infile.close( )
+
+	allGenCkFilePtr = open( allGenCkFile, 'rb' )
+	Ck = allGenCkFilePtr.readline( )	
+	Ck = allGenCkFilePtr.readline( )	
+	strlen = len( Ck )
+	while Ck != '' :
+		Ck = Ck[ : strlen - 1 ]
 		print Ck
 		#no more spikes to be used by the P system
 		if isConfVecZero( Ck ) or Ck == '214':
 			print '\tZero Ck/spikes reached. Stop.'
+			allGenCkFilePtr.close( )
 			break
 		else :
 			#write all valid config vectors onto each of their own files e.g. given 211, create file c_211 and write 211 in it
@@ -525,7 +540,10 @@ else :
 			addTotalCk( allGenCk, C_k )
 
 			print '\tAll generated Cks are allGenCk =', allGenCk	
-			print '**************************************** '				
+			print '**************************************** '		
+
+			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
+			Ck = allGenCkFilePtr.readline( )		
 		#addTotalCk( allGenCk, '214' )
 		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
 
