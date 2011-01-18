@@ -144,18 +144,18 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, ch
 
 	int *matA = ( int * )malloc( size );//spikVec
 	loadMatrixFile( filename1, matA, Width, Width );
-//	printf( " \n%s after loading from file: \n", filename1 );
-//	printMatrix( matA, Width, Width );
+	printf( " \n%s after loading from file: \n", filename1 );
+	printMatrix( matA, Width, Width );
 			
 	int *matB = ( int * )malloc( size );//spikTransMat
 	loadMatrixFile( filename2, matB, Width, Width );		
-//	printf( " \n%s after loading from file: \n", filename2 );
-//	printMatrix( matB, Width, Width );
+	printf( " \n%s after loading from file: \n", filename2 );
+	printMatrix( matB, Width, Width );
 
 	int *matD = ( int * )malloc( size );//confVec
 	loadMatrixFile( filename0, matD, Width, Width );		
-//	printf( " \n%s after loading from file: \n", filename0 );
-//	printMatrix( matD, Width, Width );
+	printf( " \n%s after loading from file: \n", filename0 );
+	printMatrix( matD, Width, Width );
 			
 	//assumes a square matrix
 	int *matC = ( int * )malloc( size );
@@ -181,15 +181,15 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, ch
 	MatrixMulKernel<<< dimGrid, dimBlock >>>( Md, Nd, Pd, Width );
 
 //	cudaMemcpy( matE, Qd, size, cudaMemcpyDeviceToHost );
-//	printf( " \n%s * %s : \n", filename1, filename2 );
-//	printMatrix( matC, Width, Width );
+	printf( " \n%s * %s : \n", filename1, filename2 );
+	printMatrix( matC, Width, Width );
 
 	// Ck+1 = confVec + Ck => Qd = Od + Pd
 	MatrixAddKernel<<< dimGrid, dimBlock >>>( Od, Pd, Qd, Width );
 
 	cudaMemcpy( matE, Qd, size, cudaMemcpyDeviceToHost );
-//	printf( " \n%s + %s * %s : \n", filename0, filename1, filename2 );
-//	printMatrix( matE, Width, Width );
+	printf( " \n%s + %s * %s : \n", filename0, filename1, filename2 );
+	printMatrix( matE, Width, Width );
 
 	writeMatFile( Cnext, matE, Width );
 
