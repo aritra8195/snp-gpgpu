@@ -89,11 +89,10 @@ Francis George Cabarle \\
 % 2nd. author
 \alignauthor
 Henry Adorna \\
-       \affaddr{Institute for Clarity in Documentation}\\
-       \affaddr{P.O. Box 1212}\\
-       \affaddr{Dublin, Ohio 43017-6221}\\
-       \email{webmaster@marysville-ohio.com}
-       \email{larst@affiliation.org}
+       \affaddr{ University of the Philippines Diliman }\\
+       \affaddr{ Department of Computer Science }\\
+       \affaddr{ Algorithms and Complexity Laboratory }\\
+       \email{hnadorna@dcs.upd.edu.ph}
 %\and  % use '\and' if you need 'another row' of author names
 }
 % There's nothing stopping you putting the seventh, eighth, etc.
@@ -140,61 +139,31 @@ The design of the simulator, including the algorithms deviced, architectural con
 
 \section{Spiking neural p systems}
 
-Typically, the body of a paper is organized
-into a hierarchical structure, with numbered or unnumbered
+\subsection{Computing with SNP systems}
+The type of SNP systems focused on by this paper are those without delays i.e. those that spike or transmit signals the moment they are able to do so. An SNP system of this type is of the form:
+	\begin{center}
+	$\Pi = (\{b,c\},e, [_1[_2]_2]_1, \{cb^2\}, \emptyset,$ 
+	$\{r_{11}, r_{12}\}, \{r_{11}'\}, \{r_{21}\}, \emptyset, 1\})$
+	\end{center}
+where
+	\begin{itemize}
+	\item $r_{11}: c \rightarrow bbcc$
+	\item $r_{12}: c \rightarrow e$
+	\item $r_{11}': (ce,in)$
+	\item $r_{21}: c \rightarrow c$
+	\end{itemize}
 
+%\subsection{Type Changes and {\subsecit Special} Characters}
+%of\footnote{A fourth, and last, footnote.}
 
-Because the entire article is contained in
-the \textbf{document} environment, you can indicate the
-start of a new paragraph with a blank line in your
-input file; that is why this sentence forms a separate paragraph.
+%\subsection{Math Equations}
+%You may want to display math equations in three distinct styles: the three are discussed in the next sections.
 
-\subsection{Type Changes and {\subsecit Special} Characters}
-We have already seen several typeface changes in this sample.  You
-can indicate italicized words or phrases in your text with
-document class file. Take care with the use
-of\footnote{A fourth, and last, footnote.}
-the text that is to be in the different typeface.
+%\subsubsection{Inline (In-text) Equations}
+%A formula that appears in the running text is called an
 
-You can use whatever symbols, accented characters, or
-User's Guide}\cite{Lamport:LaTeX}.
-
-\subsection{Math Equations}
-You may want to display math equations in three distinct styles:
-the three are discussed in the next sections.
-
-\subsubsection{Inline (In-text) Equations}
-A formula that appears in the running text is called an
-inline or in-text formula.  It is produced by the
-\textbf{math} environment, which can be
-invoked with the usual \texttt{{\char'134}begin. . .{\char'134}end}
-construction or with the short form \texttt{\$. . .\$}. You
-can use any of the symbols and structures,
-from $\alpha$ to $\omega$, available in
-\LaTeX\cite{Lamport:LaTeX}; this section will simply show a
-few examples of in-text equations in context. Notice how
-this equation: \begin{math}\lim_{n\rightarrow \infty}x=0\end{math},
-set here in in-line math style, looks slightly different when
-set in display style.  (See next section).
-
-\subsubsection{Display Equations}
-A numbered display equation -- one set off by vertical space
-from the text and centered horizontally -- is produced
-by the \textbf{equation} environment. An unnumbered display
-equation is produced by the \textbf{displaymath} environment.
-
-Again, in either environment, you can use any of the symbols
-and structures available in \LaTeX; this section will just
-give a couple of examples of display equations in context.
-First, consider the equation, shown as an inline equation above:
-\begin{equation}\lim_{n\rightarrow \infty}x=0\end{equation}
-Notice how it is formatted somewhat differently in
-the \textbf{displaymath}
-environment.  Now, we'll enter an unnumbered equation:
-\begin{displaymath}\sum_{i=0}^{\infty} x + 1\end{displaymath}
-and follow it with another numbered equation:
-\begin{equation}\sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f\end{equation}
-just to demonstrate \LaTeX's able handling of numbering.
+%\subsubsection{Display Equations}
+%A numbered display equation -- one set off by vertical space
 
 \subsection{Citations}
 Citations to articles \cite{bowman:reasoning, clark:pct, braams:babel, herlihy:methodology},
