@@ -415,7 +415,7 @@ else :
 	printMatrix( spikTransMat )
 	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
 	print '\nRules of the form a^n/a^m -> a or a^n ->a loaded:\n', rules
-	print '\nInitial configuration vector:\n', confVec, concatConfVec( confVec )
+	print '\nInitial configuration vector:\n', confVec, '\nor in dash delimited format:', concatConfVec( confVec )
 
 
 #####
