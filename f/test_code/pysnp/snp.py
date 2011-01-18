@@ -23,6 +23,8 @@ import math
 # (1)	CK = Ck-1 + Sk-1 * Msnp
 #
 
+#the compiled CUDA C file evaluation equation (1)
+cudaBin = 'snp-cuda'
 
 ########################
 #START of AUX functions#
@@ -294,8 +296,8 @@ def concatConfVec( lst ):
 	index = 2
 	confVec = ''
 	while index <= neurNum + 1 :
-#		if lst[ index ] != '0' :
-		confVec += lst[ index ]
+		print lst[ index ]
+		confVec += str( lst[ index ] )
 		index += 1
 	return confVec
 #END of function
@@ -316,8 +318,8 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 		Ck_1 = 'c_' + Ck_1_str
 		Sk = 's_' + spikVec
 		#print Ck, Sk #works!
-		cudaCmd = './snp-v12.26.10.1-emu ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
-		#print  cudaCmd 		
+		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
+		print  cudaCmd 		
 		os.popen( cudaCmd )
 
 #END of function
@@ -401,7 +403,7 @@ else :
 	printMatrix( spikTransMat )
 	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
 	print '\nRules of the form a^n/a^m -> a^i or a^n ->a^i loaded:\n', rules
-	print '\nInitial configuration vector:\n', concatConfVec( confVec )
+	print '\nInitial configuration vector:\n', confVec, concatConfVec( confVec )
 
 
 #####
@@ -577,7 +579,7 @@ else :
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
-	print '\nNo more Cks to use. Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
+	print '\nNo more Cks to use (loop otherwise). Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
 		#addTotalCk( allGenCk, '214' )
 		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
 
