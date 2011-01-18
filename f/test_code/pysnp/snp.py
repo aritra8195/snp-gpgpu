@@ -6,6 +6,8 @@ import math
 #TODOs:
 # 1. create function to improve implementation of the spike-rule selection (SRS) criterion
 # rather than just rules of type 3)
+# 2. What about Ck values/spikes that are greater than 9, since Cks are concat together as a single string
+# i.e. num of neurons = 3, Ck = (2,1,10) which is 2110 in concat form
 #
 #NOTES:
 # 1.load confVec c0 (Ck+1 several times), spikVec s0 (Program must determine this!),
@@ -67,10 +69,14 @@ def genSpikVec( confVec, rules  ) :
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 def genSpikRuleList( confVec, rules ) :
 	spikRuleList = [ ]
-	y = 0	
+	x = y = 0	
 	z = 1
 	w = 0
-	#print spikRuleList
+	for elem in confVec :
+		if elem == '-' :
+			del confVec[ x ]
+		x += 1
+	print 'In genSpikRuleList() confVec =', confVec
 	for conf in confVec[ 2 : 2 + neurNum ] : #loop starts @ index 2
 		spikRuleList.append( [ conf ] ) #append first conf/spike for first neuron
 		for rule in rules[ w: ] :
@@ -79,7 +85,7 @@ def genSpikRuleList( confVec, rules ) :
 				break
 			else :
 				#print z
-				spikRuleList[ y ].append( rule ) #append rules to neuron's spike in the list
+				spikRuleList[ y ].append( rule ) #append rule criteria to neuron's spike/s in the list
 				#print spikRuleList
 			w += 1
 		#if conf == '0' :
@@ -268,7 +274,7 @@ def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 #START of function
 def createConfVecFiles( spikTransMat, Ck_vec ) :
 #write the Ck string onto a file in the same format as the input matrix file
-# TODO: create a list of lists to add info whether a given Ck file has been created already
+# TODO: create a list of lists to add info whether a given Ck file has been created already (Done, but using an external text file)
  
 	fileStrLen = len( spikTransMat )
 	#print ' length of spikTransMat is ', fileStrLen
@@ -280,7 +286,8 @@ def createConfVecFiles( spikTransMat, Ck_vec ) :
 		#and 1 white space apart. Total length of file must be same as spikTransMat (the matrix file)
 		outfile.write( spikTransMat[ 0 ] + ' ' + spikTransMat[ 1 ] )
 		for C in  Ck  :
-			outfile.write( ' ' + C )
+			if C != '-' :
+				outfile.write( ' ' + C )
 		
 		while x < fileStrLen - len( Ck ) - 2 :
 			#print '\t', x
@@ -293,11 +300,13 @@ def createConfVecFiles( spikTransMat, Ck_vec ) :
 
 #START of function
 def concatConfVec( lst ):
-	index = 2
+	index = 3
 	confVec = ''
+	#append first Ck element/spike before concatenating dashes
+	confVec += str( lst[ 2 ] )
 	while index <= neurNum + 1 :
-		print lst[ index ]
-		confVec += str( lst[ index ] )
+		confVec += '-' + str( lst[ index ] )
+		#print confVec
 		index += 1
 	return confVec
 #END of function
@@ -310,7 +319,7 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 		# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
 		# to configVec = 211 <string>
 		Ck_1_str = configVec_str 
-		#write into total list of Cks
+		#write into total list of Ckspri
 		#allGenCk = addTotalCk( allGenCk, Ck_1_str )
 		#print spikVec		
 		#form the filenames of the Cks and the Sks
@@ -330,6 +339,7 @@ def addTotalCk( allGenCk, Ck_1_str ) :
 	if Ck_1_str in allGenCk :
 		return allGenCk
 	else :
+#		Ck_1_str = Ck_1_str.replace( '-', '')
 		allGenCk += [ Ck_1_str ]
 		totalCkFile = open( allGenCkFile, 'a' )
 		totalCkFile.write( Ck_1_str + '\n' )
@@ -344,8 +354,9 @@ def addTotalCk( allGenCk, Ck_1_str ) :
 #works for strings 
 def isConfVecZero( Ck ) :
 	for x in Ck :
-		if int( x ) != 0 :
-			return False
+		if x != '-' :
+			if int( x ) != 0 :
+				return False
 	return True
 #END of function
 
@@ -417,7 +428,7 @@ else :
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 	spikRuleList = genSpikRuleList( confVec, rules )
-	#print spikRuleList
+	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
 	prNeurons( spikRuleList )
@@ -427,7 +438,7 @@ else :
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 	tmpList = genPotentialSpikrule( spikRuleList )
-	#print ' tmpList = ', tmpList
+	print 'genPotentialSpikrule(): tmpList = ', tmpList
 
 	# get min/max values in a list: min( list) and max( list )
 	
@@ -435,11 +446,11 @@ else :
 	# if tmp = [ '01', '10 ], tmp2 = [ '1' ], returns tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
 	tmpList = genNeurSpikVecStr( tmpList, neurNum )
 
-	print ' tmpList = ', tmpList
+	print 'genNeurSpikVecStr(): tmpList = ', tmpList
 
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 	allValidSpikVec = genNeurPairs( tmpList )
-	print ' All valid 10 strings i.e. spiking vectors: allValidSpikVec =', allValidSpikVec
+	print 'genNeurPairs(): allValidSpikVec =', allValidSpikVec
 
 	#create total (not global) list of all generated Ck + Sk to prevent loops in the computation tree +extra file creation
 	allGenCk = [ ]
@@ -504,14 +515,16 @@ else :
 	allGenCkFilePtr = open( allGenCkFile, 'rb' )
 	Ck = allGenCkFilePtr.readline( )	
 	Ck = allGenCkFilePtr.readline( )	
-	strlen = len( Ck )
+	strlen = len( Ck.replace( '-', '') )
 	while Ck != '' :
-		Ck = Ck[ : strlen - 1 ]
-		#print Ck
+		print 'Current spikVec:', spikVec, ' and Ck:', Ck
+		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
+		Ck = Ck.replace( '\n', '' )
+		print 'Ck =', Ck
 		#no more spikes to be used by the P system
 		#if isConfVecZero( Ck ) or Ck == '214': #works
 		if isConfVecZero( Ck ) : #works
-			print '\tZero Ck/spikes or Stopping Criterion/Critera reached. Stop.'
+			print '\tZero Ck/spikes. Stop.'
 			print '\n********************************SN P system simulation run ENDS here***********************************\n'
 			allGenCkFilePtr.close( )
 			break
@@ -520,10 +533,8 @@ else :
 			#print ' allGenCk ', allGenCk
 			createConfVecFiles( spikTransMat, allGenCk )
 
-			print 'Current spikVec:', spikVec, ' and Ck:', Ck
 			#build filename string for the Ck to be loaded from file
 			strn = 'c_' +  Ck
-
 			#import/load Cks generated by Ck-1 from files
 			C_k_vec = importVec( strn )
 			C_k = concatConfVec( C_k_vec )
@@ -567,7 +578,7 @@ else :
 				#import/load Cks generated by Ck-1 from files
 				C_k_vec = importVec( strn )
 				C_k = concatConfVec( C_k_vec )
-				print '\t\tLoaded file ', strn, ' and concat it to C_k ', C_k
+				print '\t\tLoaded file ', strn, ' and concatenated its contents into to C_k ', C_k
 				#add the generated Ck-1 to the total list of generated Cks
 				addTotalCk( allGenCk, C_k )
 
