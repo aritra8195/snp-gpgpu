@@ -141,7 +141,35 @@ The design of the simulator, including the algorithms deviced, architectural con
 
 \subsection{Computing with SNP systems}
 The type of SNP systems focused on by this paper are those without delays i.e. those that spike or transmit signals the moment they are able to do so. An SNP system of this type is of the form:
+\begin{definition} An SN P system without delay, of degree $m\geq 1$,
+is a construct of the form
+$$\Pi=(O,\sigma_1,\ldots, \sigma_m, syn, in, out),$$
+where:
+\begin{enumerate}
+\item[1.] $O=\{a\}$ is the singleton alphabet ($a$ is called spike);
 
+\item[2.] $\sigma_1,\ldots, \sigma_m$ are neurons, of the form
+$$\sigma_{i}=(n_i, R_i),1\leq i\leq m,$$
+where:
+\begin{enumerate}
+\item[a)] $n_i\geq 0$ is the initial number of spikes contained in $\sigma_i$;
+
+\item[b)] $R_i$ is a finite set of rules of the following two forms:
+\begin{enumerate}
+\item[(1)]$E/a^c \rightarrow a^p$, where $E$ is a regular expression
+over $a$, and $c\geq 1$, $p\geq 1$, with the restriction $c\geq p$;
+\item[(2)]$a^s\rightarrow \lambda$, for $s\geq 1$, with the
+restriction that for each rule $E/a^c\rightarrow a^p$ of type (1)
+from $R_i$, $a^s\notin L(E)$;
+\end{enumerate}
+\end{enumerate}
+\item[3.] $syn= \{ (i,j)\, |\, 1\leq i,j \leq m, \, i\neq j\, \}$ (synapses
+between neurons);
+
+\item[4.] $in, out\in \{1,2,\ldots, m\}$ indicate the input and output neurons, respectively.
+\end{enumerate}
+
+\end{definition}
 %Π =O , σ 1 , ... , σ m , syn , σ inp , σ outp (2a)
 
 (2a) represents an SNP system without delay of degree $m \ge 1$, that is, with $m$ neurons, where
@@ -426,6 +454,8 @@ The authors are supported by the \textit{ERDT Project}. They also wish to acknow
 \bibitem{cudapage} NVIDIA CUDA developers resources page: tools, presentations, whitepapers. (2010, Jan) [Online]. Available: {\tt http://developer.nvidia.com/page/home.html }.
 
 %ADD matrix on parallel computers book citation
+
+%ADD figure citation
 
 \end{thebibliography}
 

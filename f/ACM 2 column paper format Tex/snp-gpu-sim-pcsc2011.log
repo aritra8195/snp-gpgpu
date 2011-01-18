@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  18 JAN 2011 13:57
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  19 JAN 2011 03:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -221,49 +221,75 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 112.
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 
-LaTeX Warning: Citation `bowman:reasoning' on page \thepage  undefined on input
- line 163.
+! LaTeX Error: Environment definition undefined.
 
-
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 1
-63.
-
-
-LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
-e 163.
-
-
-LaTeX Warning: Citation `herlihy:methodology' on page \thepage  undefined on in
-put line 163.
-
-
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 1
-65.
-
-
-LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 165.
-
-
-LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 165.
-
-LaTeX Font Info:    Try loading font information for T1+aett on input line 171.
-
-(/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
-File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-)
-
-LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 171.
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.144 \begin{definition}
+                         An SN P system without delay, of degree $m\geq 1$,
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
 
+! LaTeX Error: \begin{document} ended by \end{definition}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.172 \end{definition}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: Citation `bowman:reasoning' on page \thepage  undefined on input
+ line 191.
+
+
+LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 1
+91.
+
+
+LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
+e 191.
+
+
+LaTeX Warning: Citation `herlihy:methodology' on page \thepage  undefined on in
+put line 191.
+
+
+LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 1
+93.
+
+
+LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
+ine 193.
+
+
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 182.
+ne 193.
+
+LaTeX Font Info:    Try loading font information for T1+aett on input line 199.
+
+(/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+)
+
+LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
+ne 199.
+
+
+LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
+ne 210.
 
 
 ! LaTeX Error: Unknown graphics extension: .eps.
@@ -272,9 +298,11 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.257 \epsfig{file=fly.eps}
+l.285 \epsfig{file=fly.eps}
                            
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 
 ! LaTeX Error: Unknown graphics extension: .eps.
 
@@ -282,21 +310,25 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.263 \epsfig{file=fly.eps, height=1in, width=1in}
+l.291 \epsfig{file=fly.eps, height=1in, width=1in}
                                                   
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 
 LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
-(Font)              using `T1/aett/m/n' instead on input line 265.
+(Font)              using `T1/aett/m/n' instead on input line 293.
 
 \c@theorem=\count114
 
-Underfull \hbox (badness 1603) in paragraph at lines 289--293
+Underfull \hbox (badness 1603) in paragraph at lines 317--321
 []\T1/aer/m/n/9 This uses the \T1/aer/bx/n/9 the-o-rem \T1/aer/m/n/9 en-vi-ron-
 ment, cre-ated by the
  []
 
+[2]
 \c@definition=\count115
+
 
 ! LaTeX Error: Unknown graphics extension: .ps.
 
@@ -304,9 +336,11 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.309 ...{file=rosette.ps, height=1in, width=1in,}
+l.337 ...{file=rosette.ps, height=1in, width=1in,}
                                                   
-? 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 
 ! LaTeX Error: Unknown graphics extension: .eps.
 
@@ -314,11 +348,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.320 \epsfig{file=flies.eps}
+l.348 \epsfig{file=flies.eps}
                              
-? 
-[2]
-Overfull \hbox (15.60826pt too wide) detected at line 345
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (15.60826pt too wide) detected at line 373
 \OML/cmm/m/it/9 l \OT1/cmr/m/n/9 = [] \OML/cmm/m/it/9 f\OT1/cmr/m/n/9 (\OML/cmm
 /m/it/9 x\OT1/cmr/m/n/9 ) = [] [] = [] \OML/cmm/m/it/9 g\OT1/cmr/m/n/9 (\OML/cm
 m/m/it/9 x\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9 ^^A [] [] \OT1/cmr/m/n/9 = 0 \OMS/cm
@@ -327,9 +363,11 @@ sy/m/n/9 ^^A \OML/cmm/m/it/9 L \OT1/cmr/m/n/9 = 0\OML/cmm/m/it/9 ;
 
 
 LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 355.
+ine 383.
 
-[3] (./snp-gpu-sim-pcsc2011.aux)
+[3] [4
+
+] (./snp-gpu-sim-pcsc2011.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -337,7 +375,7 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Here is how much of TeX's memory you used:
  2261 strings out of 495061
  25619 string characters out of 1182621
- 84107 words of memory out of 3000000
+ 85107 words of memory out of 3000000
  5389 multiletter control sequences out of 15000+50000
  57450 words of font info for 81 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
@@ -357,9 +395,9 @@ r/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-tex
 live/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/
 urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pf
 b>
-Output written on snp-gpu-sim-pcsc2011.pdf (3 pages, 197408 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (4 pages, 205006 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
+ 80 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
