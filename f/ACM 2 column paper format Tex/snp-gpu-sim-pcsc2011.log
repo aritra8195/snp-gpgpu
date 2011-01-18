@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  18 JAN 2011 12:56
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  18 JAN 2011 13:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -220,78 +220,70 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 113.
 (/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
+Underfull \vbox (badness 5924) has occurred while \output is active []
 
-LaTeX Warning: Citation `adorna' on page \thepage  undefined on input line 137.
-
-
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
 ! Too many }'s.
-l.159 User's Guide}
+l.160 User's Guide}
                    \cite{Lamport:LaTeX}.
-? ^^[[A^^[[A
-Type <return> to proceed, S to scroll future error messages,
-R to run without stopping, Q to run quietly,
-I to insert something, E to edit your file,
-1 or ... or 9 to ignore the next 1 to 9 tokens of input,
-H for help, X to quit.
 ? 
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 159.
+ne 160.
 
 
-Overfull \hbox (1.5787pt too wide) in paragraph at lines 158--160
+Overfull \hbox (1.5787pt too wide) in paragraph at lines 159--161
 []\T1/aer/m/n/9 You can use what-ever sym-bols, ac-cented char-ac-ters, or User
 's
  []
 
-LaTeX Font Info:    Try loading font information for T1+aett on input line 169.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 170.
 
 (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 173.
+ne 174.
 
 
 LaTeX Warning: Citation `bowman:reasoning' on page \thepage  undefined on input
- line 199.
-
-
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 1
-99.
-
-
-LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
-e 199.
-
-
-LaTeX Warning: Citation `herlihy:methodology' on page \thepage  undefined on in
-put line 199.
+ line 200.
 
 
 LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
-01.
+00.
+
+
+LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
+e 200.
+
+
+LaTeX Warning: Citation `herlihy:methodology' on page \thepage  undefined on in
+put line 200.
+
+
+LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
+02.
 
 
 LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 201.
+ine 202.
 
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 201.
+ne 202.
 
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 207.
+ne 208.
 
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 218.
+ne 219.
 
 
 ! LaTeX Error: Unknown graphics extension: .eps.
@@ -300,7 +292,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.293 \epsfig{file=fly.eps}
+l.294 \epsfig{file=fly.eps}
                            
 ? 
 
@@ -310,17 +302,17 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.299 \epsfig{file=fly.eps, height=1in, width=1in}
+l.300 \epsfig{file=fly.eps, height=1in, width=1in}
                                                   
 ? 
 
 LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
-(Font)              using `T1/aett/m/n' instead on input line 301.
+(Font)              using `T1/aett/m/n' instead on input line 302.
 
 [2]
 \c@theorem=\count114
 
-Underfull \hbox (badness 1603) in paragraph at lines 325--329
+Underfull \hbox (badness 1603) in paragraph at lines 326--330
 []\T1/aer/m/n/9 This uses the \T1/aer/bx/n/9 the-o-rem \T1/aer/m/n/9 en-vi-ron-
 ment, cre-ated by the
  []
@@ -333,7 +325,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.345 ...{file=rosette.ps, height=1in, width=1in,}
+l.346 ...{file=rosette.ps, height=1in, width=1in,}
                                                   
 ? 
 
@@ -343,11 +335,11 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.356 \epsfig{file=flies.eps}
+l.357 \epsfig{file=flies.eps}
                              
 ? 
 
-Overfull \hbox (15.60826pt too wide) detected at line 381
+Overfull \hbox (15.60826pt too wide) detected at line 382
 \OML/cmm/m/it/9 l \OT1/cmr/m/n/9 = [] \OML/cmm/m/it/9 f\OT1/cmr/m/n/9 (\OML/cmm
 /m/it/9 x\OT1/cmr/m/n/9 ) = [] [] = [] \OML/cmm/m/it/9 g\OT1/cmr/m/n/9 (\OML/cm
 m/m/it/9 x\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9 ^^A [] [] \OT1/cmr/m/n/9 = 0 \OMS/cm
@@ -356,7 +348,7 @@ sy/m/n/9 ^^A \OML/cmm/m/it/9 L \OT1/cmr/m/n/9 = 0\OML/cmm/m/it/9 ;
 
 
 LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 391.
+ine 392.
 
 [3] [4
 
@@ -367,12 +359,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
  ) 
 Here is how much of TeX's memory you used:
  2263 strings out of 495061
- 25649 string characters out of 1182621
- 84104 words of memory out of 3000000
+ 25633 string characters out of 1182621
+ 84107 words of memory out of 3000000
  5389 multiletter control sequences out of 15000+50000
  59682 words of font info for 83 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,10n,26p,896b,248s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,10n,26p,965b,248s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
 ve/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/typ
 e1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/fonts/type1/public/
@@ -388,7 +380,7 @@ r/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-tex
 live/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/
 urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pf
 b></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (4 pages, 215967 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (4 pages, 215319 bytes).
 PDF statistics:
  84 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
