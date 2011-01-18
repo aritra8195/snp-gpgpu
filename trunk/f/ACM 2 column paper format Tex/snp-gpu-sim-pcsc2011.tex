@@ -128,17 +128,18 @@ This paper presents a parallel simulator for a type of P system known as spiking
 
 \section{Introduction}
 
-The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons [CITE]. One important reason for such a trend in recent years include the low consumption in terms of power, of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs [CITE] in order to obtain the same level of parallelization and performance. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching [CITE]. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with  larger speedups when done in parallel, by GPGPUs over CPUs. 
+The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power, of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance\cite{cudapage}. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with  larger speedups when done in parallel, by GPGPUs over CPUs. 
 
-Membrane computing or its more specific counterpart, a P system, are Turing complete computing models that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by George Paun in 1998 [CITE] and takes inspiration, similar to other members of natural computing, from nature. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
+Membrane computing or its more specific counterpart, a P system, are Turing complete computing models that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by George Paun in 1998 and takes inspiration, similar to other members of natural computing, from nature\cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
 
-SN P systems differ from other types of P systems precisely because they are mono-membranar  and only use one type of object in its computation. These characteristics, among others, are meant to capture the workings of a special type of cell known as the neuron. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as spikes. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, by means of time duration as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval. [CITE]. The time duration between two spikes, or several successive spikes, transmit information from one cell to another.  
+SN P systems differ from other types of P systems precisely because they are mono-membranar  and only use one type of object in its computation. These characteristics, among others, are meant to capture the workings of a special type of cell known as the neuron. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as spikes. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, by means of time duration as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval\cite{snp}. The time duration between two spikes, or several successive spikes, transmit information from one cell to another.  
 
-It has been shown that SN P systems, given their nature, are representable by matrices \cite{adorna}. This representation allows design and implementation of an SN P system simulator using parallel computing machines such as GPGPUs. 
+It has been shown that SN P systems, given their nature, are representable by matrices\cite{snpbrain}\cite{snpmat}. This representation allows design and implementation of an SN P system simulator using parallel computing machines such as GPGPUs. 
 
 The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVDIA CUDA extends the widely known ANSI C programming language and makes parallel computation via GPGPUs manufactured by NVIDIA more accessible.
 
-\section{The {\secit Body} of The Paper}
+\section{Spiking neural p systems}
+
 Typically, the body of a paper is organized
 into a hierarchical structure, with numbered or unnumbered
 
@@ -434,30 +435,32 @@ The authors are supported by the \textit{ERDT Project}. They also wish to acknow
 
 %MUST learn how to use bibtex
 
+%\bibitem{adorna} H. Adorna, Gh. P\u aun, M. P\'{e}rez-Jim\'{e}nez : On Communication Complexity in Evolution-Communication P Systems, {\it Proc. Eighth Brainstorming Week on Membrane Computing, Sevilla, February 1-5, 2010}
+
 %journal citation
-\bibitem{ snp } M. Ionescu, Gh. P\u aun, T. Yokomori, ``Spiking Neural P Systems'', {\it Journal Fundamenta Informaticae  }, vol. 71, issue 2,3 pp. 279-308, Feb. 2006.
+\bibitem{snp} M. Ionescu, Gh. P\u aun, T. Yokomori, ``Spiking Neural P Systems'', {\it Journal Fundamenta Informaticae  }, vol. 71, issue 2,3 pp. 279-308, Feb. 2006.
 
 %proceedings/brainstorming citation
-\bibitem{ snpbrain } X. Zeng, H. Adorna, M. A. Martinez-del-Amor, L. Pan, ``When Matrices Meet Brains'', {\it Proceedings of the Eighth Brainstorming Week on Membrane Computing }, Sevilla, Spain, Feb. 2010.
+\bibitem{snpbrain} X. Zeng, H. Adorna, M. A. Martinez-del-Amor, L. Pan, ``When Matrices Meet Brains'', {\it Proceedings of the Eighth Brainstorming Week on Membrane Computing }, Sevilla, Spain, Feb. 2010.
 
 %conference citation
-%\bibitem{ snpmat } X. Zeng, H. Adorna, M. A. Martinez-del-Amor, L. Pan, M. P\'{e}rez-Jim\'{e}nez, ``Matrix Representation of Spiking Neural P Systems'', {\it 11th International Conference on Membrane Computing }, Jena, Germany, Aug. 2010.
+\bibitem{snpmat} X. Zeng, H. Adorna, M. A. Martinez-del-Amor, L. Pan, M. P\'{e}rez-Jim\'{e}nez, ``Matrix Representation of Spiking Neural P Systems'', {\it 11th International Conference on Membrane Computing }, Jena, Germany, Aug. 2010.
 
 %\bibitem{backward} M.A. Gutierrez-Naranjo, M.J. P\'{e}rez-Jim\'{e}nez: Computing Backwards with P Systems, $WMC10$, Curtea de Arge\c s, Romania, (2009), 282-295.
 
-\bibitem{ introtomem } Gh. P\u aun, G. Ciobanu, M. P\'{e}rez-Jim\'{e}nez (Eds), {\it ``Applications of Membrane Computing'' }, Natural Computing Series, Springer, 2006.
+\bibitem{introtomem} Gh. P\u aun, G. Ciobanu, M. P\'{e}rez-Jim\'{e}nez (Eds), {\it ``Applications of Membrane Computing'' }, Natural Computing Series, Springer, 2006.
 
 %website citation (IEEE format)
-\bibitem{ ppage } P systems resource website. (2010, Jan) [Online]. Available: {\tt www.ppage.psystems.eu}.
+\bibitem{ppage} P systems resource website. (2010, Jan) [Online]. Available: {\tt www.ppage.psystems.eu}.
 
-\bibitem{ sat } J. Cecilia, J. Garcia, G. Guerrero, M. Martinez-del-Amor, I. Perez-Jurtado, M.J. P\'{e}rez-Jim\'{e}nez, ``Simulating a P system based efficient solution to SAT by using GPUs'', {\it Journal of Logic and Algebraic Programming }, Vol 79, issue 6, pp. 317-325, Apr. 2010.
+\bibitem{sat} J. Cecilia, J. Garcia, G. Guerrero, M. Martinez-del-Amor, I. Perez-Jurtado, M.J. P\'{e}rez-Jim\'{e}nez, ``Simulating a P system based efficient solution to SAT by using GPUs'', {\it Journal of Logic and Algebraic Programming }, Vol 79, issue 6, pp. 317-325, Apr. 2010.
 
 %book citation (IEEE format)
-\bibitem{ cudabook } D. Kirk, W. Hwu, {\it ``Programming Massively Parallel Processors: A Hands On Approach'' }, 1st ed. MA, USA: Morgan Kaufmann, 2010.
+\bibitem{cudabook} D. Kirk, W. Hwu, {\it ``Programming Massively Parallel Processors: A Hands On Approach'' }, 1st ed. MA, USA: Morgan Kaufmann, 2010.
 
-\bibitem{ cudaguide } NVIDIA corporation, {\it ``NVIDIA CUDA C programming guide'' }, version 3.0, CA, USA: NVIDIA, 2010.
+\bibitem{cudaguide} NVIDIA corporation, {\it ``NVIDIA CUDA C programming guide'' }, version 3.0, CA, USA: NVIDIA, 2010.
 
-\bibitem{ cudapage } NVIDIA CUDA developers resources page: tools, presentations, whitepapers. (2010, Jan) [Online]. Available: {\tt http://developer.nvidia.com/page/home.html }.
+\bibitem{cudapage} NVIDIA CUDA developers resources page: tools, presentations, whitepapers. (2010, Jan) [Online]. Available: {\tt http://developer.nvidia.com/page/home.html }.
 
 %ADD matrix on parallel computers book citation
 
