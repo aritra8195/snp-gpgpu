@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 02:07
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 02:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -329,46 +329,53 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
+<cuda-scaling.jpeg, id=21, 486.31688pt x 431.36156pt>
+File: cuda-scaling.jpeg Graphic file (type jpg)
+ <use cuda-scaling.jpeg>
+Overfull \hbox (3.15784pt too wide) in paragraph at lines 321--324
+ [][] 
+ []
+
 
 LaTeX Warning: Citation `bowman:reasoning' on page \thepage  undefined on input
- line 276.
+ line 331.
 
 
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
-76.
+LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 3
+31.
 
 
 LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
-e 276.
+e 331.
 
 
 LaTeX Warning: Citation `herlihy:methodology' on page \thepage  undefined on in
-put line 276.
+put line 331.
 
 
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 2
-78.
+LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 3
+33.
 
 
 LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 278.
+ine 333.
 
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 278.
+ne 333.
 
-LaTeX Font Info:    Try loading font information for T1+aett on input line 284.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 339.
 
 (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 284.
+ne 339.
 
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 295.
+ne 350.
 
 
 ! LaTeX Error: Unknown graphics extension: .eps.
@@ -377,11 +384,12 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.359 \epsfig{file=fly.eps}
+l.414 \epsfig{file=fly.eps}
                            
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
+[3 <./cuda-scaling.jpeg>]
 
 ! LaTeX Error: Unknown graphics extension: .eps.
 
@@ -389,18 +397,18 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.365 \epsfig{file=fly.eps, height=1in, width=1in}
+l.420 \epsfig{file=fly.eps, height=1in, width=1in}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
-(Font)              using `T1/aett/m/n' instead on input line 367.
+(Font)              using `T1/aett/m/n' instead on input line 422.
 
 \c@theorem=\count114
 
-Underfull \hbox (badness 1603) in paragraph at lines 391--395
+Underfull \hbox (badness 1603) in paragraph at lines 446--450
 []\T1/aer/m/n/9 This uses the \T1/aer/bx/n/9 the-o-rem \T1/aer/m/n/9 en-vi-ron-
 ment, cre-ated by the
  []
@@ -413,7 +421,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.411 ...{file=rosette.ps, height=1in, width=1in,}
+l.466 ...{file=rosette.ps, height=1in, width=1in,}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -425,13 +433,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.422 \epsfig{file=flies.eps}
+l.477 \epsfig{file=flies.eps}
                              
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[3]
-Overfull \hbox (15.60826pt too wide) detected at line 447
+
+Overfull \hbox (15.60826pt too wide) detected at line 502
 \OML/cmm/m/it/9 l \OT1/cmr/m/n/9 = [] \OML/cmm/m/it/9 f\OT1/cmr/m/n/9 (\OML/cmm
 /m/it/9 x\OT1/cmr/m/n/9 ) = [] [] = [] \OML/cmm/m/it/9 g\OT1/cmr/m/n/9 (\OML/cm
 m/m/it/9 x\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9 ^^A [] [] \OT1/cmr/m/n/9 = 0 \OMS/cm
@@ -440,20 +448,21 @@ sy/m/n/9 ^^A \OML/cmm/m/it/9 L \OT1/cmr/m/n/9 = 0\OML/cmm/m/it/9 ;
 
 
 LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 457.
+ine 512.
 
-[4] [5
-
-] (./snp-gpu-sim-pcsc2011.aux)
+[4] [5] (./snp-gpu-sim-pcsc2011.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 2344 strings out of 495061
- 26627 string characters out of 1182621
- 85005 words of memory out of 3000000
- 5466 multiletter control sequences out of 15000+50000
+ 2353 strings out of 495061
+ 26769 string characters out of 1182621
+ 84021 words of memory out of 3000000
+ 5473 multiletter control sequences out of 15000+50000
  57450 words of font info for 81 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  39i,15n,26p,964b,248s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -473,9 +482,9 @@ xmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-te
 xlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1
 /urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a
 .pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (5 pages, 245903 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (5 pages, 307428 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
+ 93 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

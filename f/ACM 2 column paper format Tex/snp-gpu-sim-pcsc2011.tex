@@ -271,7 +271,62 @@ a_{ij} = \left\{
 $$
 \end{definition}
 
+For $\Pi$, the $M_{\Pi}$ is as follows:
 
+\begin{equation}\label{snp_mat}
+%$$
+M_{\Pi} = \left(
+\begin{array}{ccc}
+  -1 & 1 & 1\\
+  -2 & 1 &  1 \\
+   1 &  -1 & 1 \\
+   0 & 0 & -1\\
+   0 & 0& -2
+\end{array}\right)
+%$$
+\end{equation}
+
+In such a scheme, rows represent rules and columns
+represent neurons.
+
+Finally, the following equation provides the configuration
+vector at the $(k+1)th$ step, given the configuration vector and
+spiking vector at the $kth$ step, and $M_{\Pi}$:
+
+\begin{equation}\label{next-config}
+C_{k+1} =  C_{k} ~ + ~ S_{k}\cdot M_{\Pi}.
+\end{equation}
+
+
+\section{the NVIDIA CUDA architecture}
+
+NVIDIA, a well known manufacturer of GPUs, released in
+2006 the CUDA programming model and architecture \cite{cudapage}.
+Using extensions of the widely known C language, a
+programmer can write parallel code which will then execute
+in multiple threads within multiple thread blocks, each
+contained within a grid of (thread) blocks. These grids
+belong to a single device i.e. a single GPGPU. Each
+device/GPGPU has multiple cores, each capable of running
+its own grids. The program run in the CUDA model scales
+up or down, depending on the number of cores the
+programmer currently has in a device. This scaling is done
+in a manner that is abstracted from the user, and is
+efficiently as well. Automatic and efficient scaling is shown
+in Figure  Parallelized code will run faster with more cores
+than with fewer ones \cite{cudaguide}.
+
+	\begin{figure}
+		\centering
+		\includegraphics[scale=.5]{cuda-scaling.jpeg} 
+%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
+		\caption{NVIDIA CUDA automatic scaling, hence more cores
+result to faster execution, from \cite{cudaguide}.}
+		\label{cuda_scale}
+	\end{figure}
+	
+	
+	
 \subsection{Citations}
 Citations to articles \cite{bowman:reasoning, clark:pct, braams:babel, herlihy:methodology},
 conference
