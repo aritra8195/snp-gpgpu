@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 03:05
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 04:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -367,51 +367,55 @@ Overfull \hbox (3.15784pt too wide) in paragraph at lines 321--324
 <cuda-model.jpeg, id=22, 356.0803pt x 354.57469pt>
 File: cuda-model.jpeg Graphic file (type jpg)
  <use cuda-model.jpeg>
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 353.
 
-LaTeX Warning: Reference `cuda_gencode' on page \thepage  undefined on input li
-ne 344.
 
+(/usr/share/texmf-texlive/tex/latex/ae/omsaer.fd
+File: omsaer.fd 1999/12/27
+)
+LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 353.
+ [3 <./cuda-scaling.jpeg> <./cuda-model.jpeg>]
 
 LaTeX Warning: Citation `bowman:reasoning' on page \thepage  undefined on input
- line 359.
+ line 405.
 
 
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 3
-59.
+LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 4
+05.
 
 
 LaTeX Warning: Citation `braams:babel' on page \thepage  undefined on input lin
-e 359.
+e 405.
 
 
 LaTeX Warning: Citation `herlihy:methodology' on page \thepage  undefined on in
-put line 359.
+put line 405.
 
 
-LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 3
-61.
+LaTeX Warning: Citation `clark:pct' on page \thepage  undefined on input line 4
+07.
 
 
 LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 361.
+ine 407.
 
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 361.
+ne 407.
 
-LaTeX Font Info:    Try loading font information for T1+aett on input line 367.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 413.
 
 (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 367.
+ne 413.
 
-[3 <./cuda-scaling.jpeg> <./cuda-model.jpeg>]
 
 LaTeX Warning: Citation `Lamport:LaTeX' on page \thepage  undefined on input li
-ne 378.
+ne 424.
 
 
 ! LaTeX Error: Unknown graphics extension: .eps.
@@ -420,7 +424,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.442 \epsfig{file=fly.eps}
+l.488 \epsfig{file=fly.eps}
                            
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -432,18 +436,19 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.448 \epsfig{file=fly.eps, height=1in, width=1in}
+l.494 \epsfig{file=fly.eps, height=1in, width=1in}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
 LaTeX Font Warning: Font shape `T1/aett/bx/n' undefined
-(Font)              using `T1/aett/m/n' instead on input line 450.
+(Font)              using `T1/aett/m/n' instead on input line 496.
 
+[4]
 \c@theorem=\count123
 
-Underfull \hbox (badness 1603) in paragraph at lines 474--478
+Underfull \hbox (badness 1603) in paragraph at lines 520--524
 []\T1/aer/m/n/9 This uses the \T1/aer/bx/n/9 the-o-rem \T1/aer/m/n/9 en-vi-ron-
 ment, cre-ated by the
  []
@@ -456,7 +461,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.494 ...{file=rosette.ps, height=1in, width=1in,}
+l.540 ...{file=rosette.ps, height=1in, width=1in,}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -468,13 +473,13 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.505 \epsfig{file=flies.eps}
+l.551 \epsfig{file=flies.eps}
                              
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (15.60826pt too wide) detected at line 530
+Overfull \hbox (15.60826pt too wide) detected at line 576
 \OML/cmm/m/it/9 l \OT1/cmr/m/n/9 = [] \OML/cmm/m/it/9 f\OT1/cmr/m/n/9 (\OML/cmm
 /m/it/9 x\OT1/cmr/m/n/9 ) = [] [] = [] \OML/cmm/m/it/9 g\OT1/cmr/m/n/9 (\OML/cm
 m/m/it/9 x\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9 ^^A [] [] \OT1/cmr/m/n/9 = 0 \OMS/cm
@@ -483,26 +488,23 @@ sy/m/n/9 ^^A \OML/cmm/m/it/9 L \OT1/cmr/m/n/9 = 0\OML/cmm/m/it/9 ;
 
 
 LaTeX Warning: Citation `salas:calculus' on page \thepage  undefined on input l
-ine 540.
+ine 586.
 
-[4] [5] [6
+[5] [6
 
 ] (./snp-gpu-sim-pcsc2011.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 3556 strings out of 495061
- 44445 string characters out of 1182621
- 106063 words of memory out of 3000000
- 6660 multiletter control sequences out of 15000+50000
+ 3572 strings out of 495061
+ 44717 string characters out of 1182621
+ 111063 words of memory out of 3000000
+ 6673 multiletter control sequences out of 15000+50000
  59590 words of font info for 84 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,15n,32p,964b,911s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,15n,32p,964b,1423s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
 ve/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texmf-texlive/fonts/t
 ype1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/type1/public/
@@ -520,7 +522,7 @@ onts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-texlive/fonts/t
 ype1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic
 /uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></usr/sh
 are/texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (6 pages, 357229 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (6 pages, 364139 bytes).
 PDF statistics:
  101 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

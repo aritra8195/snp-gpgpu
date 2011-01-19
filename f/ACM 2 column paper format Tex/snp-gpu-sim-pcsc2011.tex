@@ -341,18 +341,64 @@ function, is a function called from the host but executed in
 the device.
 
 A general model for creating a CUDA enabled program is
-shown in Listing \ref{cuda_gencode}
+shown in Listing \ref{cuda-code}.
 
 
 \lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, label=cuda_gencode}
 % This concludes the preamble
 
 
-\begin{lstlisting}[label=some-code,caption=Some Code]
-public void here() {
-	goes().the().code()
-}
+\begin{lstlisting}[label=cuda-code,caption=General code flow for CUDA programming]
+//allocate memory on GPU e.g.
+cudaMalloc( (void**)&dev_a, N * sizeof(int)
+
+//populate arrays
+ . . .
+
+//copy arrays from host to device e.g.
+cudaMemcpy( dev_a, a, N * sizeof(int), 
+cudaMemcpyHostToDevice)
+
+//call kernel (GPU) function e.g.
+add<<<N, 1>>>( dev_a, dev_b, dev_c );
+
+// copy arrays from device to host e.g.
+cudaMemcpy( c, dev_c, N * sizeof( int), 
+cudaMemcpyDeviceToHost )
+
+//display results
+
+//free memory e.g.
+cudaFree( dev_a );
 \end{lstlisting}
+
+Lines 2 and 19, implement CUDA versions of
+the standard C language functions e.g. the standard C
+function $malloc$ has the CUDA C function counterpart being
+$cudaMalloc$, and the standard C function $free$ has $cudaFree$ as its CUDA C counterpart.
+
+Lines 8 and 15 show a CUDA C specific function, namely
+$cudaMemcpy$, which, given an input of pointers ( from Listing \ref{cuda-code} host code
+pointers are single letter variables such as $a$ and $c$,while
+device code variable counterparts are prefixed by $dev\_$ such
+as $dev\_a$ and $dev\_c$ ) and the size to copy ( as computed by
+the $sizeof$ function ), moves data from host to device
+( parameter $cudaMemcpyHostToDevoce$ ) or device to host
+( parameter $cudaMemcpyDeviceToHost$).
+
+A kernel function call uses the double < and > operator, in
+this case the kernel function 
+
+$add< < N, 1 > >( dev\_a, dev\_b,
+dev\_c )$.
+
+This function adds the values, per element (and
+each element is associated to 1 thread), of the variables
+dev\_a and dev\_b sent to the device, collected in variable
+dev\_c before being sent back to the host/CPU. The variable
+$N$ in this case allows the programmer to specify $N$ number of
+threads which will execute the $add$ kernel function in parallel, with 1
+specifying only one block for all $N$ threads.
 
 	
 \subsection{Citations}
