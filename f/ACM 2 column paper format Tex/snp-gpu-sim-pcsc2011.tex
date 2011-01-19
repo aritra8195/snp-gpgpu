@@ -27,7 +27,7 @@
 % For tracking purposes - this is V3.1SP - APRIL 2009
 
 \documentclass{acm_proc_article-sp}
-\usepackage{amsmath,amssymb,latexsym,graphicx,url}
+\usepackage{amsmath,amssymb,latexsym,graphicx,url,listings}
 \begin{document}
 
 
@@ -313,7 +313,7 @@ up or down, depending on the number of cores the
 programmer currently has in a device. This scaling is done
 in a manner that is abstracted from the user, and is
 efficiently as well. Automatic and efficient scaling is shown
-in Figure  Parallelized code will run faster with more cores
+in Figure \ref{cuda_scale} Parallelized code will run faster with more cores
 than with fewer ones \cite{cudaguide}.
 
 	\begin{figure}
@@ -325,7 +325,35 @@ result to faster execution, from \cite{cudaguide}.}
 		\label{cuda_scale}
 	\end{figure}
 	
-	
+	\begin{figure}
+		\centering
+		\includegraphics[scale=.6]{cuda-model.jpeg} 
+%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
+		\caption{NVIDIA CUDA programming model showing the sequential execution of the $host$ code alongside the parallel execution of the $kernel$ function on the $device$ side, from \cite{sat}.}
+		\label{cuda_model}
+	\end{figure}
+
+Figure \ref{cuda_model} shows another important feature of the CUDA model:
+the host and the device parts. As mentioned earlier, device
+pertains to the GPGPU/s of the system, while the host
+pertains to the CPU/s. A function known as a kernel
+function, is a function called from the host but executed in
+the device.
+
+A general model for creating a CUDA enabled program is
+shown in Listing \ref{cuda_gencode}
+
+
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, label=cuda_gencode}
+% This concludes the preamble
+
+
+\begin{lstlisting}[label=some-code,caption=Some Code]
+public void here() {
+	goes().the().code()
+}
+\end{lstlisting}
+
 	
 \subsection{Citations}
 Citations to articles \cite{bowman:reasoning, clark:pct, braams:babel, herlihy:methodology},
