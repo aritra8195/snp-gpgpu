@@ -135,21 +135,26 @@ The matrix representation of SNP systems provides a crucial step into their simu
 The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance\cite{cudapage}. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with  larger speedups when done in parallel, by GPGPUs over CPUs. 
 
 \subsection{Paralel computing: Via Membranes}
-Membrane computing or its more specific counterpart, a P system, are Turing complete computing models that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by George Paun in 1998 and takes inspiration, similar to other members of natural computing, from nature\cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
+Membrane computing or its more specific counterpart, a P system, are Turing complete computing models that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of natural computing, from nature\cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
 
 SN P systems differ from other types of P systems precisely because they are mono-membranar and only use one type of object in its computation. These characteristics, among others, are meant to capture the workings of a special type of cell known as the neuron. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as spikes. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, by means of time duration as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval\cite{snp}. The time duration between two spikes, or several successive spikes, transmit information from one cell to another.  
 
 It has been shown that SN P systems, given their nature, are representable by matrices\cite{snpbrain}\cite{snpmat}. This representation allows design and implementation of an SN P system simulator using parallel computing machines such as GPGPUs. 
 
-\subsection{Combining GPU and Membrane computing }
-The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVDIA CUDA extends the widely known ANSI C programming language and makes parallel computation via GPGPUs manufactured by NVIDIA more accessible.
+\subsection{Simulating SNP systems in GPGPUs}
+Matrix operations and their algorithms have been studied and efficiently implemented in GPGPUs \cite{matrixgpu1}\cite{matrixgpu2}. Thus the matrix representation of SNP systems bridges the gap between the highly theoretical yet still computationally powerful SNP systems and the applicative and more tangible GPGPUs, via an SNP system simulator. The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and makes parallel computations, via GPGPUs manufactured by NVIDIA.
 
-%Mention matrix implementation on parallel/GPU systems + citations
+This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
+
+%MENTION matrix implementation on parallel/GPU systems + citations (DONE)
+
+%MENTION overview of paper + contributions BRIEFLY (DONE)
+
 
 \section{Spiking neural p systems}
 
 \subsection{Computing with SNP systems}
-The type of SNP systems focused on by this paper are those without delays i.e. those that spike or transmit signals the moment they are able to do so. A variant, which allows for delays before a neuron produces a spike, are also available \cite{snp}. An SNP system without delay is of the form:
+The type of SNP systems focused on by this paper are those without delays i.e. those that spike or transmit signals the moment they are able to do so \cite{snpbrain}\cite{snpmat}. A variant, which allows for delays before a neuron produces a spike, are also available \cite{snp}. An SNP system without delay is of the form:
 
 %MODIFY the following defitions or CITE them instead
 
@@ -157,36 +162,31 @@ The type of SNP systems focused on by this paper are those without delays i.e. t
 $$\Pi=(O,\sigma_1,\ldots, \sigma_m, syn, in, out),$$
 where:
 \begin{enumerate}
-\item[1.] $O=\{a\}$ is the singleton alphabet ($a$ is called spike);
+\item[1.] $O=\{a\}$ is the alphabet made up of only one object, the system spike $a$.
 
-\item[2.] $\sigma_1,\ldots, \sigma_m$ are $m$ number of neurons, of the form
+\item[2.] $\sigma_1,\ldots, \sigma_m$ are $m$ number of neurons of the form
 $$\sigma_{i}=(n_i, R_i),1\leq i\leq m,$$
 where:
 \begin{enumerate}
-\item[a)] $n_i\geq 0$ is the initial number of spikes contained in $\sigma_i$;
-
-\item[b)] $R_i$ is a finite set of rules of the following two forms:
+\item[a)] $n_i\geq 0$ gives the initial number of $a$s i.e. spikes contained in neuron $\sigma_i$
+\item[b)] $R_i$ is a finite set of rules of with two forms:
 \begin{enumerate}
-\item[(b-1)]$E/a^c \rightarrow a$, where $E$ is a regular expression
-over $a$, and $c\geq 1$, $p\geq 1$, with the restriction $c\geq p$;
-\item[(b-2)]$a^s\rightarrow \lambda$, for $s\geq 1$, with the
-restriction that for each rule $E/a^c\rightarrow a$ of type (b-1)
-from $R_i$, $a^s\notin L(E)$;
+\item[(b-1)]$E/a^c \rightarrow a$, are known as \textit{Spiking rules}, where $E$ is a regular expression
+over $a$, and $c\geq 1$, such that $c\geq 1$. 
+\item[(b-2)]$a^s\rightarrow \lambda$, are known as \textit{Forgetting rules}, for $s\geq 1$, such that for each rule $E/a^c\rightarrow a$ of type (b-1) from $R_i$, $a^s\notin L(E)$. 
 \end{enumerate}
 \end{enumerate}
-\item[3.] $syn= \{ (i,j)\, |\, 1\leq i,j \leq m, \, i\neq j\, \}$ (synapses
-between neurons);
+\item[3.] $syn= \{ (i,j)\, |\, 1\leq i,j \leq m, \, i\neq j\, \}$ are the synapses i.e. connection between neurons.
 
-\item[4.] $in, out\in \{1,2,\ldots, m\}$ indicate the input and output neurons, respectively.
+\item[4.] $in, out\in \{1,2,\ldots, m\}$ are the input and output neurons, respectively.
 \end{enumerate}
 
 \end{definition}
-%Π =O , σ 1 , ... , σ m , syn , σ inp , σ outp (2a)
 
 Furthermore, rules of type (b-1) are applied if $\sigma_i$ contains $k$
 spikes, $a^k \in L(E)$ and $k \geq c$. Using this type of rule uses up
 or consumes k spikes from the neuron, producing a spike to
-neurons adjacent to it. In this manner, for rules of type (b-2)
+each of the neurons connected to it via a forward pointing arrow i.e. away from the neuron. In this manner, for rules of type (b-2)
 if $\sigma_i$ contains $s$ spikes, then $s$ spikes are forgotten or
 removed once the rule is used. Rules of type (b-1) can be
 simplified with the notation
@@ -210,9 +210,9 @@ a given time, given enough spikes. The rule to be used is
 chosen non-deterministically in the neuron. However, only
 one rule can be applied or used at a given time \cite{snp}\cite{snpbrain}\cite{snpmat}. The
 neurons in an SN P system operate in parallel and in unison,
-under a global clock. For Figure \ref{snp_ex} no input neuron is present,
+under a global clock \cite{snp}. For Figure \ref{snp_ex} no input neuron is present,
 but neuron 3 is the output neuron, hence the arrow pointing
-towards the environment, outside the SNP system.
+towards the environment, outside the SNP system. The SNP system in Figure \ref{snp_ex} is a 3 neuron system whose neurons are labeled (neuron/$\sigma_1$ to 3) and whose rules have a total system ordering from (1) to (5)
 
 
 	\begin{figure}
@@ -237,6 +237,40 @@ towards the environment, outside the SNP system.
 
 %\subsubsection{Display Equations}
 %A numbered display equation -- one set off by vertical space
+
+
+
+\subsection{Matrix representation of SNP systems}
+A matrix representation of an SN P system makes use of the
+following vectors and matrix definitions \cite{snpbrain}\cite{snpmat} . It is important to note that, just as in Figure \ref{snp_ex}, a total ordering of rules is in
+order.
+
+\textit{Configuration vector} $C_k$ is the vector containing all spikes in every neuron on the $kth$ computation step/time, where $C_0$ is the initial vector containing all spikes in the system at the beginning of the computation. For $\Pi$ (in Figure \ref{snp_ex} ) the initial configuration vector is $C_0 = < 2, 1, 1 >$.
+
+\textit{Spiking vector} which shows, at a given configuration $C_k$, if a
+rule is applicable (has value 1) or not (has value 0 instead). For $\Pi$ we have the
+spiking vector $S_k = < 1, 0, 1, 1, 0 >$ given $C_0$.
+Note that a 2nd spiking vector, $S_k = < 1, 0, 1, 1, 0 >$, is
+possible if we use rule (2) over rule (1) instead (but not both
+at the same time, hence we cannot have a vector equal to
+< 1, 1, 1, 1, 0> ).
+
+\textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_i_j$
+elements where $a_i_j$ is given as
+
+\begin{definition}\label{defi-snp-mat}
+$$
+a_{ij} = \left\{
+\begin{array}{rl}
+-c, &\mbox{if rule $r_i$ is in $\sigma_j$ and it is applied consuming $c$ spikes;} \\
+ p, &\mbox{if rule $r_i$ is in $\sigma_s$ ($s\neq j$ and $(s,j)\in syn$)} \\
+ & \mbox{and it is applied producing $p$ spikes in total;}\\
+ 0, &\mbox{if rule $r_i$ is in $\sigma_s$ ($s\neq j$ and $(s,j)\notin syn$).}
+    \end{array}
+\right.
+$$
+\end{definition}
+
 
 \subsection{Citations}
 Citations to articles \cite{bowman:reasoning, clark:pct, braams:babel, herlihy:methodology},
@@ -283,17 +317,6 @@ Table 1 is included in the input file; compare the
 placement of the table here with the table in the printed
 dvi output of this document.
 
-\begin{table}
-\centering
-\caption{Frequency of Special Characters}
-\begin{tabular}{|c|c|l|} \hline
-Non-English or Math&Frequency&Comments\\ \hline
-\O & 1 in 1,000& For Swedish names\\ \hline
-$\pi$ & 1 in 5& Common in math\\ \hline
-\$ & 4 in 5 & Used in business\\ \hline
-$\Psi^2_1$ & 1 in 40,000& Unexplained usage\\
-\hline\end{tabular}
-\end{table}
 
 To set a wider table, which takes up the whole width of
 the page's live area, use the environment
@@ -530,7 +553,13 @@ The authors are supported by the \textit{ERDT Project}. They also wish to acknow
 
 %ADD matrix on parallel computers book citation
 
+%William Schmeister. 2006. Review of "Algorithms: Sequential, Parallel, and Distributed by Kenneth A. Berman and Jerome L. Paul", Thomson Course Technology, 2005. SIGACT News 37, 2 (June 2006), 17-22. DOI=10.1145/1140612.1140616 http://doi.acm.org/10.1145/1140612.1140616
+
 %ADD citation to figures used!!
+
+\bibitem{matrixgpu1} V. Volkov, J. Demmel, ``Benchmarking GPUs to tune dense linear algebra'', {\it Proceedings of the 2008 ACM/IEEE conference on Supercomputing}, NJ, USA, 2008.
+
+\bibitem{matrixgpu2} K. Fatahalian, J. Sugerman, P. Hanrahan, ``Understanding the efficiency of GPU algorithms for matrix-matrix multiplication'', {\it In Proceedings of the ACM SIGGRAPH/EUROGRAPHICS conference on Graphics hardware (HWWS '04) }, ACM, NY, USA, pp. 133-137, 2004
 
 \end{thebibliography}
 
