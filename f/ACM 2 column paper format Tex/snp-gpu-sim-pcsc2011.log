@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  19 JAN 2011 13:47
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  19 JAN 2011 13:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -401,7 +401,7 @@ xmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf-te
 xlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1
 /urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a
 .pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmbi8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (4 pages, 239311 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (4 pages, 239456 bytes).
 PDF statistics:
  89 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
