@@ -293,6 +293,7 @@ Finally, the following equation provides the configuration
 vector at the $(k+1)th$ step, given the configuration vector and
 spiking vector at the $kth$ step, and $M_{\Pi}$:
 
+%Ck+1 = Ck + Sk * M
 \begin{equation}\label{next-config}
 C_{k+1} =  C_{k} ~ + ~ S_{k}\cdot M_{\Pi}.
 \end{equation}
@@ -347,7 +348,6 @@ shown in Listing \ref{cuda-code}.
 \lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, label=cuda_gencode}
 % This concludes the preamble
 
-
 \begin{lstlisting}[label=cuda-code,caption=General code flow for CUDA programming]
 //allocate memory on GPU e.g.
 cudaMalloc( (void**)&dev_a, N * sizeof(int)
@@ -400,6 +400,174 @@ $N$ in this case allows the programmer to specify $N$ number of
 threads which will execute the $add$ kernel function in parallel, with 1
 specifying only one block for all $N$ threads.
 
+\subsection{Design considerations given hardware and software
+setup}
+
+The kernel function i.e. code that is executed in parallel in
+the device, needs to have its results initially moved from the
+CPU/host to the device, and then back from the device to the
+host after computation. This movement of data back and
+forth should be minimized in order to obtain more efficient,
+in terms of time, execution.
+Implementing an equation such as \ref{next-config}, which involves
+multiplication and addition between vectors and a matrix,
+can be done in parallel with the previous considerations in
+mind. In this case, $C_k$, $S_k$, and $M_{\Pi}$ are loaded, manipulated, and pre-processed within the host code,
+before being sent to the kernel function which will perform
+computations on these function arguments in parallel.
+In order to represent $C_k$, $S_k$, and $M_{\Pi}$, text files are created in
+order to house each input, whereby each element of the
+vector or matrix is entered in the file in order, from left to right, with a blank space in between as a delimiter. The
+matrix however is entered in row-major ( a linear array of all
+the elements, rows first, then columns) order format i.e. for
+the matrix $M_{\Pi}$ seen in \ref{snp_mat}, the row-major order version is simply
+\begin{equation}\label{row-maj}
+-1, 1, 1, -2, 1, 1, 1, -1, 1, 0, 0, -1, 0, 0, -2
+\end{equation}
+
+Row major ordering is a well-known ordering and
+representation of matrices for their linear as well as parallel
+manipulation in corresponding algorithms \cite{cudabook}. Once all
+computations are done for the $(k+1)th$ configuration, the result of
+equation \ref{next-config} are then collected and moved back from the
+device back to the host, where they can once again be
+operated on by the host/CPU. It is also important to note
+that these operations in the host/CPU provide logic and
+control of the data/inputs, while the device/GPU provides
+the arithmetic or computational 'muscle', the laborious task
+of working on multiple data or instructions at a given time,
+hence the current dichotomy of the CUDA programming model \cite{sat}.
+This division of labor is implemented in exemplified in Listing \ref{cuda-code} .
+
+\subsection{Matrix
+computations
+and
+CPU-GPGPU
+interactions
+}
+
+Once all 3 initial and necessary inputs are loaded, as is to be
+expected from equation \ref{next-config}, the device is first instructed to
+perform multiplication between the spiking vector $S_k$ and the
+matrix $M_{\Pi}$. To further simplify computations at this point, the
+vectors are treated and automatically formatted by the host
+code to appear as single row matrices, since vectors can be
+considered as such. Multiplication is done per element (one
+element is in one thread of the device/GPGPU), and then the
+products are collected and summed to produce a single
+element of the resulting vector/single row matrix.
+
+Once multiplication of the $S_k$ and $M_{\Pi}$ is done,
+the result is similarly added to the configuration vector $C_k$, once
+again element per element, with each element belonging to
+one thread, executed all at the same time as the others.
+
+For this simulator, the host code consists almost entirely of
+the programming language Python, a well-known high-
+level, object oriented programming (OOP) language. The
+reason for using a high-level language such as Python is
+because the initial inputs, as well as succeeding ones
+resulting from exhaustively applying the rules and equation
+\ref{next-config} require manipulation of the vector/matrix elements or
+values as strings to be concatenated, checked on (if they
+conform to the form (b-3) for example) by the host, as well
+as manipulated in ways which will be elaborated in the
+following sections along with the discussion of the
+algorithm for producing all possible and valid spiking
+vectors and configuration vectors given initial conditions. A
+language such as Python is well-suited for such a task, and
+can be byte-compiled like a C program for improved
+performance. The host code/Python part thus implements the
+logic and control as mentioned earlier, while in it, the
+device/GPU code which is written in C executes the parallel
+parts of the simulator.
+
+\section{DESIGN AND IMPLEMENTATION OF AN
+SNP SYSTEM SIMULATOR USING CUDA
+GPGPUS
+}
+
+The current SNP simulator, which is based on the type of
+SNP systems currently without time delays, is capable of
+implementing rules of the form (b-3) i.e. whenever the
+regular expression $E$ is the same as the number of spikes
+consumed in that rule. Rules are entered in the same manner
+as the earlier mentioned vectors and matrix, as blank space
+delimited values (from one rule to the other, belonging to the same neuron) and \$ delimited ( from one neuron to the
+other). Thus for the SNP system ${\Pi}$ shown earlier, the file $r$
+containing the blank space and \$ delimited values is as
+follows:
+\begin{equation}\label{rules}
+2~2~\$~1~\$~1~2
+\end{equation}
+
+That is, rule (1) from Figure \ref{snp_ex} has the value $2$ in the file $r$ (though rule (1)
+isn't of the form (b-3) it nevertheless consumes a spike since
+its regular expression is of the same regular expression type
+as the rest of the rules of ${\Pi}$ ). Another implementation
+consideration was the use of $lists$ in Python, since unlike
+dictionaries or tuples, lists in Python are  \emph{mutable}, which is a
+direct requirement of the vector/matrix element
+manipulation to be performed later on (concatenation
+mostly). Hence a configuration vector $C_k = <2, 1, 1>$ is
+represented as $[ 2, 1, 1 ]$ in Python. That is, at the $kth$
+configuration of the system, the number of spikes of neuron
+1 are given by accessing the index (starting at zero) of the
+configuration vector list Python variable $confVec$, in this case if
+\begin{equation}\label{confvec}
+confVec = [ 2, 1, 1 ]
+\end{equation}
+	
+then $confVec[ 0 ] = 2$ are the number of spikes available at
+that time for neuron 1, $confVec[ 1 ] = 1$ for neuron 2, and so
+on. The file $r$, which contains the ordered list of neurons and
+the rules that comprise each of them, is represented as a list of sub-
+lists in the Python/host code. For SNP ${\Pi}$ we have the
+following:
+\begin{equation}\label{rule-list}
+r = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ]
+\end{equation}
+
+Neuron 1's rules are given by accessing the sub-lists of $r$
+(again, starting at index zero) i.e. rule (1) is given by $r[ 0 ][ 0 ]
+= 2$ and rule (4) is given by $r[ 2 ][ 1 ] = 1$.
+
+\subsection{Algorithms in the implementation of the SNP
+simulator}
+	
+The general algorithm is as shown in Listing \ref{sim-algo}
+	
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1 numbersep=5pt, label=cuda_gencode}
+% This concludes the preamble
+Require: creation of files confVec, M, and r
+I. (host) Load inputs: configuration vector file (
+confVec ), spiking transition matrix file (M), and
+rule criteria file ( r ). Note that M and r need only
+be loaded once since they are unchanging for a
+given SN P system.
+
+II. (host) Determine if a rule/element in r is
+applicable based on the the spike value in
+
+configVec, and then generate all valid + possible
+spiking vectors in a list of lists spikVec given r and
+confVec.
+III. ( device ) From part II, run the kernel function on
+spikVec, which contains all the valid + possible
+spiking vectors for the current confVec and r. This
+will generate further Ck and their corresponding
+Sk .
+
+IV. Repeat steps I to IV until a zero configuration
+vector (vector with only zeros as elements) or
+further Ck produced are repetitions of a Ck
+produced at an earlier time.
+
+\begin{lstlisting}[label=sim-algo,caption=Overview of the algorithm for the SNP
+simulator]
+
+\end{lstlisting}
+	
 	
 \subsection{Citations}
 Citations to articles \cite{bowman:reasoning, clark:pct, braams:babel, herlihy:methodology},
