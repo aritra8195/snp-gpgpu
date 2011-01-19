@@ -537,37 +537,94 @@ simulator}
 	
 The general algorithm is as shown in Listing \ref{sim-algo}
 	
-\lstset{numbers=left, numberstyle=\tiny, stepnumber=1 numbersep=5pt, label=cuda_gencode}
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=0, numbersep=5pt, label=cuda_gencode}
 % This concludes the preamble
-Require: creation of files confVec, M, and r
-I. (host) Load inputs: configuration vector file (
-confVec ), spiking transition matrix file (M), and
-rule criteria file ( r ). Note that M and r need only
-be loaded once since they are unchanging for a
-given SN P system.
-
-II. (host) Determine if a rule/element in r is
-applicable based on the the spike value in
-
-configVec, and then generate all valid + possible
-spiking vectors in a list of lists spikVec given r and
-confVec.
-III. ( device ) From part II, run the kernel function on
-spikVec, which contains all the valid + possible
-spiking vectors for the current confVec and r. This
-will generate further Ck and their corresponding
-Sk .
-
-IV. Repeat steps I to IV until a zero configuration
-vector (vector with only zeros as elements) or
-further Ck produced are repetitions of a Ck
-produced at an earlier time.
 
 \begin{lstlisting}[label=sim-algo,caption=Overview of the algorithm for the SNP
 simulator]
+Require: creation of files confVec, M, and r
 
+I. (HOST) Load inputs: configuration vector
+file (confVec ), spiking transition matrix
+file (M), and rule criteria file ( r ).
+Note that M and r need only be loaded 
+once since they are unchanging for a
+given SN P system.
+
+II. (HOST) Determine if a rule/element in r 
+is applicable based on the the spike value 
+in configVec, and then generate all valid +
+possible spiking vectors in a list of lists
+spikVec given r and confVec.
+
+III. (DEVICE) From part II, run the kernel 
+function on spikVec, which contains all 
+the valid + possible spiking vectors for 
+the current  confVec and r. This will 
+generate further Ck and their corresponding Sk.
+
+IV. (HOST+DEVICE) Repeat steps I to IV until
+a zero configuration vector (vector with 
+only zeros as elements) or further Ck
+produced are repetitions of a Ck
+produced at an earlier time.
 \end{lstlisting}
 	
+Step $IV$ of Listing \ref{sim-algo} makes
+the algorithm stop with 2 $stopping criteria$ to do this: One is when
+there are no more available spikes in the system (hence a
+zero value for a configuration vector), and the second one
+being the fact that all previously generated configuration
+vectors have been produced in an earlier time or
+computation, hence using them again in part I of the
+simulator algorithm overview would be pointless, since a
+redundant, unnecessary infinite loop will only be formed. Another
+important point to notice is that either of the stopping
+criterion could allow for a deeply nested computation tree,
+one that can continues on executing for a certain length of
+time even with a multi-core CPU and even more parallel
+GPGPU.
+
+Each line in Listing \ref{sim-algo} mentions
+which parts of the simulator run in which part of the CUDA
+programming model, either in the device (DEVICE) or in the host (HOST) part.
+
+\subsection{Further inspection and detailing of the SNP system
+simulator}
+	
+The more detailed algorithm for part $II$ of Listing \ref{sim-algo} is as follows.
+
+A few definitions are in order at this point:
+	
+\begin{definition}
+\Sigma =  |r|, total number of neurons.
+
+\Psi = |{\sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_n}|, n \in \mathbb{N}, n \leq \infty
+
+where
+
+|\sigma_V_n|
+
+means the total count of the number of rules in the $nth$ neuron which satisfy the regular expresion $E$ in (b-3)
+
+\end{definition}	
+
+
+During the exposition of the algorithm, the following Python
+lists (from their vector/matrix counterparts in earlier
+sections) will be used for demonstration purposes:
+
+\begin{equation}\label{confveclist}
+configVec = [ 2, 1, 1 ]~(from~(\ref{confvec})~)
+\end{equation}
+\begin{equation}\label{rulelist}
+r = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ] ~(from~(\ref{rules})~)
+\end{equation}
+
+
+For part $II$ Listing \ref{sim-algo} we have the following sub-algorithm for generating all valid
+and possible spiking vectors given input files $M$, $configVec$, and $r$:
+
 	
 \subsection{Citations}
 Citations to articles \cite{bowman:reasoning, clark:pct, braams:babel, herlihy:methodology},
