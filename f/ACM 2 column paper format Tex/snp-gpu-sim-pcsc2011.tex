@@ -183,26 +183,44 @@ between neurons);
 
 Furthermore, rules of type (b-1) are applied if $\sigma_i$ contains $k$
 spikes, $a^k \in L(E)$ and $k \geq c$. Using this type of rule uses up
-or consumes k spikes from the neuron, producing p spikes to
-neurons adjacent to it. In this manner, for rules of type b-2)
-if σi contains s spikes, then s spikes are forgotten or
-removed once the rule is used. Rules of type b-1) can be
+or consumes k spikes from the neuron, producing a spike to
+neurons adjacent to it. In this manner, for rules of type (b-2)
+if $\sigma_i$ contains $s$ spikes, then $s$ spikes are forgotten or
+removed once the rule is used. Rules of type (b-1) can be
 simplified with the notation
 
-b-3) a → a
+\begin{enumerate}
+\begin{enumerate}
+\begin{enumerate}
+\item[(b-3)]$a^k \rightarrow a$
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+%b-3) a → a
 
-where E = ak , again consuming k spikes and producing a
-single spike.
-The non-determinism of SNP systems come with the fact
+where the regular expression $E = a^k$, again consuming $k$ spikes and producing a spike.
+
+The non-determinism of SNP systems comes with the fact
 that more than one rule of the several types are applicable at
 a given time, given enough spikes. The rule to be used is
 chosen non-deterministically in the neuron. However, only
-one rule can be applied or used at a given time [CITE]. The
+one rule can be applied or used at a given time \cite{snp}\cite{snpbrain}\cite{snpmat}. The
 neurons in an SN P system operate in parallel and in unison,
-under a global clock. For Fig. 1 no input neuron is present,
+under a global clock. For Figure \ref{snp_ex} no input neuron is present,
 but neuron 3 is the output neuron, hence the arrow pointing
-towards the environment, outside the SNP system [CITE].
+towards the environment, outside the SNP system.
 
+
+	\begin{figure}
+		\centering
+		\includegraphics[scale=.5]{snp-img.png} 
+%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
+		\caption{An SNP P system $\Pi$, generating all numbers in \{$\mathbb N$ - $1$\} \cite{snpmat}.}
+		\label{snp_ex}
+	\end{figure}
+
+
+%cite references for figures used!!!
 
 %\subsection{Type Changes and {\subsecit Special} Characters}
 %of\footnote{A fourth, and last, footnote.}
