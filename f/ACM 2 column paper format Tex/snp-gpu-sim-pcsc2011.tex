@@ -82,16 +82,16 @@
 % 1st. author
 \alignauthor
 Francis Cabarle \\
-       \affaddr{ University of the Philippines Diliman }\\
-       \affaddr{ Department of Computer Science }\\
        \affaddr{ Algorithms and Complexity Laboratory }\\
+       \affaddr{ Department of Computer Science }\\
+       \affaddr{ University of the Philippines Diliman }\\
        \email{ fccabarle@up.edu.ph  }
 % 2nd. author
 \alignauthor
 Henry Adorna \\
-       \affaddr{ University of the Philippines Diliman }\\
-       \affaddr{ Department of Computer Science }\\
        \affaddr{ Algorithms and Complexity Laboratory }\\
+       \affaddr{ Department of Computer Science }\\
+       \affaddr{ University of the Philippines Diliman }\\
        \email{hnadorna@dcs.upd.edu.ph}
 %\and  % use '\and' if you need 'another row' of author names
 }
@@ -113,7 +113,9 @@ Henry Adorna \\
 \begin{abstract}
 
 This paper presents a parallel simulator for a type of P system known as spiking neural P system (SNP system) using general purpose graphics processing units (GPGPUs). GPGPUs, unlike the more conventional and general purpose, multi-core CPUs, are used for parallelizable problems due to their architectural optimization for parallel computations.
+
 Membrane computing or P systems on the other hand, are cell-inspired computational models which compute in a maximally parallel and non-deterministic manner. SNP systems, w/c compute via time separated spikes and whose inspiration was taken from the way neurons operate in living organisms, have been represented as matrices.
+
 The matrix representation of SNP systems provides a crucial step into their simulation on parallel devices such as GPGPUs. Simulating the highly parallel nature of SNP systems necessitates the use of hardware intended for parallel computations. The simulator algorithms, design considerations, and implementation are presented. Finally, simulation results, observations, and analyses using an SNP system that generates all numbers in \{$\mathbb N$ - $1$\} are discussed.
 
 \end{abstract}
@@ -125,7 +127,7 @@ The matrix representation of SNP systems provides a crucial step into their simu
 
 %\terms{Theory}
 
-\keywords{ Membrane computing, Parallel computing, GPGPUs  } % NOT required for Proceedings
+\keywords{ Membrane computing, Parallel computing, GPU computing  } % NOT required for Proceedings
 
 \section{Introduction}
 
@@ -155,7 +157,7 @@ where:
 \begin{enumerate}
 \item[1.] $O=\{a\}$ is the singleton alphabet ($a$ is called spike);
 
-\item[2.] $\sigma_1,\ldots, \sigma_m$ are neurons, of the form
+\item[2.] $\sigma_1,\ldots, \sigma_m$ are $m$ number of neurons, of the form
 $$\sigma_{i}=(n_i, R_i),1\leq i\leq m,$$
 where:
 \begin{enumerate}
@@ -163,10 +165,10 @@ where:
 
 \item[b)] $R_i$ is a finite set of rules of the following two forms:
 \begin{enumerate}
-\item[(1)]$E/a^c \rightarrow a^p$, where $E$ is a regular expression
+\item[(b-1)]$E/a^c \rightarrow a$, where $E$ is a regular expression
 over $a$, and $c\geq 1$, $p\geq 1$, with the restriction $c\geq p$;
-\item[(2)]$a^s\rightarrow \lambda$, for $s\geq 1$, with the
-restriction that for each rule $E/a^c\rightarrow a^p$ of type (1)
+\item[(b-2)]$a^s\rightarrow \lambda$, for $s\geq 1$, with the
+restriction that for each rule $E/a^c\rightarrow a$ of type (b-1)
 from $R_i$, $a^s\notin L(E)$;
 \end{enumerate}
 \end{enumerate}
@@ -179,7 +181,27 @@ between neurons);
 \end{definition}
 %Π =O , σ 1 , ... , σ m , syn , σ inp , σ outp (2a)
 
-(2a) represents an SNP system without delay of degree $m \ge 1$, that is, with $m$ neurons, where
+Furthermore, rules of type (b-1) are applied if $\sigma_i$ contains $k$
+spikes, $a^k \in L(E)$ and $k \geq c$. Using this type of rule uses up
+or consumes k spikes from the neuron, producing p spikes to
+neurons adjacent to it. In this manner, for rules of type b-2)
+if σi contains s spikes, then s spikes are forgotten or
+removed once the rule is used. Rules of type b-1) can be
+simplified with the notation
+
+b-3) a → a
+
+where E = ak , again consuming k spikes and producing a
+single spike.
+The non-determinism of SNP systems come with the fact
+that more than one rule of the several types are applicable at
+a given time, given enough spikes. The rule to be used is
+chosen non-deterministically in the neuron. However, only
+one rule can be applied or used at a given time [CITE]. The
+neurons in an SN P system operate in parallel and in unison,
+under a global clock. For Fig. 1 no input neuron is present,
+but neuron 3 is the output neuron, hence the arrow pointing
+towards the environment, outside the SNP system [CITE].
 
 
 %\subsection{Type Changes and {\subsecit Special} Characters}
@@ -404,21 +426,45 @@ to other forms -- e.g. HTML. If you inadvertently omit
 some or all of the \texttt{{\char'134}def}s recompilation will
 be, to say the least, problematic.
 
-\section{Conclusions}
-This paragraph will end the body of this sample document.
-Remember that you might still have Acknowledgments or
-Appendices; brief samples of these
-follow.  There is still the Bibliography to deal with; and
-we will make a disclaimer about that here: with the exception
-of the reference to the \LaTeX\ book, the citations in
-this paper are to articles which have nothing to
-do with the present subject and are used as
-examples only.
+\section{Conclusions and future work}
+Using a highly parallel computing device such as a GPGPU,
+particularly NVIDIA CUDA, an SNP system simulator was
+successfully designed and implemented. The use of a high
+level programming language such as Python for host tasks,
+mainly for logic and string representation and manipulation
+of values (vector/matrix elements) provided the necessary
+expressivity to implement the algorithms created to produce
+and exhaust all possible and valid configuration and spiking
+vectors. For the device tasks, CUDA C allowed the
+manipulation of the NVIDIA CUDA enabled GPGPU which
+took care of repetitive and highly parallel computations
+(addition and multiplication essentially).
+
+Future versions of the SNP system simulator will focus on
+several improvements. These improvements include the use
+of an algorithm for matrix computations without requiring
+the input matrix to be turned into a square matrix (this is
+currently handled by the simulator by padding zeros to an
+otherwise non-square matrix input). Another improvement
+would be the simulation of systems not of the form b-3).
+Byte-compiling the Python/host part of the code to improve
+performance as well as metrics to further enhance and
+measure execution time are desirable as well. Finally, deeper
+understanding of the CUDA architecture, such as inter-
+thread/block communication, for extremely large systems
+with equally large matrices, is required. These
+improvements as well as the current version of the simulator
+should also be run in a machine with higher versions of
+GPGPUs running NVIDIA CUDA.
+%ADD simulation in larger CUDA systems
+
 %\end{document}  % This is where a 'short' article might terminate
 
 %ACKNOWLEDGMENTS are optional
 \section{ Acknowledgments }
 The authors are supported by the \textit{ERDT Project}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests.
+
+%HOW to acknowledge Mr. Miguel del-Amor?
 
 %and the \textbf{.cls} and \textbf{.tex} files that it describes.
 
@@ -462,7 +508,7 @@ The authors are supported by the \textit{ERDT Project}. They also wish to acknow
 
 %ADD matrix on parallel computers book citation
 
-%ADD figure citation
+%ADD citation to figures used!!
 
 \end{thebibliography}
 
