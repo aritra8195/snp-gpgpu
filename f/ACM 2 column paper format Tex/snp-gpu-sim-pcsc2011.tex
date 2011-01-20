@@ -132,17 +132,17 @@ The matrix representation of SNP systems provides a crucial step into their simu
 \section{Introduction}
 
 \subsection{Parallel computing: Via graphics processing units (GPUs)}
-The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance\cite{cudapage}. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with  larger speedups when done in parallel, by GPGPUs over CPUs. 
+The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance\cite{cudapage}. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with larger speedups when done in parallel as compared to performing them sequentially. 
 
 \subsection{Paralel computing: Via Membranes}
 Membrane computing or its more specific counterpart, a P system, are Turing complete computing models that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of natural computing, from nature\cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
 
-SN P systems differ from other types of P systems precisely because they are mono-membranar and only use one type of object in its computation. These characteristics, among others, are meant to capture the workings of a special type of cell known as the neuron. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as spikes. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, by means of time duration as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval\cite{snp}. The time duration between two spikes, or several successive spikes, transmit information from one cell to another.  
+SN P systems differ from other types of P systems precisely because they are mono-membranar and only use one type of object in its computation. These characteristics, among others, are meant to capture the workings of a special type of cell known as the neuron. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as \textit{spikes}. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, but by means of time duration as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval\cite{snp}. The time duration between two spikes, or several successive spikes, transmit the information.  
 
 It has been shown that SN P systems, given their nature, are representable by matrices\cite{snpbrain}\cite{snpmat}. This representation allows design and implementation of an SN P system simulator using parallel computing machines such as GPGPUs. 
 
 \subsection{Simulating SNP systems in GPGPUs}
-Matrix operations and their algorithms have been studied and efficiently implemented in GPGPUs \cite{matrixgpu1}\cite{matrixgpu2}. Thus the matrix representation of SNP systems bridges the gap between the highly theoretical yet still computationally powerful SNP systems and the applicative and more tangible GPGPUs, via an SNP system simulator. The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and makes parallel computations, via GPGPUs manufactured by NVIDIA.
+Matrix operations and their algorithms have been studied and efficiently implemented in GPGPUs \cite{matrixgpu1}\cite{matrixgpu2}. Thus the matrix representation of SNP systems bridges the gap between the highly theoretical yet still computationally powerful SNP systems and the applicative and more tangible GPGPUs, via an SNP system simulator. The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and allows programmers to perform parallel computations, via GPGPUs manufactured by NVIDIA.
 
 This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
 
@@ -212,7 +212,7 @@ one rule can be applied or used at a given time \cite{snp}\cite{snpbrain}\cite{s
 neurons in an SN P system operate in parallel and in unison,
 under a global clock \cite{snp}. For Figure \ref{snp_ex} no input neuron is present,
 but neuron 3 is the output neuron, hence the arrow pointing
-towards the environment, outside the SNP system. The SNP system in Figure \ref{snp_ex} is a 3 neuron system whose neurons are labeled (neuron/$\sigma_1$ to 3) and whose rules have a total system ordering from (1) to (5)
+towards the environment, outside the SNP system. The SNP system in Figure \ref{snp_ex} is a 3 neuron system whose neurons are labeled (neuron/$\sigma_1$ to 3) and whose rules have a total system ordering from (1) to (5).
 
 
 	\begin{figure}
@@ -248,12 +248,12 @@ order.
 \textit{Configuration vector} $C_k$ is the vector containing all spikes in every neuron on the $kth$ computation step/time, where $C_0$ is the initial vector containing all spikes in the system at the beginning of the computation. For $\Pi$ (in Figure \ref{snp_ex} ) the initial configuration vector is $C_0 = < 2, 1, 1 >$.
 
 \textit{Spiking vector} which shows, at a given configuration $C_k$, if a
-rule is applicable (has value 1) or not (has value 0 instead). For $\Pi$ we have the
+rule is applicable (has value \textit{1}) or not (has value \textit{0} instead). For $\Pi$ we have the
 spiking vector $S_k = < 1, 0, 1, 1, 0 >$ given $C_0$.
 Note that a 2nd spiking vector, $S_k = < 1, 0, 1, 1, 0 >$, is
 possible if we use rule (2) over rule (1) instead (but not both
 at the same time, hence we cannot have a vector equal to
-< 1, 1, 1, 1, 0> ).
+< 1, 1, 1, 1, 0>, so this $S_k$ is invalid ).
 
 \textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_i_j$
 elements where $a_i_j$ is given as
@@ -313,8 +313,8 @@ its own grids. The program run in the CUDA model scales
 up or down, depending on the number of cores the
 programmer currently has in a device. This scaling is done
 in a manner that is abstracted from the user, and is
-efficiently as well. Automatic and efficient scaling is shown
-in Figure \ref{cuda_scale} Parallelized code will run faster with more cores
+efficiently handled by the architecture as well. Automatic and efficient scaling is shown
+in Figure \ref{cuda_scale}. Parallelized code will run faster with more cores
 than with fewer ones \cite{cudaguide}.
 
 	\begin{figure}
@@ -335,10 +335,10 @@ result to faster execution, from \cite{cudaguide}.}
 	\end{figure}
 
 Figure \ref{cuda_model} shows another important feature of the CUDA model:
-the host and the device parts. As mentioned earlier, device
+the host and the device parts. Device
 pertains to the GPGPU/s of the system, while the host
-pertains to the CPU/s. A function known as a kernel
-function, is a function called from the host but executed in
+pertains to the CPU/s. A function known as a \textit{kernel
+function}, is a function called from the host but executed in
 the device.
 
 A general model for creating a CUDA enabled program is
@@ -372,7 +372,7 @@ cudaMemcpyDeviceToHost )
 cudaFree( dev_a );
 \end{lstlisting}
 
-Lines 2 and 19, implement CUDA versions of
+Lines 2 and 21, implement CUDA versions of
 the standard C language functions e.g. the standard C
 function $malloc$ has the CUDA C function counterpart being
 $cudaMalloc$, and the standard C function $free$ has $cudaFree$ as its CUDA C counterpart.
@@ -394,11 +394,11 @@ dev\_c )$.
 
 This function adds the values, per element (and
 each element is associated to 1 thread), of the variables
-dev\_a and dev\_b sent to the device, collected in variable
-dev\_c before being sent back to the host/CPU. The variable
+$dev\_a$ and $dev\_b$ sent to the device, collected in variable
+$dev\_c$ before being sent back to the host/CPU. The variable
 $N$ in this case allows the programmer to specify $N$ number of
 threads which will execute the $add$ kernel function in parallel, with 1
-specifying only one block for all $N$ threads.
+specifying only one block of thread for all $N$ threads.
 
 \subsection{Design considerations given hardware and software
 setup}
@@ -409,7 +409,7 @@ CPU/host to the device, and then back from the device to the
 host after computation. This movement of data back and
 forth should be minimized in order to obtain more efficient,
 in terms of time, execution.
-Implementing an equation such as \ref{next-config}, which involves
+Implementing an equation such as (\ref{next-config}), which involves
 multiplication and addition between vectors and a matrix,
 can be done in parallel with the previous considerations in
 mind. In this case, $C_k$, $S_k$, and $M_{\Pi}$ are loaded, manipulated, and pre-processed within the host code,
@@ -420,7 +420,7 @@ order to house each input, whereby each element of the
 vector or matrix is entered in the file in order, from left to right, with a blank space in between as a delimiter. The
 matrix however is entered in row-major ( a linear array of all
 the elements, rows first, then columns) order format i.e. for
-the matrix $M_{\Pi}$ seen in \ref{snp_mat}, the row-major order version is simply
+the matrix $M_{\Pi}$ seen in (\ref{snp_mat}), the row-major order version is simply
 \begin{equation}\label{row-maj}
 -1, 1, 1, -2, 1, 1, 1, -1, 1, 0, 0, -1, 0, 0, -2
 \end{equation}
@@ -429,15 +429,15 @@ Row major ordering is a well-known ordering and
 representation of matrices for their linear as well as parallel
 manipulation in corresponding algorithms \cite{cudabook}. Once all
 computations are done for the $(k+1)th$ configuration, the result of
-equation \ref{next-config} are then collected and moved back from the
+equation (\ref{next-config}) are then collected and moved from the
 device back to the host, where they can once again be
 operated on by the host/CPU. It is also important to note
 that these operations in the host/CPU provide logic and
 control of the data/inputs, while the device/GPU provides
 the arithmetic or computational 'muscle', the laborious task
-of working on multiple data or instructions at a given time,
+of working on multiple data or instructions at a given time in parallel,
 hence the current dichotomy of the CUDA programming model \cite{sat}.
-This division of labor is implemented in exemplified in Listing \ref{cuda-code} .
+This division of labor is observed in Listing \ref{cuda-code} .
 
 \subsection{Matrix
 computations
@@ -458,18 +458,18 @@ products are collected and summed to produce a single
 element of the resulting vector/single row matrix.
 
 Once multiplication of the $S_k$ and $M_{\Pi}$ is done,
-the result is similarly added to the configuration vector $C_k$, once
+the result is similarly added to the $C_k$, once
 again element per element, with each element belonging to
-one thread, executed all at the same time as the others.
+one thread, executed at the same time as the others.
 
-For this simulator, the host code consists almost entirely of
-the programming language Python, a well-known high-
+For this simulator, the host code consists largely of
+the programming language \emph{Python}, a well-known high-
 level, object oriented programming (OOP) language. The
 reason for using a high-level language such as Python is
 because the initial inputs, as well as succeeding ones
 resulting from exhaustively applying the rules and equation
 \ref{next-config} require manipulation of the vector/matrix elements or
-values as strings to be concatenated, checked on (if they
+values as \emph{strings} to be concatenated, checked on (if they
 conform to the form (b-3) for example) by the host, as well
 as manipulated in ways which will be elaborated in the
 following sections along with the discussion of the
@@ -495,7 +495,7 @@ consumed in that rule. Rules are entered in the same manner
 as the earlier mentioned vectors and matrix, as blank space
 delimited values (from one rule to the other, belonging to the same neuron) and \$ delimited ( from one neuron to the
 other). Thus for the SNP system ${\Pi}$ shown earlier, the file $r$
-containing the blank space and \$ delimited values is as
+containing the blank space and \textit{\$} delimited values is as
 follows:
 \begin{equation}\label{rules}
 2~2~\$~1~\$~1~2
@@ -509,7 +509,7 @@ consideration was the use of $lists$ in Python, since unlike
 dictionaries or tuples, lists in Python are  \emph{mutable}, which is a
 direct requirement of the vector/matrix element
 manipulation to be performed later on (concatenation
-mostly). Hence a configuration vector $C_k = <2, 1, 1>$ is
+mostly). Hence a $C_k = <2, 1, 1>$ is
 represented as $[ 2, 1, 1 ]$ in Python. That is, at the $kth$
 configuration of the system, the number of spikes of neuron
 1 are given by accessing the index (starting at zero) of the
@@ -521,8 +521,8 @@ confVec = [ 2, 1, 1 ]
 then $confVec[ 0 ] = 2$ are the number of spikes available at
 that time for neuron 1, $confVec[ 1 ] = 1$ for neuron 2, and so
 on. The file $r$, which contains the ordered list of neurons and
-the rules that comprise each of them, is represented as a $list of sub-
-lists$ in the Python/host code. For SNP ${\Pi}$ we have the
+the rules that comprise each of them, is represented as a \textit{list of sub-
+lists} in the Python/host code. For SNP system ${\Pi}$ we have the
 following:
 \begin{equation}\label{rule-list}
 r = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ]
@@ -548,12 +548,12 @@ I. \textbf{(HOST)} Load inputs: configuration vector
 file \textit{confVec}, spiking transition matrix
 file \textit{M}, and rule criteria file \textit{r}.
 Note that $M$ and $r$ need only be loaded 
-once since they are unchanging for a given SN P system.\\
+once since they are unchanging for an SN P system.\\
 
 
 II. \textbf{(HOST)} Determine if a rule/element in $r$ 
 is applicable based on its corresponding spike value 
-in $configVec$, and then generate all valid and
+in $confVec$, and then generate all valid and
 possible spiking vectors in a list of lists $spikVec$ given the 3 initial inputs.\\
 
 
@@ -561,13 +561,13 @@ III. \textbf{(DEVICE)} From part II., run the kernel
 function on $spikVec$, which contains all 
 the valid and possible spiking vectors for 
 the current $confVec$ and $r$. This will 
-generate the succeeding $Ck$s and their corresponding $Sk$s.\\
+generate the succeeding $C_k$s and their corresponding $S_k$s.\\
 
 
-IV. \textbf{(HOST+DEVICE)} Repeat steps I to IV until
+IV. \textbf{(HOST+DEVICE)} Repeat steps I to IV (except instead of loading $C_0$ as $confVec$, use the generated $C_k$s in III) until
 a zero configuration vector (vector with 
-only zeros as elements) or further $Ck$s
-produced are repetitions of a $Ck$
+only zeros as elements) or further $C_k$s
+produced are repetitions of a $C_k$
 produced at an earlier time. (Stopping criteria in subsection \ref{snp-sim-algo} )
 \end{algorithmic}
 \end{algorithm}
@@ -590,8 +590,7 @@ one that can continue executing for a significantly lengthy amount of
 time even with a multi-core CPU and even the more parallelized
 GPGPU.
 Each line in Algorithm \ref{sim-algo} mentions
-which parts of the simulator run in which part of the CUDA
-programming model, either in the device \textbf{(DEVICE)} or in the host \textbf{(HOST)} part.
+which part/s the simulator code runs in, either in the device \textbf{(DEVICE)} or in the host \textbf{(HOST)} part.
 
 \subsection{Further inspection and detailing of the SNP system
 simulator}
@@ -601,7 +600,7 @@ The more detailed algorithm for part $II$ of Algorithm \ref{sim-algo} is as foll
 A few definitions are in order at this point:
 
 \begin{equation}\label{sigma}
-\Sigma =  |r|, total number of neurons.
+\Sigma =  |r| 
 \end{equation}
 \begin{equation}\label{psi}
 \Psi = |{\sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_n}|, n \in \mathbb{N}, n \leq \infty
@@ -611,13 +610,13 @@ where
 
 |{\sigma_V_n}|
 
-means the total count of the number of rules in the $nth$ neuron which satisfy the regular expresion $E$ in (b-3)
+means the total count of the number of rules in the $nth$ neuron which satisfy the regular expresion $E$ in (b-3). \Sigma gives the total number of neurons, while \Psi gives the expected number of valid and possible $S_k$s which should be produced in a given configuration.
 
 
 During the exposition of the algorithm, the previous Python
 lists (from their vector/matrix counterparts in earlier
 sections) (\ref{confvec}) and (\ref{rule-list}) will be utilized. For part $II$ Algorithm \ref{sim-algo} we have a sub-algorithm (Algorithm \ref{sim-algo2}) for generating all valid
-and possible spiking vectors given input files $M$ (the $list$ version of (\ref{row-maj})) , $configVec$, and $r$.
+and possible spiking vectors given input files $M$ (the $list$ version of (\ref{row-maj})) , $confVec$, and $r$.
 
 \begin{algorithm}
 \caption{Algorithm further detailing part II in Algorithm \ref{sim-algo}}
@@ -634,7 +633,7 @@ II-2 To generate all possible and valid spiking vectors from
 $tmp$, we go through each neuron i.e. all elements of $tmp$,
 since we know a priori $\Sigma$ as well as the number of
 elements per neuron which satisfy $E$. We only need to iterate
-through each neuron/element of tmp $\omega$ times, where $\omega$ is
+through each neuron/element of $tmp$, $\omega$ times, where $\omega$ is
 both the largest and last number in the sub-list/neuron,
 which tells us how many elements of that neuron satisfy $E$
 (from II-1). We then produce a new list, $tmp2$, which is
@@ -642,7 +641,7 @@ made up of a sub-list of strings from all possible and valid
 \textit{\{1,0\}} strings i.e. spiking vectors per neuron.\\
 
 II-3. To obtain all possible and valid \textit{\{1,0\}}
-strings (spiking vectors), given that there are multiple strings
+strings ($S_k$s), given that there are multiple strings
 to be concatenated ( as in $tmp2$'s case ), pairing up the
 neurons first, in order, and then exhaustively distributing
 every element of the first neuron to the elements of the 2nd
@@ -657,7 +656,7 @@ As an illustration of Algorithm \ref{sim-algo2}, consider (\ref{confvec}), (\ref
 $tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]$\\
 \textit{Remark/s}: previously, $tmp [ 0 ][ 0 ]$ was equal to 2,
 but now has been changed to 1, since it satisfies $E$
-( $configVec[ 0 ] = 2$ w/c is less than or equal to 2, the
+( $configVec[ 0 ] = 2$ w/c is equal to 2, the
 number of spikes consumed by that rule).
 
 2nd pass:
@@ -683,7 +682,7 @@ element/rule of neuron 3 doesn't satisfy $E$.
 Final result:
 $tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]$
 
-At this point we can observe the following, based on the
+At this point we have the following, based on the
 earlier definitions:
 
 $\Sigma$ = 3 ( 3 neurons in total, one per element/value of
@@ -719,7 +718,7 @@ For neuron 1, our first pass along its elements/list is as follows. Its 1st elem
 
 		$tmp[ 0 ][ 0 ] = 1$
 
-is the first element to satisfy $E$, hence it requires a \textit{1} in its place, and \textit{0} in the others. We therefore produce the string	\textit{10} for it. Next, the 2nd element satisfies $E$ and it too, deserves a \textit{1}, while the rest get \textit{0}s. We produce the string \textit{01} for it. 
+is the first element to satisfy $E$, hence it requires a \textit{1} in its place, and \textit{0} in the others. We therefore produce the string	'\textit{10}' for it. Next, the 2nd element satisfies $E$ and it too, deserves a \textit{1}, while the rest get \textit{0}s. We produce the string '\textit{01}' for it. 
 
 The new list, $tmp2$, collecting the strings produced for neuron 1 therefore becomes
 
@@ -742,7 +741,7 @@ Observe that the sublist
 is equal to all possible and valid \{\textit{1,0}\} strings for neuron 1, given rules in (\ref{rule-list}) and the number of spikes in $configVec$. 
 
 Illustrating II-3 of Algorithm \ref{sim-algo2}, given the valid and
-possible \{\textit{1,0}\} strings (spiking vectors) for neurons 1, 2, and 3 (separated per neuron-column) from (\ref{confvec}) and (\ref{rule-list}) and from the illustration of II-2, all possible \{\textit{1,0}\} string/s for neuron 1: <10,01>, neuron 2: <1>, and neuron 3: <10>.
+possible \{\textit{1,0}\} strings (spiking vectors) for neurons 1, 2, and 3 (separated per neuron-column) from (\ref{confvec}) and (\ref{rule-list}) and from the illustration of II-2, all possible and valid list of \{\textit{1,0}\} string/s for neuron 1: ['10','01'], neuron 2: ['1'], and neuron 3: ['10'].
 
 First, pair the strings of neurons 1 and 2, and then distribute them exhaustively to the other neuron's possible and valid strings, concatenating them in the process (since they are considered as $strings$ in Python). 
 
@@ -776,12 +775,12 @@ The final output of the sub-algorithm for the generation of all valid and possib
 
 		$tmp3 = [ 10110, 01110 ] $
 
-Thus $tmp3$ is the list of all possible and valid spiking vectors given (\ref{confvec}) and (\ref{rule-list}) in this illustration. Furthermore, $tmp3$ includes all possible and valid spiking vectors for a given neuron in a given configuration of an SN P system with all its rules and 
+As mentioned earlier, $\Psi$ = 2 is the number of valid and possible $S_k$s to be expected from $r$, $M_\Pi$, and $C_0$ = [2,1,1] in $\Pi$. Thus $tmp3$ is the list of all possible and valid spiking vectors given (\ref{confvec}) and (\ref{rule-list}) in this illustration. Furthermore, $tmp3$ includes all possible and valid spiking vectors for a given neuron in a given configuration of an SN P system with all its rules and 
 synapses (interconnections). Part II-3 is done (	$\Sigma - 1$) times, albeit exhaustively still so, between the two lists/neurons in the pair. 
 
 \section{simulation computation results, observations, and analysis}
-Running the SNP system simulator (combination of Python
-and CUDA C) implementing the algorithms in section \ref{sect-snp-algo}
+The SNP system simulator (combination of Python
+and CUDA C) implements the algorithms in section \ref{sect-snp-algo}
 earlier. A sample simulation run with the SNP system $\Pi$ is
 shown below (most of the output has been truncated due to space constraints ) with $C_0$ = [2,1,1]
 \begin{verbatim}
@@ -789,7 +788,7 @@ shown below (most of the output has been truncated due to space constraints ) wi
 Spiking transition Matrix: 
 ... 
 
-Rules of the form a^n/a^m -> a^i or a^n ->a^i loaded: 
+Rules of the form a^n/a^m -> a or a^n ->a loaded: 
 ['2', '2', '$', '1', '$', '1', '2'] 
 
 Initial configuration vector: 211
@@ -802,22 +801,22 @@ Neuron 1  rules criterion/criteria and total order
  All valid spiking vectors: allValidSpikVec =
  [['10110', '01110']] 
 All generated Cks are allGenCk =
- ['211', '212', '112'] 
+['2-1-1', '2-1-2', '1-1-2'] 
  End of C0 
 ** 
 ** 
 ** 
  initial total Ck list is
-   ['211', '212', '112'] 
+   ['2-1-1', '2-1-2', '1-1-2'] 
 Current confVec: 212 
 All generated Cks are allGenCk =
-	 ['211', '212', '112', '213', '113'] 
+['2-1-1', '2-1-2', '1-1-2', '2-1-3', '1-1-3'] 
 ** 
 ** 
 ** 
 Current confVec: 112 
 All generated Cks are allGenCk =
-['211', '212', '112', '213', '113', '202', '201'] 
+['2-1-1', '2-1-2', '1-1-2', '2-1-3', '1-1-3', '2-0-2', '2-0-1'] 
 ** 
 ** 
 ...
@@ -835,15 +834,12 @@ No more Cks to use (infinite loop/s otherwise). Stop.
 ****SN P system simulation run ENDS here****
 \end{verbatim}
 
-That is, the computation tree for SNP system $\Pi$ with $C_0$ = [2,1,1] went down as deep as $confVec = 109$. At that point, all configuration vectors for all possible and valid spiking vectors have been produced. The Python lise variable $allGenCk$ collects all the $C_k$s produced. The final value of $allGenCk$ for the above simulation run is
+That is, the computation tree for SNP system $\Pi$ with $C_0$ = [2,1,1] went down as deep as $confVec = 109$. At that point, all configuration vectors for all possible and valid spiking vectors have been produced. The Python list variable $allGenCk$ collects all the $C_k$s produced. The final value of $allGenCk$ for the above simulation run is
 
-\textit{allGenCk = ['211', '212', '112', '213', '113', '202', '201', '214',
-'114', '203', '111', '012', '011', '215', '115', '204', '013', '102',
-'101', '216', '116', '205', '014', '103', '100', '217', '117', '206',
-'015', '104', '218', '118', '207', '016', '105', '219', '119', '208',
-'017', '106', '2110', '1110', '209', '018', '107', '019', '108', '109'] }
+\textit{
+allGenCk = ['2-1-1', '2-1-2', '1-1-2', '2-1-3', '1-1-3', '2-0-2', '2-0-1', '2-1-4', '1-1-4', '2-0-3', '1-1-1', '0-1-2', '0-1-1', '2-1-5', '1-1-5', '2-0-4', '0-1-3', '1-0-2', '1-0-1', '2-1-6', '1-1-6', '2-0-5', '0-1-4', '1-0-3', '1-0-0', '2-1-7', '1-1-7', '2-0-6', '0-1-5', '1-0-4', '2-1-8', '1-1-8', '2-0-7', '0-1-6', '1-0-5', '2-1-9', '1-1-9', '2-0-8', '0-1-7', '1-0-6', '2-1-10', '1-1-10', '2-0-9', '0-1-8', '1-0-7', '0-1-9', '1-0-8', '1-0-9'] }
 
- It's also noteworthy that simulation for $\Pi$ didn't stop at the 1st stopping criteria (arriving at a zero vector) since $\Pi$ generates  all natural counting numbers greater than 1, hence a loop (an infinite one) is to be expected. The simulation run shown above stopped with the 2nd stopping criteria from Section \ref{sect-snp-algo}. Thus the simulation was able to exhaust all possible configuration vectors and their spiking vectors, stopping only since a repetition of an earlier generated $confVec$ would introduce a loop (triggering the 2nd stopping criteria).
+ It's also noteworthy that the simulation for $\Pi$ didn't stop at the 1st stopping criteria (arriving at a zero vector i.e. $C_k$ = [0,0,0] ) since $\Pi$ generates  all natural counting numbers greater than 1, hence a loop (an infinite one) is to be expected. The simulation run shown above stopped with the 2nd stopping criteria from Section \ref{sect-snp-algo}. Thus the simulation was able to exhaust all possible configuration vectors and their spiking vectors, stopping only since a repetition of an earlier generated $confVec$ would introduce a loop (triggering the 2nd stopping criteria).
 Graphically (though not shown exhaustively) the computation tree for $\Pi$ is shown in Figure \ref{c211_tree}.
 
 	\begin{figure}
@@ -854,7 +850,7 @@ Graphically (though not shown exhaustively) the computation tree for $\Pi$ is sh
 		\label{c211_tree}
 	\end{figure}
 
-The $confVecs$ followed by (...) are the $confVecs$ that went deeper i.e. produced more $Ck$s than Figure \ref{c211_tree} has shown.
+The $confVecs$ followed by (...) are the $confVecs$ that went deeper i.e. produced more $C_k$s than Figure \ref{c211_tree} has shown.
 
 
 \section{Conclusions and future work}
@@ -893,7 +889,7 @@ GPGPUs running NVIDIA CUDA.
 
 %ACKNOWLEDGMENTS are optional
 \section{ Acknowledgments }
-The authors are supported by the \textit{ERDT Project}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. The authors would also like to thank the valuable insights of Mr. Miguel Martinez-del-Amor and Mr. Neil Ibo.
+The authors are supported by the \textit{ERDT Project}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of the \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. The authors would also like to thank the valuable insights of Mr. Miguel Martinez-del-Amor and Mr. Neil Ibo.
 
 %HOW to acknowledge Mr. Miguel del-Amor?
 
