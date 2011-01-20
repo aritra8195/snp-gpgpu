@@ -27,7 +27,7 @@
 % For tracking purposes - this is V3.1SP - APRIL 2009
 
 \documentclass{acm_proc_article-sp}
-\usepackage{amsmath,amssymb,latexsym,graphicx,url,listings}
+\usepackage{amsmath,amssymb,latexsym,graphicx,url,listings, algorithm}
 \begin{document}
 
 
@@ -194,9 +194,9 @@ simplified with the notation
 \begin{definition}
 \begin{enumerate}
 \begin{enumerate}
-\begin{enumerate}
+%\begin{enumerate}
 \item[(b-3)]$a^k \rightarrow a$
-\end{enumerate}
+%\end{enumerate}
 \end{enumerate}
 \end{enumerate}
 \end{definition}
@@ -485,7 +485,7 @@ parts of the simulator.
 \section{DESIGN AND IMPLEMENTATION OF AN
 SNP SYSTEM SIMULATOR USING CUDA
 GPGPUS
-}
+}\label{sect-snp-algo}
 
 The current SNP simulator, which is based on the type of
 SNP systems currently without time delays, is capable of
@@ -533,66 +533,70 @@ Neuron 1's rules are given by accessing the sub-lists of $r$
 = 2$ and rule (4) is given by $r[ 2 ][ 1 ] = 1$.
 
 \subsection{Algorithms in the implementation of the SNP
+simulator}\label{snp-sim-algo}
+	
+The general algorithm is shown in Algorithm \ref{sim-algo}.
+	
+\begin{algorithm}
+\caption{Overview of the algorithm for the SNP system
 simulator}
-	
-The general algorithm is as shown in Listing \ref{sim-algo}
-	
-\lstset{numbers=left, numberstyle=\tiny, stepnumber=0, numbersep=5pt, label=cuda_gencode}
-% This concludes the preamble
+\label{sim-algo}
+\begin{algorithmic}
+\textbf{Require}: creation of files $confVec$, $M$, and $r$\\
 
-\begin{lstlisting}[label=sim-algo,caption=Overview of the algorithm for the SNP
-simulator]
-Require: creation of files confVec, M, and r
+I. \textbf{(HOST)} Load inputs: configuration vector
+file \textit{confVec}, spiking transition matrix
+file \textit{M}, and rule criteria file \textit{r}.
+Note that $M$ and $r$ need only be loaded 
+once since they are unchanging for a given SN P system.\\
 
-I. (HOST) Load inputs: configuration vector
-file (confVec ), spiking transition matrix
-file (M), and rule criteria file ( r ).
-Note that M and r need only be loaded 
-once since they are unchanging for a
-given SN P system.
 
-II. (HOST) Determine if a rule/element in r 
-is applicable based on the the spike value 
-in configVec, and then generate all valid +
-possible spiking vectors in a list of lists
-spikVec given r and confVec.
+II. \textbf{(HOST)} Determine if a rule/element in $r$ 
+is applicable based on its corresponding spike value 
+in $configVec$, and then generate all valid and
+possible spiking vectors in a list of lists $spikVec$ given the 3 initial inputs.\\
 
-III. (DEVICE) From part II, run the kernel 
-function on spikVec, which contains all 
-the valid + possible spiking vectors for 
-the current  confVec and r. This will 
-generate further Ck and their corresponding Sk.
 
-IV. (HOST+DEVICE) Repeat steps I to IV until
+III. \textbf{(DEVICE)} From part II., run the kernel 
+function on $spikVec$, which contains all 
+the valid and possible spiking vectors for 
+the current $confVec$ and $r$. This will 
+generate the succeeding $Ck$s and their corresponding $Sk$s.\\
+
+
+IV. \textbf{(HOST+DEVICE)} Repeat steps I to IV until
 a zero configuration vector (vector with 
-only zeros as elements) or further Ck
-produced are repetitions of a Ck
-produced at an earlier time.
-\end{lstlisting}
+only zeros as elements) or further $Ck$s
+produced are repetitions of a $Ck$
+produced at an earlier time. (Stopping criteria in subsection \ref{snp-sim-algo} )
+\end{algorithmic}
+\end{algorithm}
+
 	
-Step $IV$ of Listing \ref{sim-algo} makes
-the algorithm stop with 2 $stopping criteria$ to do this: One is when
-there are no more available spikes in the system (hence a
+Step $IV$ of Algorithm \ref{sim-algo} makes
+the algorithm stop with 2 \textit{stopping criteria} to do this:
+
+One is when there are no more available spikes in the system (hence a
 zero value for a configuration vector), and the second one
 being the fact that all previously generated configuration
 vectors have been produced in an earlier time or
-computation, hence using them again in part I of the
-simulator algorithm overview would be pointless, since a
-redundant, unnecessary infinite loop will only be formed. Another
-important point to notice is that either of the stopping
-criterion could allow for a deeply nested computation tree,
-one that can continues on executing for a certain length of
-time even with a multi-core CPU and even more parallel
-GPGPU.
+computation, hence using them again in part I of Algorithm \ref{sim-algo} would be pointless, since a
+redundant, infinite loop will only be formed.
 
-Each line in Listing \ref{sim-algo} mentions
+Another
+important point to notice is that either of the stopping
+criterion from \ref{snp-sim-algo} could allow for a deeply nested computation tree,
+one that can continue executing for a significantly lengthy amount of
+time even with a multi-core CPU and even the more parallelized
+GPGPU.
+Each line in Algorithm \ref{sim-algo} mentions
 which parts of the simulator run in which part of the CUDA
-programming model, either in the device (DEVICE) or in the host (HOST) part.
+programming model, either in the device \textbf{(DEVICE)} or in the host \textbf{(HOST)} part.
 
 \subsection{Further inspection and detailing of the SNP system
 simulator}
 	
-The more detailed algorithm for part $II$ of Listing \ref{sim-algo} is as follows.
+The more detailed algorithm for part $II$ of Algorithm \ref{sim-algo} is as follows.
 
 A few definitions are in order at this point:
 
@@ -612,116 +616,246 @@ means the total count of the number of rules in the $nth$ neuron which satisfy t
 
 During the exposition of the algorithm, the previous Python
 lists (from their vector/matrix counterparts in earlier
-sections) (\ref{confvec}) and (\ref{rule-list}) will be utilized. For part $II$ Listing \ref{sim-algo} we have the following sub-algorithm for generating all valid
-and possible spiking vectors given input files $M$ (the $list$ version of (\ref{row-maj})) , $configVec$, and $r$:
+sections) (\ref{confvec}) and (\ref{rule-list}) will be utilized. For part $II$ Algorithm \ref{sim-algo} we have a sub-algorithm (Algorithm \ref{sim-algo2}) for generating all valid
+and possible spiking vectors given input files $M$ (the $list$ version of (\ref{row-maj})) , $configVec$, and $r$.
 
-\lstset{numbers=left, numberstyle=\tiny, stepnumber=0, numbersep=5pt, label=cuda_gencode}
-% This concludes the preambleII-1 Create a list tmp, a copy of r, marking each element of
-tmp in increasing order of N, as long as the element/s
-satisfy the rule's regular expression E of a rule (given by list
-r ). Elements that don't satisfy E are marked with 0.
-
-In this case
-
-tmp = r
-
-then
-tmp = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ]
-and that given (a) we thus have the following passes as we
-traverse tmp, with underlined elements being the elements
-that are currently being checked at that stage/pass:
-1st pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: previously, tmp [ 0 ][ 0 ] was equal to 2,
-but now has been changed to 1, since it satisfies E
-( configVec[ 0 ] = 2 w/c is less than or equal to 2, the
-number of spikes consumed by that rule).
-2nd pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: previously tmp[ 0 ][ 1 ] = 2, which has
-now been changed (incidentally) to 2 as well, since
-it's the 2nd element of neuron 1 which satisfies E.
-3rd pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: 1st (and only) element of neuron 2 which
-satisfies E.
-4th pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: Same as the 1st pass
-5th pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
-Remark/s: element tmp[ 2 ][ 1 ], or the 2nd
-element/rule of neuron 3 doesn't satisfy E.
-Final result:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
-At this point we can observe the following, based on the
-earlier definitions:
-Σ = 3 ( 3 neurons in total, one per element/value of
-confVec )
-Ψ = |σV1| |σV2| |σV3| = 2 * 1 * 1 = 2
-Ψ tells us the number of valid strings of 1s and 0s i.e.
-spiking vectors, which needs to be produced later, for a
-given configuration, in this case we have (a). There are only
-2 valid spiking vectors from configVec = [ 2, 1, 1 ] and the
-rules given in (b) encoded in r. These spiking vectors are
-01 1 10
-10 1 10
-
-
-\begin{lstlisting}[label=sim-algo2,caption=Detailed algorithm for part $II$ in Listing \ref{sim-algo}]
-
-	
-II-1 Create a list tmp, a copy of r, marking
-each element of tmp in increasing order of N,
+\begin{algorithm}
+\caption{Algorithm further detailing part II in Algorithm \ref{sim-algo}}
+\label{sim-algo2}
+\begin{algorithmic}
+II-1 Create a list $tmp$, a copy of $r$, marking
+each element of $tmp$ in increasing order of $\mathbb N$,
 as long as the element/s satisfy the rule's 
-regular expression E of a rule (given by list
-r ). Elements that don't satisfy E are marked
- with 0.
-In this case
-tmp = r
-then
-tmp = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ]
-and that given (a) we thus have the following passes as we
-traverse tmp, with underlined elements being the elements
-that are currently being checked at that stage/pass:
+regular expression $E$ of a rule (given by list
+$r$ ). Elements that don't satisfy $E$ are marked
+ with 0.\\
+ 
+II-2 To generate all possible and valid spiking vectors from
+$tmp$, we go through each neuron i.e. all elements of $tmp$,
+since we know a priori $\Sigma$ as well as the number of
+elements per neuron which satisfy $E$. We only need to iterate
+through each neuron/element of tmp $\omega$ times, where $\omega$ is
+both the largest and last number in the sub-list/neuron,
+which tells us how many elements of that neuron satisfy $E$
+(from II-1). We then produce a new list, $tmp2$, which is
+made up of a sub-list of strings from all possible and valid
+\textit{\{1,0\}} strings i.e. spiking vectors per neuron.\\
+
+II-3. To obtain all possible and valid \textit{\{1,0\}}
+strings (spiking vectors), given that there are multiple strings
+to be concatenated ( as in $tmp2$'s case ), pairing up the
+neurons first, in order, and then exhaustively distributing
+every element of the first neuron to the elements of the 2nd
+one in the pair. 
+
+\end{algorithmic}
+\end{algorithm}
+
+As an illustration of Algorithm \ref{sim-algo2}, consider (\ref{confvec}), (\ref{rule-list}), and (\ref{snp_mat}) as inputs to our SNP system simulator. The following details the production of all valid and possible spiking vectors using Algorithm \ref{sim-algo2}.
+
 1st pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: previously, tmp [ 0 ][ 0 ] was equal to 2,
-but now has been changed to 1, since it satisfies E
-( configVec[ 0 ] = 2 w/c is less than or equal to 2, the
+$tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]$\\
+\textit{Remark/s}: previously, $tmp [ 0 ][ 0 ]$ was equal to 2,
+but now has been changed to 1, since it satisfies $E$
+( $configVec[ 0 ] = 2$ w/c is less than or equal to 2, the
 number of spikes consumed by that rule).
+
 2nd pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: previously tmp[ 0 ][ 1 ] = 2, which has
+$tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]$\\
+\textit{Remark/s}: previously $tmp[ 0 ][ 1 ] = 2$, which has
 now been changed (incidentally) to 2 as well, since
-it's the 2nd element of neuron 1 which satisfies E.
+it's the 2nd element of neuron 1 which satisfies $E$.
+
 3rd pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: 1st (and only) element of neuron 2 which
-satisfies E.
+$tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]$\\
+\textit{Remark/s}: 1st (and only) element of neuron 2 which
+satisfies $E$.
+
 4th pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
-Remark/s: Same as the 1st pass
+$tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]$\\
+\textit{Remark/s}: Same as the 1st pass
+
 5th pass:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
-Remark/s: element tmp[ 2 ][ 1 ], or the 2nd
-element/rule of neuron 3 doesn't satisfy E.
+$tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]$\\
+\textit{Remark/s}: element $tmp[ 2 ][ 1 ]$, or the 2nd
+element/rule of neuron 3 doesn't satisfy $E$.
+
 Final result:
-tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
+$tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]$
+
 At this point we can observe the following, based on the
 earlier definitions:
-Σ = 3 ( 3 neurons in total, one per element/value of
-confVec )
-Ψ = |σV1| |σV2| |σV3| = 2 * 1 * 1 = 2
-Ψ tells us the number of valid strings of 1s and 0s i.e.
-spiking vectors, which needs to be produced later, for a
-given configuration, in this case we have (a). There are only
-2 valid spiking vectors from configVec = [ 2, 1, 1 ] and the
-rules given in (b) encoded in r. These spiking vectors are
-01 1 10
-10 1 10
 
-\end{lstlisting}
+$\Sigma$ = 3 ( 3 neurons in total, one per element/value of
+$confVec$)
+
+$\Psi$ = |\sigma_V_1| |\sigma_V_2| |\sigma_V_3| = 2 * 1 * 1 = 2
+
+$\Psi$ tells us the number of valid strings of \textit{1}s and \textit{0}s i.e.
+spiking vectors, which needs to be produced later, for a
+given configuration, in this case we have $confvec$. There are only
+2 valid spiking vectors from (\ref{confvec}) and the
+rules given in (\ref{rule-list}) encoded in the Python list $r$. These spiking vectors are
+
+\begin{equation}\label{sk-211-1}
+< 0, 1, 1, 1, 0>
+\end{equation}
+
+\begin{equation}\label{sk-211-2}
+< 1, 0, 1, 1, 0>
+\end{equation}
+
+In order to produce these spiking vectors algorithmically as in Algorithm \ref{sim-algo2} , it's
+important to notice that first, all possible and valid spiking
+vector strings ( made up of \textit{1}s and \textit{0}s) per neuron have to be
+produced first, which is facilitated by II-1 of Algorithm \ref{sim-algo2} and its output (the
+current value of the list $tmp$ ).
+
+Continuing the illustration of II-1, and illustrating II-2 this time, we iterate over neuron 1 twice, since its $\omega$ = 2, i.e. neuron 1 has only 2 elements which satisfy $E$, and consequently, it is its 2nd element,
+
+		$tmp[ 0 ] [ 1 ] = 2.$ 
+
+For neuron 1, our first pass along its elements/list is as follows. Its 1st element,
+
+		$tmp[ 0 ][ 0 ] = 1$
+
+is the first element to satisfy $E$, hence it requires a \textit{1} in its place, and \textit{0} in the others. We therefore produce the string	\textit{10} for it. Next, the 2nd element satisfies $E$ and it too, deserves a \textit{1}, while the rest get \textit{0}s. We produce the string \textit{01} for it. 
+
+The new list, $tmp2$, collecting the strings produced for neuron 1 therefore becomes
+
+		$tmp2 = [ [ 10, 01 ] ] $
+
+Following these procedures, for neuron 2 we get $tmp2$ to be as follows: 
+
+		$tmp2 = [ [ 10, 01 ], [ 1 ] ]$ 
+
+Since neuron 2 which has only one element only has 1 possible and valid string, the string 1. 
+Finally, for neuron 3, we get $tmp2$ to be 
+
+		$tmp2 = [ [ 10, 01 ], [ 1 ], [ 10 ] ] $
+
+In neuron 3, we iterated over it only once because $\omega$, the number of elements it has which satisfy $E$, is equal to 1 only. 
+Observe that the sublist 
+
+		$tmp2[ 0 ] = [ 10, 01 ]$ 
+
+is equal to all possible and valid \{\textit{1,0}\} strings for neuron 1, given rules in (\ref{rule-list}) and the number of spikes in $configVec$. 
+
+Illustrating II-3 of Algorithm \ref{sim-algo2}, given the valid and
+possible \{\textit{1,0}\} strings (spiking vectors) for neurons 1, 2, and 3 (separated per neuron-column) from (\ref{confvec}) and (\ref{rule-list}) and from the illustration of II-2, all possible \{\textit{1,0}\} string/s for neuron 1: <10,01>, neuron 2: <1>, and neuron 3: <10>.
+
+First, pair the strings of neurons 1 and 2, and then distribute them exhaustively to the other neuron's possible and valid strings, concatenating them in the process (since they are considered as $strings$ in Python). 
+
+'10'  +	'1' => '101'\\
+'01' 
+
+and 
+
+'10' \\
+'01'  +	'1' => '011'
+
+now we have to create a new list from $tmp2$, which will house the concatenations we'll be doing. In this case, 
+
+		$tmp3 = [ 101, 011 ] $
+
+next, we pair up $tmp3$ and the possible and valid strings of neuron 3 
+
+'101' + '10' => '10110' \\
+'011'
+ 
+and 
+
+'101' \\
+'011' + '10' => '01110' 
+
+eventually turning $tmp3$ into 
+
+		$tmp3 = [ 10110, 01110 ]$ 
+
+The final output of the sub-algorithm for the generation of all valid and possible spiking vectors is a list, 
+
+		$tmp3 = [ 10110, 01110 ] $
+
+Thus $tmp3$ is the list of all possible and valid spiking vectors given (\ref{confvec}) and (\ref{rule-list}) in this illustration. Furthermore, $tmp3$ includes all possible and valid spiking vectors for a given neuron in a given configuration of an SN P system with all its rules and 
+synapses (interconnections). Part II-3 is done (	$\Sigma - 1$) times, albeit exhaustively still so, between the two lists/neurons in the pair. 
+
+\section{simulation computation results, observations, and analysis}
+Running the SNP system simulator (combination of Python
+and CUDA C) implementing the algorithms in section \ref{sect-snp-algo}
+earlier. A sample simulation run with the SNP system $\Pi$ is
+shown below (most of the output has been truncated due to space constraints ) with $C_0$ = [2,1,1]
+\begin{verbatim}
+****SN P system simulation run STARTS here****
+Spiking transition Matrix: 
+... 
+
+Rules of the form a^n/a^m -> a^i or a^n ->a^i loaded: 
+['2', '2', '$', '1', '$', '1', '2'] 
+
+Initial configuration vector: 211
+ 
+Number of neurons for the SN P system is 3 
+Neuron 1  rules criterion/criteria and total order 
+... 
+
+ tmpList =  [['10', '01'], ['1'], ['10']] 
+ All valid spiking vectors: allValidSpikVec =
+ [['10110', '01110']] 
+All generated Cks are allGenCk =
+ ['211', '212', '112'] 
+ End of C0 
+** 
+** 
+** 
+ initial total Ck list is
+   ['211', '212', '112'] 
+Current confVec: 212 
+All generated Cks are allGenCk =
+	 ['211', '212', '112', '213', '113'] 
+** 
+** 
+** 
+Current confVec: 112 
+All generated Cks are allGenCk =
+['211', '212', '112', '213', '113', '202', '201'] 
+** 
+** 
+...
+
+Current confVec: 109
+All generated Cks are allGenCk = ['2-1-1', '2-1-2',
+...
+ '1-0-7', '0-1-9', '1-0-8', '1-0-9']
+
+**
+**
+**
+
+No more Cks to use (infinite loop/s otherwise). Stop.
+****SN P system simulation run ENDS here****
+\end{verbatim}
+
+That is, the computation tree for SNP system $\Pi$ with $C_0$ = [2,1,1] went down as deep as $confVec = 109$. At that point, all configuration vectors for all possible and valid spiking vectors have been produced. The Python lise variable $allGenCk$ collects all the $C_k$s produced. The final value of $allGenCk$ for the above simulation run is
+
+\textit{allGenCk = ['211', '212', '112', '213', '113', '202', '201', '214',
+'114', '203', '111', '012', '011', '215', '115', '204', '013', '102',
+'101', '216', '116', '205', '014', '103', '100', '217', '117', '206',
+'015', '104', '218', '118', '207', '016', '105', '219', '119', '208',
+'017', '106', '2110', '1110', '209', '018', '107', '019', '108', '109'] }
+
+ It's also noteworthy that simulation for $\Pi$ didn't stop at the 1st stopping criteria (arriving at a zero vector) since $\Pi$ generates  all natural counting numbers greater than 1, hence a loop (an infinite one) is to be expected. The simulation run shown above stopped with the 2nd stopping criteria from Section \ref{sect-snp-algo}. Thus the simulation was able to exhaust all possible configuration vectors and their spiking vectors, stopping only since a repetition of an earlier generated $confVec$ would introduce a loop (triggering the 2nd stopping criteria).
+Graphically (though not shown exhaustively) the computation tree for $\Pi$ is shown in Figure \ref{c211_tree}.
+
+	\begin{figure}
+		\centering
+		\includegraphics[scale=.7]{c211_tree.jpeg} 
+%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
+		\caption{The computation tree graphically representing the output of the simulator run over $\Pi$ with $C_0$ = [2, 1, 1]}
+		\label{c211_tree}
+	\end{figure}
+
+The $confVecs$ followed by (...) are the $confVecs$ that went deeper i.e. produced more $Ck$s than Figure \ref{c211_tree} has shown.
+
 
 \section{Conclusions and future work}
 Using a highly parallel computing device such as a GPGPU,
@@ -740,10 +874,10 @@ took care of repetitive and highly parallel computations
 Future versions of the SNP system simulator will focus on
 several improvements. These improvements include the use
 of an algorithm for matrix computations without requiring
-the input matrix to be turned into a square matrix (this is
+the input matrix to be transformed into a square matrix (this is
 currently handled by the simulator by padding zeros to an
 otherwise non-square matrix input). Another improvement
-would be the simulation of systems not of the form b-3).
+would be the simulation of systems not of the form (b-3).
 Byte-compiling the Python/host part of the code to improve
 performance as well as metrics to further enhance and
 measure execution time are desirable as well. Finally, deeper
@@ -751,7 +885,7 @@ understanding of the CUDA architecture, such as inter-
 thread/block communication, for extremely large systems
 with equally large matrices, is required. These
 improvements as well as the current version of the simulator
-should also be run in a machine with higher versions of
+should also be run in a machine or setup with higher versions of
 GPGPUs running NVIDIA CUDA.
 %ADD simulation in larger CUDA systems
 
@@ -759,7 +893,7 @@ GPGPUs running NVIDIA CUDA.
 
 %ACKNOWLEDGMENTS are optional
 \section{ Acknowledgments }
-The authors are supported by the \textit{ERDT Project}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests.
+The authors are supported by the \textit{ERDT Project}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. The authors would also like to thank the valuable insights of Mr. Miguel Martinez-del-Amor and Mr. Neil Ibo.
 
 %HOW to acknowledge Mr. Miguel del-Amor?
 
