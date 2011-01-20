@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 13:57
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 19:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -210,6 +210,24 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
+(/usr/share/texmf-texlive/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/share/texmf-texlive/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count117
+\float@exts=\toks37
+\float@box=\box32
+\@float@everytoks=\toks38
+\@floatcapt=\box33
+)
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks39
+\c@algorithm=\count118
+)
 (./snp-gpu-sim-pcsc2011.aux)
 \openout1 = `snp-gpu-sim-pcsc2011.aux'.
 
@@ -228,18 +246,18 @@ LaTeX Font Info:    ... okay on input line 31.
 
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count117
+\scratchcounter=\count119
 \scratchdimen=\dimen127
-\scratchbox=\box32
-\nofMPsegments=\count118
-\nofMParguments=\count119
-\everyMPshowfont=\toks37
-\MPscratchCnt=\count120
+\scratchbox=\box34
+\nofMPsegments=\count120
+\nofMParguments=\count121
+\everyMPshowfont=\toks40
+\MPscratchCnt=\count122
 \MPscratchDim=\dimen128
-\MPnumerator=\count121
-\everyMPtoPDFconversion=\toks38
+\MPnumerator=\count123
+\everyMPtoPDFconversion=\toks41
 )
-\c@lstlisting=\count122
+\c@lstlisting=\count124
 LaTeX Font Info:    Try loading font information for U+msa on input line 112.
  (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
@@ -391,61 +409,87 @@ Overfull \hbox (7.01547pt too wide) in paragraph at lines 488--488
  []
 
 [4]
-Overfull \hbox (4.01483pt too wide) in paragraph at lines 545--547
-[][][][][][][][][][][][][][][][][][][][] 
+
+! LaTeX Error: Environment algorithmic undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.544 \begin{algorithmic}
+                         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 545--546
+
  []
 
 
-Overfull \hbox (20.6522pt too wide) in paragraph at lines 564--566
-[][][][][][][][][][][][][][][][] 
+Underfull \hbox (badness 10000) in paragraph at lines 547--552
+
  []
 
 
-Overfull \hbox (4.01483pt too wide) in paragraph at lines 566--567
-[][][][][][][][][][][][][][][][][][][][][][] 
+Underfull \hbox (badness 10000) in paragraph at lines 554--558
+
  []
 
 
-Overfull \hbox (35.43771pt too wide) in paragraph at lines 573--587
-[]\T1/aer/m/n/9 Step $\OML/cmm/m/it/9 IV$ \T1/aer/m/n/9 of List-ing 2[] makes t
-he al-go-rithm stop with 2 $\OML/cmm/m/it/9 stoppingcriteria$
+Underfull \hbox (badness 10000) in paragraph at lines 560--565
+
  []
 
 
-Overfull \hbox (6.02176pt too wide) in paragraph at lines 593--593
+! LaTeX Error: \begin{algorithm} on input line 540 ended by \end{algorithmic}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.572 \end{algorithmic}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (6.02176pt too wide) in paragraph at lines 597--597
 []\secfnt Further in-spec-tion and de-tail-ing of the SNP
  []
 
 ! Double subscript.
-l.603 \Psi = |{\sigma_V_
+l.607 \Psi = |{\sigma_V_
                         1}| |{\sigma_V_2}| ...|{\sigma_V_n}|, n \in \mathbb{...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.603 \Psi = |{\sigma_V_1}| |{\sigma_V_
+l.607 \Psi = |{\sigma_V_1}| |{\sigma_V_
                                        2}| ...|{\sigma_V_n}|, n \in \mathbb{...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.603 ...sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_
+l.607 ...sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_
                                                   n}|, n \in \mathbb{N}, n \...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.608 |{\sigma
+l.612 |{\sigma
               _V_n}|
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Double subscript.
-l.608 |{\sigma_V_
+l.612 |{\sigma_V_
                  n}|
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Extra }, or forgotten $.
-l.608 |{\sigma_V_n}
+l.612 |{\sigma_V_n}
                    |
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -456,137 +500,121 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.609 
+l.613 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
+
+! LaTeX Error: Environment algorithmic undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.625 \begin{algorithmic}
+                         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 626--632
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 633--643
+
+ []
+
+
+! LaTeX Error: \begin{algorithm} on input line 622 ended by \end{algorithmic}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.651 \end{algorithmic}
+                       
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
 [5]
-Overfull \hbox (4.01483pt too wide) in paragraph at lines 674--675
-[][][][][][][][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (1.92255pt too wide) in paragraph at lines 689--691
+[]$\OT1/cmr/m/n/9 ^^F$ \T1/aer/m/n/9 = 3 ( 3 neu-rons in to-tal, one per el-e-m
+en-t/-value of $\OML/cmm/m/it/9 confVec$\T1/aer/m/n/9 ) 
  []
 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.692 $\Psi$ = |\sigma
+                      _V_1| |\sigma_V_2| |\sigma_V_3| = 2 * 1 * 1 = 2
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-Overfull \hbox (9.56062pt too wide) in paragraph at lines 675--676
-[][][][][][][][][][][][][][][][][][][][] 
+! Double subscript.
+l.692 $\Psi$ = |\sigma_V_
+                         1| |\sigma_V_2| |\sigma_V_3| = 2 * 1 * 1 = 2
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.692 $\Psi$ = |\sigma_V_1| |\sigma_V_
+                                      2| |\sigma_V_3| = 2 * 1 * 1 = 2
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.692 ...i$ = |\sigma_V_1| |\sigma_V_2| |\sigma_V_
+                                                  3| = 2 * 1 * 1 = 2
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.693 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+Overfull \hbox (10.11273pt too wide) in paragraph at lines 782--782
+[]\secfnt SIMULATION COM-PU-TA-TION RE-SULTS,
  []
 
+LaTeX Font Info:    Try loading font information for T1+aett on input line 787.
 
-Overfull \hbox (9.56062pt too wide) in paragraph at lines 677--678
-[][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (9.56062pt too wide) in paragraph at lines 678--679
-[][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (81.65591pt too wide) in paragraph at lines 684--685
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (76.11012pt too wide) in paragraph at lines 685--686
-[][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (48.38116pt too wide) in paragraph at lines 686--687
-[][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (48.38116pt too wide) in paragraph at lines 689--690
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (42.83537pt too wide) in paragraph at lines 690--691
-[][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (70.56433pt too wide) in paragraph at lines 691--692
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (31.74379pt too wide) in paragraph at lines 695--696
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (42.83537pt too wide) in paragraph at lines 696--697
-[][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (42.83537pt too wide) in paragraph at lines 697--698
-[][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (37.28958pt too wide) in paragraph at lines 700--701
-[][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Underfull \vbox (badness 2111) has occurred while \output is active []
-
-
-Overfull \hbox (70.56433pt too wide) in paragraph at lines 711--712
-[][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (53.92696pt too wide) in paragraph at lines 713--714
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (76.11012pt too wide) in paragraph at lines 716--717
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (70.56433pt too wide) in paragraph at lines 717--718
-[][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (98.29329pt too wide) in paragraph at lines 718--719
-[][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (92.7475pt too wide) in paragraph at lines 719--720
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (81.65591pt too wide) in paragraph at lines 720--721
-[][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-[6]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 795.
-
- (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
+(/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [7
+)
+Overfull \hbox (9.94414pt too wide) in paragraph at lines 836--836
+[]\T1/aett/m/n/9 Rules of the form a^n/a^m -> a^i or a^n ->a^i loaded:[] 
+ []
 
-]
-(./snp-gpu-sim-pcsc2011.aux) )
+
+Overfull \hbox (9.94414pt too wide) in paragraph at lines 836--836
+[]\T1/aett/m/n/9 No more Cks to use (infinite loop/s otherwise). Stop.[] 
+ []
+
+<c211_tree.jpeg, id=37, 170.13562pt x 459.21562pt>
+File: c211_tree.jpeg Graphic file (type jpg)
+ <use c211_tree.jpeg>
+[7] [8 <./c211_tree.jpeg>] [9
+
+] (./snp-gpu-sim-pcsc2011.aux) )
 (\end occurred inside a group at level 1)
 
-### simple group (level 1) entered at line 608 ({)
+### simple group (level 1) entered at line 612 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 3538 strings out of 495061
- 44402 string characters out of 1182621
- 145127 words of memory out of 3000000
- 6658 multiletter control sequences out of 15000+50000
+ 3692 strings out of 495061
+ 46416 string characters out of 1182621
+ 114554 words of memory out of 3000000
+ 6800 multiletter control sequences out of 15000+50000
  51446 words of font info for 70 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  39i,15n,32p,964b,1423s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -604,9 +632,9 @@ msfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symb
 ols/msbm10.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></
 usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-t
 exlive/fonts/type1/urw/times/utmb8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (7 pages, 337077 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (9 pages, 368436 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
+ 97 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
