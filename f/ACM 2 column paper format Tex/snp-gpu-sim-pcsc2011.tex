@@ -513,7 +513,7 @@ mostly). Hence a configuration vector $C_k = <2, 1, 1>$ is
 represented as $[ 2, 1, 1 ]$ in Python. That is, at the $kth$
 configuration of the system, the number of spikes of neuron
 1 are given by accessing the index (starting at zero) of the
-configuration vector list Python variable $confVec$, in this case if
+configuration vector Python $list$ variable $confVec$, in this case if
 \begin{equation}\label{confvec}
 confVec = [ 2, 1, 1 ]
 \end{equation}
@@ -521,8 +521,8 @@ confVec = [ 2, 1, 1 ]
 then $confVec[ 0 ] = 2$ are the number of spikes available at
 that time for neuron 1, $confVec[ 1 ] = 1$ for neuron 2, and so
 on. The file $r$, which contains the ordered list of neurons and
-the rules that comprise each of them, is represented as a list of sub-
-lists in the Python/host code. For SNP ${\Pi}$ we have the
+the rules that comprise each of them, is represented as a $list of sub-
+lists$ in the Python/host code. For SNP ${\Pi}$ we have the
 following:
 \begin{equation}\label{rule-list}
 r = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ]
@@ -595,33 +595,133 @@ simulator}
 The more detailed algorithm for part $II$ of Listing \ref{sim-algo} is as follows.
 
 A few definitions are in order at this point:
-	
-\begin{definition}
-\Sigma =  |r|, total number of neurons.
 
+\begin{equation}\label{sigma}
+\Sigma =  |r|, total number of neurons.
+\end{equation}
+\begin{equation}\label{psi}
 \Psi = |{\sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_n}|, n \in \mathbb{N}, n \leq \infty
+\end{equation}
 
 where
 
-|\sigma_V_n|
+|{\sigma_V_n}|
 
 means the total count of the number of rules in the $nth$ neuron which satisfy the regular expresion $E$ in (b-3)
 
-\end{definition}	
 
-
-During the exposition of the algorithm, the following Python
+During the exposition of the algorithm, the previous Python
 lists (from their vector/matrix counterparts in earlier
-sections) will be used for demonstration purposes:
+sections) (\ref{confvec}) and (\ref{rule-list}) will be utilized. For part $II$ Listing \ref{sim-algo} we have the following sub-algorithm for generating all valid
+and possible spiking vectors given input files $M$ (the $list$ version of (\ref{row-maj})) , $configVec$, and $r$:
 
-\begin{equation}\label{confveclist}
-configVec = [ 2, 1, 1 ]~(from~(\ref{confvec})~)
-\end{equation}
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=0, numbersep=5pt, label=cuda_gencode}
+% This concludes the preambleII-1 Create a list tmp, a copy of r, marking each element of
+tmp in increasing order of N, as long as the element/s
+satisfy the rule's regular expression E of a rule (given by list
+r ). Elements that don't satisfy E are marked with 0.
+
+In this case
+
+tmp = r
+
+then
+tmp = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ]
+and that given (a) we thus have the following passes as we
+traverse tmp, with underlined elements being the elements
+that are currently being checked at that stage/pass:
+1st pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: previously, tmp [ 0 ][ 0 ] was equal to 2,
+but now has been changed to 1, since it satisfies E
+( configVec[ 0 ] = 2 w/c is less than or equal to 2, the
+number of spikes consumed by that rule).
+2nd pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: previously tmp[ 0 ][ 1 ] = 2, which has
+now been changed (incidentally) to 2 as well, since
+it's the 2nd element of neuron 1 which satisfies E.
+3rd pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: 1st (and only) element of neuron 2 which
+satisfies E.
+4th pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: Same as the 1st pass
+5th pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
+Remark/s: element tmp[ 2 ][ 1 ], or the 2nd
+element/rule of neuron 3 doesn't satisfy E.
+Final result:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
+At this point we can observe the following, based on the
+earlier definitions:
+Σ = 3 ( 3 neurons in total, one per element/value of
+confVec )
+Ψ = |σV1| |σV2| |σV3| = 2 * 1 * 1 = 2
+Ψ tells us the number of valid strings of 1s and 0s i.e.
+spiking vectors, which needs to be produced later, for a
+given configuration, in this case we have (a). There are only
+2 valid spiking vectors from configVec = [ 2, 1, 1 ] and the
+rules given in (b) encoded in r. These spiking vectors are
+01 1 10
+10 1 10
 
 
-and (\ref{rules}). For part $II$ Listing \ref{sim-algo} we have the following sub-algorithm for generating all valid
-and possible spiking vectors given input files $M$, $configVec$, and $r$:
+\begin{lstlisting}[label=sim-algo2,caption=Detailed algorithm for part $II$ in Listing \ref{sim-algo}]
+
 	
+II-1 Create a list tmp, a copy of r, marking
+each element of tmp in increasing order of N,
+as long as the element/s satisfy the rule's 
+regular expression E of a rule (given by list
+r ). Elements that don't satisfy E are marked
+ with 0.
+In this case
+tmp = r
+then
+tmp = [ [ 2, 2 ], [ 1 ], [ 1, 2 ] ]
+and that given (a) we thus have the following passes as we
+traverse tmp, with underlined elements being the elements
+that are currently being checked at that stage/pass:
+1st pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: previously, tmp [ 0 ][ 0 ] was equal to 2,
+but now has been changed to 1, since it satisfies E
+( configVec[ 0 ] = 2 w/c is less than or equal to 2, the
+number of spikes consumed by that rule).
+2nd pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: previously tmp[ 0 ][ 1 ] = 2, which has
+now been changed (incidentally) to 2 as well, since
+it's the 2nd element of neuron 1 which satisfies E.
+3rd pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: 1st (and only) element of neuron 2 which
+satisfies E.
+4th pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 2 ] ]
+Remark/s: Same as the 1st pass
+5th pass:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
+Remark/s: element tmp[ 2 ][ 1 ], or the 2nd
+element/rule of neuron 3 doesn't satisfy E.
+Final result:
+tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]
+At this point we can observe the following, based on the
+earlier definitions:
+Σ = 3 ( 3 neurons in total, one per element/value of
+confVec )
+Ψ = |σV1| |σV2| |σV3| = 2 * 1 * 1 = 2
+Ψ tells us the number of valid strings of 1s and 0s i.e.
+spiking vectors, which needs to be produced later, for a
+given configuration, in this case we have (a). There are only
+2 valid spiking vectors from configVec = [ 2, 1, 1 ] and the
+rules given in (b) encoded in r. These spiking vectors are
+01 1 10
+10 1 10
+
+\end{lstlisting}
 
 \section{Conclusions and future work}
 Using a highly parallel computing device such as a GPGPU,
