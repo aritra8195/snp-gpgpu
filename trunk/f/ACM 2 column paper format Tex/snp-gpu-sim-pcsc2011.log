@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 05:27
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  20 JAN 2011 13:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -416,132 +416,197 @@ Overfull \hbox (6.02176pt too wide) in paragraph at lines 593--593
 []\secfnt Further in-spec-tion and de-tail-ing of the SNP
  []
 
-
-! LaTeX Error: Environment definition undefined.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.599 \begin{definition}
-                        
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.600 \Sigma
-             =  |r|, total number of neurons.
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.601 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.602 \Psi
-           = |{\sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_n}|, n \in \mathbb{...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
 ! Double subscript.
-l.602 \Psi = |{\sigma_V_
+l.603 \Psi = |{\sigma_V_
                         1}| |{\sigma_V_2}| ...|{\sigma_V_n}|, n \in \mathbb{...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.602 \Psi = |{\sigma_V_1}| |{\sigma_V_
+l.603 \Psi = |{\sigma_V_1}| |{\sigma_V_
                                        2}| ...|{\sigma_V_n}|, n \in \mathbb{...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.602 ...sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_
+l.603 ...sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_
                                                   n}|, n \in \mathbb{N}, n \...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.603 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.606 |\sigma
-             _V_n|
+l.608 |{\sigma
+              _V_n}|
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Double subscript.
-l.606 |\sigma_V_
-                n|
+l.608 |{\sigma_V_
+                 n}|
 I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Extra }, or forgotten $.
+l.608 |{\sigma_V_n}
+                   |
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.607 
+l.609 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-
-! LaTeX Error: \begin{document} ended by \end{definition}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.610 \end{definition}
-                      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
 [5]
-LaTeX Font Info:    Try loading font information for T1+aett on input line 695.
+Overfull \hbox (4.01483pt too wide) in paragraph at lines 674--675
+[][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (9.56062pt too wide) in paragraph at lines 675--676
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (9.56062pt too wide) in paragraph at lines 677--678
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (9.56062pt too wide) in paragraph at lines 678--679
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (81.65591pt too wide) in paragraph at lines 684--685
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (76.11012pt too wide) in paragraph at lines 685--686
+[][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (48.38116pt too wide) in paragraph at lines 686--687
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (48.38116pt too wide) in paragraph at lines 689--690
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (42.83537pt too wide) in paragraph at lines 690--691
+[][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (70.56433pt too wide) in paragraph at lines 691--692
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (31.74379pt too wide) in paragraph at lines 695--696
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (42.83537pt too wide) in paragraph at lines 696--697
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (42.83537pt too wide) in paragraph at lines 697--698
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (37.28958pt too wide) in paragraph at lines 700--701
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Underfull \vbox (badness 2111) has occurred while \output is active []
+
+
+Overfull \hbox (70.56433pt too wide) in paragraph at lines 711--712
+[][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (53.92696pt too wide) in paragraph at lines 713--714
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (76.11012pt too wide) in paragraph at lines 716--717
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (70.56433pt too wide) in paragraph at lines 717--718
+[][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (98.29329pt too wide) in paragraph at lines 718--719
+[][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (92.7475pt too wide) in paragraph at lines 719--720
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (81.65591pt too wide) in paragraph at lines 720--721
+[][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[6]
+LaTeX Font Info:    Try loading font information for T1+aett on input line 795.
 
  (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [6]
-(./snp-gpu-sim-pcsc2011.aux) ) 
+) [7
+
+]
+(./snp-gpu-sim-pcsc2011.aux) )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 608 ({)
+### bottom level 
 Here is how much of TeX's memory you used:
- 3536 strings out of 495061
- 44392 string characters out of 1182621
- 121111 words of memory out of 3000000
- 6656 multiletter control sequences out of 15000+50000
+ 3538 strings out of 495061
+ 44402 string characters out of 1182621
+ 145127 words of memory out of 3000000
+ 6658 multiletter control sequences out of 15000+50000
  51446 words of font info for 70 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  39i,15n,32p,964b,1423s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r
-.enc}</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr
-/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf
--texlive/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texmf-texliv
-e/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type
-1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
-fonts/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6
-.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-te
-xlive/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/
-type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/fonts/type1/public
-/amsfonts/symbols/msbm10.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic
-/uhvb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr
-/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (6 pages, 330532 bytes).
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texmf-t
+exlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts
+/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texmf-texlive/fonts/type1/
+public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfo
+nts/cm/cmmi9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr5.
+pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-texl
+ive/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/public/amsfonts/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/a
+msfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symb
+ols/msbm10.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></
+usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-t
+exlive/fonts/type1/urw/times/utmb8a.pfb>
+Output written on snp-gpu-sim-pcsc2011.pdf (7 pages, 337077 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
+ 90 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
