@@ -33,7 +33,7 @@
 
 %\title{A Sample {\ttlit ACM} SIG Proceedings Paper in LaTeX
 %Format\titlenote{(Does NOT produce the permission block, copyright information nor page numbering). For use with ACM\_PROC\_ARTICLE-SP.CLS. Supported by ACM.}}
-\title{ Spiking Neural P system without delay simulator implementation using GPGPUs }
+\title{ Spiking Neural P system without delay simulator implementation using GPGPUs \titlenote{Supported by the \textit{UP Engineering Research and Development for Technology (ERDT)} project}\\}
 %\subtitle{[Extended Abstract]
 %\titlenote{A full version of this paper is available as
 %\textit{Author's Guide to Preparing ACM SIG Proceedings Using
@@ -116,7 +116,7 @@ This paper presents a parallel simulator for a type of P system known as spiking
 
 Membrane computing or P systems on the other hand, are cell-inspired computational models which compute in a maximally parallel and non-deterministic manner. SNP systems, w/c compute via time separated spikes and whose inspiration was taken from the way neurons operate in living organisms, have been represented as matrices.
 
-The matrix representation of SNP systems provides a crucial step into their simulation on parallel devices such as GPGPUs. Simulating the highly parallel nature of SNP systems necessitates the use of hardware intended for parallel computations. The simulator algorithms, design considerations, and implementation are presented. Finally, simulation results, observations, and analyses using an SNP system that generates all numbers in \{$\mathbb N$ - $1$\} are discussed.
+The matrix representation of SNP systems provides a crucial step into their simulation on parallel devices such as GPGPUs. Simulating the highly parallel nature of SNP systems necessitates the use of hardware intended for parallel computations. The simulator algorithms, design considerations, and implementation are presented. Finally, simulation results, observations, and analyses using an SNP system that generates all numbers in $\mathbb N$ - \{$1$\} are discussed.
 
 \end{abstract}
 
@@ -140,6 +140,8 @@ Membrane computing or its more specific counterpart, a P system, are Turing comp
 SN P systems differ from other types of P systems precisely because they are mono-membranar and only use one type of object in its computation. These characteristics, among others, are meant to capture the workings of a special type of cell known as the neuron. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as \textit{spikes}. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, but by means of time duration as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval\cite{snp}. The time duration between two spikes, or several successive spikes, transmit the information.  
 
 It has been shown that SN P systems, given their nature, are representable by matrices\cite{snpbrain}\cite{snpmat}. This representation allows design and implementation of an SN P system simulator using parallel computing machines such as GPGPUs. 
+
+\pagebreak
 
 \subsection{Simulating SNP systems in GPGPUs}
 Matrix operations and their algorithms have been studied and efficiently implemented in GPGPUs \cite{matrixgpu1}\cite{matrixgpu2}. Thus the matrix representation of SNP systems bridges the gap between the highly theoretical yet still computationally powerful SNP systems and the applicative and more tangible GPGPUs, via an SNP system simulator. The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and allows programmers to perform parallel computations, via GPGPUs manufactured by NVIDIA.
@@ -219,7 +221,7 @@ towards the environment, outside the SNP system. The SNP system in Figure \ref{s
 		\centering
 		\includegraphics[scale=.5]{snp-img.png} 
 %		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
-		\caption{An SNP P system $\Pi$, generating all numbers in \{$\mathbb N$ - $1$\}, from \cite{snpmat}.}
+		\caption{An SNP P system $\Pi$, generating all numbers in $\mathbb N$ - \{$1$\}, from \cite{snpmat}.}
 		\label{snp_ex}
 	\end{figure}
 %$<$
