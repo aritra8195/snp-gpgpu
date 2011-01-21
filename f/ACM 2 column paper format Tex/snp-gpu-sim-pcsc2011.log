@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  21 JAN 2011 01:40
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  21 JAN 2011 18:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -271,7 +271,10 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 112.
 
 (/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
@@ -282,7 +285,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.161 \begin{definition}
+l.163 \begin{definition}
                         
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -295,7 +298,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.184 \end{definition}
+l.186 \end{definition}
                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -308,7 +311,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.194 \begin{definition}
+l.196 \begin{definition}
                         
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -321,7 +324,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.202 \end{definition}
+l.204 \end{definition}
                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -329,14 +332,14 @@ or  <return>  to continue without it.
 
 <snp-img.png, id=12, 444.91219pt x 281.55188pt>
 File: snp-img.png Graphic file (type png)
- <use snp-img.png>
+ <use snp-img.png> [2 <./snp-img.png (PNG copy)>]
 ! Double subscript.
-l.258 ... $M_{\Pi}$ is a matrix comprised of $a_i_
+l.260 ... $M_{\Pi}$ is a matrix comprised of $a_i_
                                                   j$
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.259 elements where $a_i_
+l.261 elements where $a_i_
                           j$ is given as
 I treat `x_1_2' essentially like `x_1{}_2'.
 
@@ -347,18 +350,17 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.261 \begin{definition}
+l.263 \begin{definition}
                         \label{defi-snp-mat}
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (42.64998pt too wide) detected at line 271
+Overfull \hbox (42.64998pt too wide) detected at line 273
 \OML/cmm/m/it/9 a[] \OT1/cmr/m/n/9 = []
  []
 
-[2 <./snp-img.png (PNG copy)>]
 
 ! LaTeX Error: \begin{document} ended by \end{definition}.
 
@@ -366,7 +368,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.272 \end{definition}
+l.274 \end{definition}
                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -375,33 +377,33 @@ or  <return>  to continue without it.
 <cuda-scaling.jpeg, id=21, 486.31688pt x 431.36156pt>
 File: cuda-scaling.jpeg Graphic file (type jpg)
  <use cuda-scaling.jpeg>
-Overfull \hbox (3.15784pt too wide) in paragraph at lines 322--325
+Overfull \hbox (3.15784pt too wide) in paragraph at lines 324--327
  [][] 
  []
 
 <cuda-model.jpeg, id=22, 356.0803pt x 354.57469pt>
 File: cuda-model.jpeg Graphic file (type jpg)
  <use cuda-model.jpeg>
-LaTeX Font Info:    Try loading font information for OMS+aer on input line 353.
+LaTeX Font Info:    Try loading font information for OMS+aer on input line 355.
 
 
 (/usr/share/texmf-texlive/tex/latex/ae/omsaer.fd
 File: omsaer.fd 1999/12/27
 )
 LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 353.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 355.
  [3 <./cuda-scaling.jpeg> <./cuda-model.jpeg>]
-Overfull \hbox (5.44553pt too wide) in paragraph at lines 447--447
+Overfull \hbox (5.44553pt too wide) in paragraph at lines 449--449
 []\secfnt Matrix com-pu-ta-tions and CPU-GPGPU in-
  []
 
 
-Overfull \hbox (8.56342pt too wide) in paragraph at lines 488--488
+Overfull \hbox (8.56342pt too wide) in paragraph at lines 490--490
 []\secfnt DESIGN AND IM-PLE-MEN-TA-TION OF AN
  []
 
 
-Overfull \hbox (7.01547pt too wide) in paragraph at lines 488--488
+Overfull \hbox (7.01547pt too wide) in paragraph at lines 490--490
 \secfnt SNP SYS-TEM SIM-U-LA-TOR US-ING CUDA
  []
 
@@ -413,80 +415,80 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.544 \begin{algorithmic}
+l.546 \begin{algorithmic}
                          
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 545--546
+Underfull \hbox (badness 10000) in paragraph at lines 547--548
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 547--552
+Underfull \hbox (badness 10000) in paragraph at lines 549--554
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 554--558
+Underfull \hbox (badness 10000) in paragraph at lines 556--560
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 560--565
+Underfull \hbox (badness 10000) in paragraph at lines 562--567
 
  []
 
 
-! LaTeX Error: \begin{algorithm} on input line 540 ended by \end{algorithmic}.
+! LaTeX Error: \begin{algorithm} on input line 542 ended by \end{algorithmic}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.572 \end{algorithmic}
+l.574 \end{algorithmic}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (6.02176pt too wide) in paragraph at lines 596--596
+Overfull \hbox (6.02176pt too wide) in paragraph at lines 598--598
 []\secfnt Further in-spec-tion and de-tail-ing of the SNP
  []
 
 ! Double subscript.
-l.606 \Psi = |{\sigma_V_
+l.608 \Psi = |{\sigma_V_
                         1}| |{\sigma_V_2}| ...|{\sigma_V_n}|, n \in \mathbb{...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.606 \Psi = |{\sigma_V_1}| |{\sigma_V_
+l.608 \Psi = |{\sigma_V_1}| |{\sigma_V_
                                        2}| ...|{\sigma_V_n}|, n \in \mathbb{...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.606 ...sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_
+l.608 ...sigma_V_1}| |{\sigma_V_2}| ...|{\sigma_V_
                                                   n}|, n \in \mathbb{N}, n \...
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.611 |{\sigma
+l.613 |{\sigma
               _V_n}|
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Double subscript.
-l.611 |{\sigma_V_
+l.613 |{\sigma_V_
                  n}|
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Extra }, or forgotten $.
-l.611 |{\sigma_V_n}
+l.613 |{\sigma_V_n}
                    |
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -497,7 +499,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.612 
+l.614 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -509,37 +511,37 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.624 \begin{algorithmic}
+l.626 \begin{algorithmic}
                          
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 625--631
+Underfull \hbox (badness 10000) in paragraph at lines 627--633
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 632--642
+Underfull \hbox (badness 10000) in paragraph at lines 634--644
 
  []
 
 
-! LaTeX Error: \begin{algorithm} on input line 621 ended by \end{algorithmic}.
+! LaTeX Error: \begin{algorithm} on input line 623 ended by \end{algorithmic}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.650 \end{algorithmic}
+l.652 \end{algorithmic}
                        
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 [5]
-Overfull \hbox (1.92255pt too wide) in paragraph at lines 694--696
+Overfull \hbox (1.92255pt too wide) in paragraph at lines 696--698
 []$\OT1/cmr/m/n/9 ^^F$ \T1/aer/m/n/9 = 3 ( 3 neu-rons in to-tal, one per el-e-m
 en-t/-value of $\OML/cmm/m/it/9 confVec$\T1/aer/m/n/9 ) 
  []
@@ -547,56 +549,50 @@ en-t/-value of $\OML/cmm/m/it/9 confVec$\T1/aer/m/n/9 )
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.697 $\Psi$ = |\sigma
+l.699 $\Psi$ = |\sigma
                       _V_1| |\sigma_V_2| |\sigma_V_3| = 2 * 1 * 1 = 2
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 ! Double subscript.
-l.697 $\Psi$ = |\sigma_V_
+l.699 $\Psi$ = |\sigma_V_
                          1| |\sigma_V_2| |\sigma_V_3| = 2 * 1 * 1 = 2
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.697 $\Psi$ = |\sigma_V_1| |\sigma_V_
+l.699 $\Psi$ = |\sigma_V_1| |\sigma_V_
                                       2| |\sigma_V_3| = 2 * 1 * 1 = 2
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Double subscript.
-l.697 ...i$ = |\sigma_V_1| |\sigma_V_2| |\sigma_V_
+l.699 ...i$ = |\sigma_V_1| |\sigma_V_2| |\sigma_V_
                                                   3| = 2 * 1 * 1 = 2
 I treat `x_1_2' essentially like `x_1{}_2'.
 
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.698 
+l.700 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-
-Underfull \vbox (badness 1715) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6]
-Overfull \hbox (10.11273pt too wide) in paragraph at lines 787--787
+[6]
+Overfull \hbox (10.11273pt too wide) in paragraph at lines 789--789
 []\secfnt SIMULATION COM-PU-TA-TION RE-SULTS,
  []
 
 
-Overfull \hbox (8.4759pt too wide) in paragraph at lines 788--792
+Overfull \hbox (8.4759pt too wide) in paragraph at lines 790--794
 \T1/aer/m/n/9 The SNP sys-tem sim-u-la-tor (com-bi-na-tion of Python and CUDA
  []
 
-LaTeX Font Info:    Try loading font information for T1+aett on input line 792.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 794.
 
 (/usr/share/texmf-texlive/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
-Overfull \hbox (9.94414pt too wide) in paragraph at lines 842--842
+Overfull \hbox (9.94414pt too wide) in paragraph at lines 844--844
 []\T1/aett/m/n/9 No more Cks to use (infinite loop/s otherwise). Stop.[] 
  []
 
@@ -608,16 +604,16 @@ File: c211_tree.jpeg Graphic file (type jpg)
 ] (./snp-gpu-sim-pcsc2011.aux) )
 (\end occurred inside a group at level 1)
 
-### simple group (level 1) entered at line 611 ({)
+### simple group (level 1) entered at line 613 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
  3692 strings out of 495061
  46416 string characters out of 1182621
- 114554 words of memory out of 3000000
+ 117554 words of memory out of 3000000
  6800 multiletter control sequences out of 15000+50000
  51446 words of font info for 70 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,15n,32p,986b,1423s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,15n,32p,986b,1421s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sha
 re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texmf-t
 exlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts
@@ -633,7 +629,7 @@ mtt9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.p
 fb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/te
 xmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts
 /type1/urw/times/utmb8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (9 pages, 376771 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (9 pages, 377040 bytes).
 PDF statistics:
  101 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
