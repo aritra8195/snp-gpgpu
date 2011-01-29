@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  29 JAN 2011 23:28
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  29 JAN 2011 23:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -332,7 +332,7 @@ or  <return>  to continue without it.
 
 <snp-img.png, id=12, 444.91219pt x 281.55188pt>
 File: snp-img.png Graphic file (type png)
- <use snp-img.png> [2 <./snp-img.png (PNG copy)>]
+ <use snp-img.png>
 ! Double subscript.
 l.260 ... $M_{\Pi}$ is a matrix comprised of $a_i_
                                                   j$
@@ -361,6 +361,7 @@ Overfull \hbox (42.64998pt too wide) detected at line 273
 \OML/cmm/m/it/9 a[] \OT1/cmr/m/n/9 = []
  []
 
+[2 <./snp-img.png (PNG copy)>]
 
 ! LaTeX Error: \begin{document} ended by \end{definition}.
 
@@ -541,10 +542,6 @@ Overfull \hbox (1.92255pt too wide) in paragraph at lines 694--696
 en-t/-value of $\OML/cmm/m/it/9 confVec$\T1/aer/m/n/9 ) 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -576,7 +573,13 @@ l.698
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
-[6]
+
+Underfull \vbox (badness 1715) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
 Overfull \hbox (10.11273pt too wide) in paragraph at lines 787--787
 []\secfnt SIMULATION COM-PU-TA-TION RE-SULTS,
  []
@@ -608,11 +611,11 @@ File: c211_tree.jpeg Graphic file (type jpg)
 Here is how much of TeX's memory you used:
  3692 strings out of 495061
  46416 string characters out of 1182621
- 117554 words of memory out of 3000000
+ 114554 words of memory out of 3000000
  6800 multiletter control sequences out of 15000+50000
  51446 words of font info for 70 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,15n,32p,986b,1421s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,15n,32p,986b,1423s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sha
 re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texmf-t
 exlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts
@@ -628,7 +631,7 @@ mtt9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.p
 fb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/te
 xmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts
 /type1/urw/times/utmb8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (9 pages, 376971 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (9 pages, 377000 bytes).
 PDF statistics:
  101 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
