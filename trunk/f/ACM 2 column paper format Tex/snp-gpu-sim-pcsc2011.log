@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  29 JAN 2011 23:44
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  8 FEB 2011 10:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -228,6 +228,120 @@ Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 \@float@every@algorithm=\toks39
 \c@algorithm=\count118
 )
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/hycolor.sty
+Package: hycolor 2009/10/02 v1.5 Code for color options of hyperref/bookmark (H
+O)
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
+Package: xcolor-patch 2009/10/02 xcolor patch
+))
+\@linkdim=\dimen127
+\Hy@linkcounter=\count119
+\Hy@pagecounter=\count120
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)
+
+Package hyperref Warning: Height of page (\paperheight) is invalid (0.0pt),
+(hyperref)                using 11in.
+
+(/usr/share/texmf-texlive/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2009/08/13 v3.4 Keyval support for LaTeX options (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2009/07/30 v1.5 Key value parser with default handler suppor
+t (HO)
+))
+Package hyperref Info: Hyper figures OFF on input line 2975.
+Package hyperref Info: Link nesting OFF on input line 2980.
+Package hyperref Info: Hyper index ON on input line 2983.
+Package hyperref Info: Plain pages OFF on input line 2990.
+Package hyperref Info: Backreferencing OFF on input line 2995.
+
+Implicit mode ON; LaTeX internals redefined
+Package hyperref Info: Bookmarks ON on input line 3191.
+LaTeX Info: Redefining \url on input line 3428.
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bitset.sty
+Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/intcalc.sty
+Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/bigintcalc.sty
+Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2009/09/23 v0.6 LuaTeX support for pdfTeX utility functions
+ (HO)
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2009/08/05 v1.0 Some LaTeX kernel commands for general use (HO
+)
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+)))
+\Fld@menulength=\count121
+\Field@Width=\dimen128
+\Fld@charsize=\dimen129
+\Field@toks=\toks40
+Package hyperref Info: Hyper figures OFF on input line 4377.
+Package hyperref Info: Link nesting OFF on input line 4382.
+Package hyperref Info: Hyper index ON on input line 4385.
+Package hyperref Info: backreferencing OFF on input line 4392.
+Package hyperref Info: Link coloring OFF on input line 4397.
+Package hyperref Info: Link coloring with OCG OFF on input line 4402.
+Package hyperref Info: PDF/A mode OFF on input line 4407.
+
+(/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
+Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
+)
+
+Package hyperref Warning: Option `pdfpagelabels' is turned off
+(hyperref)                because \thepage is undefined.
+
+\c@Item=\count122
+\c@Hfootnote=\count123
+)
+*hyperref using default driver hpdftex*
+(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
+\Fld@listcount=\count124
+)
 (./snp-gpu-sim-pcsc2011.aux)
 \openout1 = `snp-gpu-sim-pcsc2011.aux'.
 
@@ -243,31 +357,51 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
 
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count119
-\scratchdimen=\dimen127
+\scratchcounter=\count125
+\scratchdimen=\dimen130
 \scratchbox=\box34
-\nofMPsegments=\count120
-\nofMParguments=\count121
-\everyMPshowfont=\toks40
-\MPscratchCnt=\count122
-\MPscratchDim=\dimen128
-\MPnumerator=\count123
-\everyMPtoPDFconversion=\toks41
+\nofMPsegments=\count126
+\nofMParguments=\count127
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count128
+\MPscratchDim=\dimen131
+\MPnumerator=\count129
+\everyMPtoPDFconversion=\toks42
 )
-\c@lstlisting=\count124
-LaTeX Font Info:    Try loading font information for U+msa on input line 112.
- (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+\c@lstlisting=\count130
+Package hyperref Info: Link coloring OFF on input line 31.
+ (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
+Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
+)
+\c@section@level=\count131
+)
+LaTeX Info: Redefining \ref on input line 31.
+LaTeX Info: Redefining \pageref on input line 31.
+
+(./snp-gpu-sim-pcsc2011.out) (./snp-gpu-sim-pcsc2011.out)
+\@outlinefile=\write3
+\openout3 = `snp-gpu-sim-pcsc2011.out'.
+
+\AtBeginShipoutBox=\box35
+LaTeX Font Info:    Try loading font information for U+msa on input line 113.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 112.
+LaTeX Font Info:    Try loading font information for U+msb on input line 113.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 112.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 113.
 
 (/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
@@ -330,7 +464,7 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-<snp-img.png, id=12, 444.91219pt x 281.55188pt>
+<snp-img.png, id=79, 444.91219pt x 281.55188pt>
 File: snp-img.png Graphic file (type png)
  <use snp-img.png>
 ! Double subscript.
@@ -361,7 +495,12 @@ Overfull \hbox (42.64998pt too wide) detected at line 273
 \OML/cmm/m/it/9 a[] \OT1/cmr/m/n/9 = []
  []
 
-[2 <./snp-img.png (PNG copy)>]
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.273 $$
+         [2 <./snp-img.png (PNG copy)>]
 
 ! LaTeX Error: \begin{document} ended by \end{definition}.
 
@@ -375,14 +514,14 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-<cuda-scaling.jpeg, id=21, 486.31688pt x 431.36156pt>
+<cuda-scaling.jpeg, id=100, 486.31688pt x 431.36156pt>
 File: cuda-scaling.jpeg Graphic file (type jpg)
  <use cuda-scaling.jpeg>
 Overfull \hbox (3.15784pt too wide) in paragraph at lines 324--327
  [][] 
  []
 
-<cuda-model.jpeg, id=22, 356.0803pt x 354.57469pt>
+<cuda-model.jpeg, id=103, 356.0803pt x 354.57469pt>
 File: cuda-model.jpeg Graphic file (type jpg)
  <use cuda-model.jpeg>
 LaTeX Font Info:    Try loading font information for OMS+aer on input line 355.
@@ -393,7 +532,13 @@ File: omsaer.fd 1999/12/27
 )
 LaTeX Font Info:    Font shape `OMS/aer/m/n' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 355.
- [3 <./cuda-scaling.jpeg> <./cuda-model.jpeg>]
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.364 //c
+         all kernel (GPU) function e.g. [3 <./cuda-scaling.jpeg> <./cuda-model.
+jpeg>]
 Overfull \hbox (5.44553pt too wide) in paragraph at lines 449--449
 []\secfnt Matrix com-pu-ta-tions and CPU-GPGPU in-
  []
@@ -403,7 +548,18 @@ Overfull \hbox (16.5792pt too wide) in paragraph at lines 488--488
 []\secfnt DESIGN AND IM-PLE-MEN-TA-TION OF THE
  []
 
-[4]
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.500 \begin{equation}
+                      \label{rules} [4]
+
+LaTeX Warning: Reference `sim-algo' on page \thepage  undefined on input line 5
+38.
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 542.
 
 ! LaTeX Error: Environment algorithmic undefined.
 
@@ -438,6 +594,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 560--565
  []
 
 
+LaTeX Warning: Reference `snp-sim-algo' on page \thepage  undefined on input li
+ne 571.
+
+
 ! LaTeX Error: \begin{algorithm} on input line 540 ended by \end{algorithmic}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
@@ -451,9 +611,29 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
+LaTeX Warning: Reference `sim-algo' on page \thepage  undefined on input line 5
+76.
+
+
+LaTeX Warning: Reference `sim-algo' on page \thepage  undefined on input line 5
+83.
+
+
+LaTeX Warning: Reference `snp-sim-algo' on page \thepage  undefined on input li
+ne 588.
+
+
+LaTeX Warning: Reference `sim-algo' on page \thepage  undefined on input line 5
+92.
+
+
 Overfull \hbox (6.02176pt too wide) in paragraph at lines 596--596
 []\secfnt Further in-spec-tion and de-tail-ing of the SNP
  []
+
+
+LaTeX Warning: Reference `sim-algo' on page \thepage  undefined on input line 5
+98.
 
 ! Double subscript.
 l.606 \Psi = |{\sigma_V_
@@ -501,6 +681,30 @@ I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
+LaTeX Warning: Reference `confvec' on page \thepage  undefined on input line 61
+8.
+
+
+LaTeX Warning: Reference `rule-list' on page \thepage  undefined on input line 
+618.
+
+
+LaTeX Warning: Reference `sim-algo' on page \thepage  undefined on input line 6
+18.
+
+
+LaTeX Warning: Reference `sim-algo2' on page \thepage  undefined on input line 
+618.
+
+
+LaTeX Warning: Reference `row-maj' on page \thepage  undefined on input line 61
+9.
+
+
+LaTeX Warning: Reference `sim-algo' on page \thepage  undefined on input line 6
+22.
+
+
 ! LaTeX Error: Environment algorithmic undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
@@ -536,7 +740,33 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[5]
+
+LaTeX Warning: Reference `sim-algo2' on page \thepage  undefined on input line 
+653.
+
+
+LaTeX Warning: Reference `confvec' on page \thepage  undefined on input line 65
+3.
+
+
+LaTeX Warning: Reference `rule-list' on page \thepage  undefined on input line 
+653.
+
+
+LaTeX Warning: Reference `sim-algo2' on page \thepage  undefined on input line 
+653.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.655 I
+       nitially from II-1 of Algorithm \ref{sim-algo2}, we have [5]
+
+LaTeX Warning: Reference `sim-algo2' on page \thepage  undefined on input line 
+655.
+
+
 Overfull \hbox (1.92255pt too wide) in paragraph at lines 694--696
 []$\OT1/cmr/m/n/9 ^^F$ \T1/aer/m/n/9 = 3 ( 3 neu-rons in to-tal, one per el-e-m
 en-t/-value of $\OML/cmm/m/it/9 confVec$\T1/aer/m/n/9 ) 
@@ -574,15 +804,64 @@ I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \vbox (badness 1715) has occurred while \output is active []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6]
+
+
+LaTeX Warning: Reference `confvec' on page \thepage  undefined on input line 70
+2.
+
+
+LaTeX Warning: Reference `rule-list' on page \thepage  undefined on input line 
+703.
+
+
+LaTeX Warning: Reference `sim-algo2' on page \thepage  undefined on input line 
+713.
+
+
+LaTeX Warning: Reference `sim-algo2' on page \thepage  undefined on input line 
+716.
+
+
+LaTeX Warning: Reference `rule-list' on page \thepage  undefined on input line 
+747.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.749 I
+       llustrating II-3 of Algorithm \ref{sim-algo2}, given the valid and
+[6]
+
+LaTeX Warning: Reference `sim-algo2' on page \thepage  undefined on input line 
+749.
+
+
+LaTeX Warning: Reference `confvec' on page \thepage  undefined on input line 75
+0.
+
+
+LaTeX Warning: Reference `rule-list' on page \thepage  undefined on input line 
+750.
+
+
+LaTeX Warning: Reference `confvec' on page \thepage  undefined on input line 78
+4.
+
+
+LaTeX Warning: Reference `rule-list' on page \thepage  undefined on input line 
+784.
+
+
 Overfull \hbox (10.11273pt too wide) in paragraph at lines 787--787
 []\secfnt SIMULATION COM-PU-TA-TION RE-SULTS,
  []
+
+
+LaTeX Warning: Reference `sect-snp-algo' on page \thepage  undefined on input l
+ine 789.
 
 
 Overfull \hbox (8.4759pt too wide) in paragraph at lines 788--792
@@ -598,24 +877,59 @@ Overfull \hbox (9.94414pt too wide) in paragraph at lines 842--842
 []\T1/aett/m/n/9 No more Cks to use (infinite loop/s otherwise). Stop.[] 
  []
 
-[7] <c211_tree.jpeg, id=43, 170.13562pt x 459.21562pt>
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.848 
+       [7]
+
+LaTeX Warning: Reference `sect-snp-algo' on page \thepage  undefined on input l
+ine 849.
+
+
+LaTeX Warning: Reference `c211_tree' on page \thepage  undefined on input line 
+850.
+
+<c211_tree.jpeg, id=182, 170.13562pt x 459.21562pt>
 File: c211_tree.jpeg Graphic file (type jpg)
  <use c211_tree.jpeg>
-[8 <./c211_tree.jpeg>] [9
 
-] (./snp-gpu-sim-pcsc2011.aux) )
+LaTeX Warning: Reference `c211_tree' on page \thepage  undefined on input line 
+860.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.938 
+       [8 <./c211_tree.jpeg>]pdfTeX warning (ext4): destination with the same i
+dentifier (name{page.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.969 \end{document}
+                     [9
+
+] (./snp-gpu-sim-pcsc2011.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 611 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 3692 strings out of 495061
- 46416 string characters out of 1182621
- 114554 words of memory out of 3000000
- 6800 multiletter control sequences out of 15000+50000
+ 6839 strings out of 495061
+ 94660 string characters out of 1182621
+ 192557 words of memory out of 3000000
+ 9805 multiletter control sequences out of 15000+50000
  51446 words of font info for 70 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 39i,15n,32p,986b,1423s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,15n,37p,993b,1625s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/sha
 re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texmf-t
 exlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts
@@ -631,9 +945,9 @@ mtt9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.p
 fb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/te
 xmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts
 /type1/urw/times/utmb8a.pfb>
-Output written on snp-gpu-sim-pcsc2011.pdf (9 pages, 377000 bytes).
+Output written on snp-gpu-sim-pcsc2011.pdf (9 pages, 397083 bytes).
 PDF statistics:
- 101 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 261 PDF objects out of 1000 (max. 8388607)
+ 70 named destinations out of 1000 (max. 500000)
+ 85 words of extra memory for PDF output out of 10000 (max. 10000000)
 
