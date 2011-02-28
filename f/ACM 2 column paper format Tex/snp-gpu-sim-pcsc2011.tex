@@ -172,6 +172,8 @@ A matrix representation of SN P systems seem somewhat intuitive due to their gra
 
 This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
 
+The objective of this work is to start the foundations for the creation of P system simulators, in this particular case an SN P system, using highly parallel devices such as GPGPUs. Correctness, in terms of implementation algorithms and hardware design considerations, of the output and fidelity to the computing model is part of this scope.
+
 %MENTION matrix implementation on parallel/GPU systems + citations (DONE)
 
 %MENTION overview of paper + contributions BRIEFLY (DONE)
@@ -284,7 +286,7 @@ spiking vector $S_k = < 1, 0, 1, 1, 0 >$ given $C_0$.
 Note that a 2nd spiking vector, $S_k = < 1, 0, 1, 1, 0 >$, is
 possible if we use rule (2) over rule (1) instead (but not both
 at the same time, hence we cannot have a vector equal to
-< 1, 1, 1, 1, 0>, so this $S_k$ is invalid ).
+< 1, 1, 1, 1, 0>, so this $S_k$ is invalid ). $Validity$ in this case means that only one among several applicable rules is used and thus represented in the spiking vector. We can have all the possible vectors composed of $0$s and $1$s with length equal to the number of rules, but have only some of them be valid, given by $\Psi$ later at subsection \ref{siminspect}.
 
 \textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_i_j$
 elements where $a_i_j$ is given as
@@ -293,10 +295,10 @@ elements where $a_i_j$ is given as
 $$
 a_{ij} = \left\{
 \begin{array}{rl}
--c, &\mbox{if rule $r_i$ is in $\sigma_j$ and it is applied consuming $c$ spikes;} \\
- p, &\mbox{if rule $r_i$ is in $\sigma_s$ ($s\neq j$ and $(s,j)\in syn$)} \\
- & \mbox{and it is applied producing $p$ spikes in total;}\\
- 0, &\mbox{if rule $r_i$ is in $\sigma_s$ ($s\neq j$ and $(s,j)\notin syn$).}
+-c, &\mbox{rule $r_i$ is in $\sigma_j$ and is applied consuming $c$ spikes;} \\
+ p, &\mbox{rule $r_i$ is in $\sigma_s$ ($s\neq j$ and $(s,j)\in syn$)} \\
+ & \mbox{and is applied producing $p$ spikes in total;}\\
+ 0, &\mbox{rule $r_i$ is in $\sigma_s$ ($s\neq j$ and $(s,j)\notin syn$).}
     \end{array}
 \right.
 $$
@@ -318,7 +320,7 @@ M_{\Pi} = \left(
 \end{equation}
 
 In such a scheme, rows represent rules and columns
-represent neurons.
+represent neurons. 
 
 Finally, the following equation provides the configuration
 vector at the $(k+1)th$ step, given the configuration vector and
@@ -432,7 +434,7 @@ $N$ in this case allows the programmer to specify $N$ number of
 threads which will execute the $add$ kernel function in parallel, with 1
 specifying only one block of thread for all $N$ threads.
 
-\subsection{Design considerations given hardware and software
+\subsection{Design considerations for the  hardware and software
 setup}
 
 The kernel function i.e. code that is executed in parallel in
@@ -514,8 +516,9 @@ logic and control as mentioned earlier, while in it, the
 device/GPU code which is written in C executes the parallel
 parts of the simulator.
 
-\section{design and implementation of
-the simulator}\label{sect-snp-algo}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Simulator design and implementation}\label{sect-snp-algo}
 
 The current SNP simulator, which is based on the type of
 SNP systems currently without time delays, is capable of
@@ -562,8 +565,7 @@ Neuron 1's rules are given by accessing the sub-lists of $r$
 (again, starting at index zero) i.e. rule (1) is given by $r[ 0 ][ 0 ]
 = 2$ and rule (4) is given by $r[ 2 ][ 1 ] = 1$.
 
-\subsection{Algorithms in the implementation of the SNP
-simulator}\label{snp-sim-algo}
+\subsection{Algorithm simulator implementation}\label{snp-sim-algo}
 	
 The general algorithm is shown in Algorithm \ref{sim-algo}.
 	
@@ -622,8 +624,8 @@ GPGPU.
 Each line in Algorithm \ref{sim-algo} mentions
 which part/s the simulator code runs in, either in the device \textbf{(DEVICE)} or in the host \textbf{(HOST)} part.
 
-\subsection{Further inspection and detailing of the SNP system
-simulator}
+\subsection{Closer inspection of the SN P system
+simulator}\label{siminspect}
 	
 The more detailed algorithm for part $II$ of Algorithm \ref{sim-algo} is as follows.
 
@@ -731,15 +733,12 @@ spiking vectors, which needs to be produced later, for a
 given configuration, in this case we have $confvec$. There are only
 2 valid spiking vectors from (\ref{confvec}) and the
 rules given in (\ref{rule-list}) encoded in the Python list $r$. These spiking vectors are
-
 \begin{equation}\label{sk-211-1}
 < 0, 1, 1, 1, 0>
 \end{equation}
-
 \begin{equation}\label{sk-211-2}
 < 1, 0, 1, 1, 0>
 \end{equation}
-
 In order to produce these spiking vectors algorithmically as in Algorithm \ref{sim-algo2} , it's
 important to notice that first, all possible and valid spiking
 vector strings ( made up of \textit{1}s and \textit{0}s) per neuron have to be
@@ -813,6 +812,8 @@ The final output of the sub-algorithm for the generation of all valid and possib
 
 As mentioned earlier, $\Psi$ = 2 is the number of valid and possible $S_k$s to be expected from $r$, $M_\Pi$, and $C_0$ = [2,1,1] in $\Pi$. Thus $tmp3$ is the list of all possible and valid spiking vectors given (\ref{confvec}) and (\ref{rule-list}) in this illustration. Furthermore, $tmp3$ includes all possible and valid spiking vectors for a given neuron in a given configuration of an SN P system with all its rules and 
 synapses (interconnections). Part II-3 is done (	$\Sigma - 1$) times, albeit exhaustively still so, between the two lists/neurons in the pair. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{simulation computation results, observations, and analysis}
 The SNP system simulator (combination of Python
@@ -889,11 +890,12 @@ Graphically (though not shown exhaustively) the computation tree for $\Pi$ is sh
 
 The $confVecs$ followed by (...) are the $confVecs$ that went deeper i.e. produced more $C_k$s than Figure \ref{c211_tree} has shown.
 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusions and future work}
 Using a highly parallel computing device such as a GPGPU,
-particularly NVIDIA CUDA, an SNP system simulator was
-successfully designed and implemented. The use of a high
+particularly NVIDIA CUDA, an SN P system simulator was
+successfully designed and implemented as per the objective of this work. The simulator was shown to model the workings of an SN P system without delay. The use of a high
 level programming language such as Python for host tasks,
 mainly for logic and string representation and manipulation
 of values (vector/matrix elements) provided the necessary
