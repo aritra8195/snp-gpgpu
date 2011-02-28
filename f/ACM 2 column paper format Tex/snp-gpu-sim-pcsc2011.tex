@@ -44,7 +44,7 @@
 
 %\title{A Sample {\ttlit ACM} SIG Proceedings Paper in LaTeX
 %Format\titlenote{(Does NOT produce the permission block, copyright information nor page numbering). For use with ACM\_PROC\_ARTICLE-SP.CLS. Supported by ACM.}}
-\title{ Spiking Neural P system without delay simulator implementation using GPGPUs \titlenote{Supported by the \textit{UP Engineering Research and Development for Technology (ERDT)} project}\\}
+\title{ Spiking Neural P system without delay simulator implementation using GPGPUs \titlenote{Partly supported by the \textit{UP Engineering Research and Development for Technology (ERDT)} program.}\\}
 %\subtitle{[Extended Abstract]
 %\titlenote{A full version of this paper is available as
 %\textit{Author's Guide to Preparing ACM SIG Proceedings Using
@@ -75,7 +75,7 @@
 % without further effort on your part as the last section in
 % the body of your article BEFORE References or any Appendices.
 
-\numberofauthors{2} %  in this sample file, there are a *total*
+\numberofauthors{3} %  in this sample file, there are a *total*
 % of EIGHT authors. SIX appear on the 'first-page' (for formatting
 % reasons) and the remaining two appear in the \additionalauthors section.
 %
@@ -93,17 +93,23 @@
 % 1st. author
 \alignauthor
 Francis Cabarle \\
-       \affaddr{ Algorithms and Complexity Laboratory }\\
+       \affaddr{ Algorithms \& Complexity Lab }\\
        \affaddr{ Department of Computer Science }\\
        \affaddr{ University of the Philippines Diliman }\\
        \email{ fccabarle@up.edu.ph  }
 % 2nd. author
 \alignauthor
 Henry Adorna \\
-       \affaddr{ Algorithms and Complexity Laboratory }\\
+       \affaddr{ Algorithms \& Complexity Lab }\\
        \affaddr{ Department of Computer Science }\\
        \affaddr{ University of the Philippines Diliman }\\
        \email{hnadorna@dcs.upd.edu.ph}
+\alignauthor
+Miguel Martinez-del-Amor \\
+       \affaddr{ Research Group on Natural Computing}\\
+       \affaddr{ University of Seville, Spain }\\
+%       \affaddr{ University of the Philippines Diliman }\\
+       \email{ mdelamor@us.es }
 %\and  % use '\and' if you need 'another row' of author names
 }
 % There's nothing stopping you putting the seventh, eighth, etc.
@@ -121,6 +127,8 @@ Henry Adorna \\
 % number that will appear in the \additionalauthors section.
 
 \maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
 This paper presents a parallel simulator for a type of P system known as spiking neural P system (SNP system) using general purpose graphics processing units (GPGPUs). GPGPUs, unlike the more conventional and general purpose, multi-core CPUs, are used for parallelizable problems due to their architectural optimization for parallel computations.
@@ -130,6 +138,7 @@ Membrane computing or P systems on the other hand, are cell-inspired computation
 The matrix representation of SNP systems provides a crucial step into their simulation on parallel devices such as GPGPUs. Simulating the highly parallel nature of SNP systems necessitates the use of hardware intended for parallel computations. The simulator algorithms, design considerations, and implementation are presented. Finally, simulation results, observations, and analyses using an SNP system that generates all numbers in $\mathbb N$ - \{$1$\} are discussed.
 
 \end{abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 % A category with the (minimum) three required fields
 %\category{H.4}{Information Systems Applications}{Miscellaneous}
@@ -138,16 +147,19 @@ The matrix representation of SNP systems provides a crucial step into their simu
 
 %\terms{Theory}
 
-\keywords{ Membrane computing, Parallel computing, GPU computing  } % NOT required for Proceedings
+\keywords{ Membrane computing, Parallel computing, GPU computing, simulators  } % NOT required for Proceedings
 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
 
 \subsection{Parallel computing: Via graphics processing units (GPUs)}
-The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance\cite{cudapage}. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with larger speedups when done in parallel as compared to performing them sequentially. 
+The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance \cite{cudapage}. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with larger speedups when done in parallel as compared to performing them sequentially. 
 
 \subsection{Parallel computing: Via Membranes}
-Membrane computing or its more specific counterpart, a P system, are Turing complete computing models that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of natural computing, from nature\cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
+Membrane computing or its more specific counterpart, a P system, are Turing complete computing models (for some P system types or variants) that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of natural computing, from nature \cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
+
+%Can add more to this by explaining ions, molecules in the cell's 'soup' are represented by a multiset of objects (data structure) at least for most types of P systems. The cell is seen as 'computing' or processing information through these things.
 
 SN P systems differ from other types of P systems precisely because they are mono-membranar and only use one type of object in its computation. These characteristics, among others, are meant to capture the workings of a special type of cell known as the neuron. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as \textit{spikes}. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, but by means of time duration as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval\cite{snp}. The time duration between two spikes, or several successive spikes, transmit the information.  
 
@@ -164,6 +176,7 @@ This paper starts out by introducing and defining the type of SNP system that wi
 
 %MENTION overview of paper + contributions BRIEFLY (DONE)
 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Spiking neural p systems}
 
@@ -908,7 +921,7 @@ GPGPUs running NVIDIA CUDA.
 
 %ACKNOWLEDGMENTS are optional
 \section{ Acknowledgments }
-The authors are supported by the \textit{ERDT Project}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of the \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. The authors would also like to thank the valuable insights of Mr. Miguel Martinez-del-Amor and Mr. Neil Ibo.
+The authors are supported by the \textit{ERDT program}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of the \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. The authors would also like to thank the valuable insights of Mr. Miguel Martinez-del-Amor and Mr. Neil Ibo.
 
 %HOW to acknowledge Mr. Miguel del-Amor?
 
