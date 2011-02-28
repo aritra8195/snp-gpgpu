@@ -157,7 +157,7 @@ The matrix representation of SNP systems provides a crucial step into their simu
 The trend for massively parallel computation is moving from the more common multi-core CPUs towards GPGPUs for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of GPGPUs compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance \cite{cudapage}. Another more important reason is that GPGPUs are architectured for massively parallel computations since unlike the architectures of most general purpose CPUs, a large part of GPGPUs are devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with larger speedups when done in parallel as compared to performing them sequentially. 
 
 \subsection{Parallel computing: Via Membranes}
-Membrane computing or its more specific counterpart, a P system, are Turing complete computing models (for some P system types or variants) that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of {\it natural computing} (e.g. DNA/molecular computing, neural networks, quantum computing), from nature \cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane.
+Membrane computing or its more specific counterpart, a P system, are Turing complete computing models (for some P system types or variants) that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of {\it natural computing} (e.g. DNA/molecular computing, neural networks, quantum computing), from nature \cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane. Before proceeding, it is important to clarify what is meant when it is said that nature $computes$, particularly life or the cell: computation in this case involves reading information from memory from past or present stimuli, rewrite and retrieve this data as a stimuli from the environment, process the gathered data and act accordingly due to this processing \cite{molecular}. Thus, we extend the classical meaning of computation presented by Allan Turing.
 
 %Can add more to this by explaining ions, molecules in the cell's 'soup' are represented by a multiset of objects (data structure) at least for most types of P systems. The cell is seen as 'computing' or processing information through these things. (from New Computational Paradigms book)
 
@@ -168,7 +168,7 @@ It has been shown that SN P systems, given their nature, are representable by ma
 %\pagebreak
 
 \subsection{Simulating SNP systems in GPGPUs}
-Matrix operations and their algorithms have been studied and efficiently implemented in GPGPUs \cite{matrixgpu1}\cite{matrixgpu2}. Thus the matrix representation of SNP systems bridges the gap between the highly theoretical yet still computationally powerful SNP systems and the applicative and more tangible GPGPUs, via an SNP system simulator. The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and allows programmers to perform parallel computations, via GPGPUs manufactured by NVIDIA.
+A matrix representation of SN P systems seem somewhat intuitive due to their graph-like nature and properties (as will be further shown in the succeeding sections such as in subsection \ref{computesnp}). Matrix operations, algorithms and such in parallel computing literature (e.g. \cite{matrixgpu1} and \cite{matrixgpu2} to name a few recent ones done on GPGPUs) have been studied and are available in vast quantities for years now. It would thus seem then that a matrix represented SN P system simulator implementation on highly parallel computing devices such as GPGPUs be a natural confluence of the previous points made. The matrix representation of SN P systems bridges the gap between the theoretical yet still computationally powerful SN P systems and the applicative and more tangible GPGPUs, via an SN P system simulator. The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and allows programmers to perform parallel computations, via GPGPUs manufactured by NVIDIA.
 
 This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
 
@@ -180,7 +180,7 @@ This paper starts out by introducing and defining the type of SNP system that wi
 
 \section{Spiking neural p systems}
 
-\subsection{Computing with SNP systems}
+\subsection{Computing with SN P systems}\label{computesnp}
 The type of SNP systems focused on by this paper are those without delays i.e. those that spike or transmit signals the moment they are able to do so \cite{snpbrain}\cite{snpmat}. A variant, which allows for delays before a neuron produces a spike, are also available \cite{snp}. An SNP system without delay is of the form:
 
 %MODIFY the following defitions or CITE them instead
@@ -231,7 +231,7 @@ simplified with the notation
 
 where the regular expression $E = a^k$, again consuming $k$ spikes and producing a spike.
 
-The non-determinism of SNP systems comes with the fact
+The non-determinism of SN P systems comes with the fact
 that more than one rule of the several types are applicable at
 a given time, given enough spikes. The rule to be used is
 chosen non-deterministically in the neuron. However, only
@@ -239,7 +239,11 @@ one rule can be applied or used at a given time \cite{snp}\cite{snpbrain}\cite{s
 neurons in an SN P system operate in parallel and in unison,
 under a global clock \cite{snp}. For Figure \ref{snp_ex} no input neuron is present,
 but neuron 3 is the output neuron, hence the arrow pointing
-towards the environment, outside the SNP system. The SNP system in Figure \ref{snp_ex} is a 3 neuron system whose neurons are labeled (neuron/$\sigma_1$ to 3) and whose rules have a total system ordering from (1) to (5).
+towards the environment, outside the SNP system.
+
+The SN P system in Figure \ref{snp_ex} is $\Pi$, a 3 neuron system whose neurons are labeled (neuron 1/$\sigma_1$ to neuron 3/$\sigma_3$) and whose rules have a total system ordering from (1) to (5). Neuron 1/$\sigma_1$ can be seen to have an initial number of spikes equal to 2 (hence the $a^2$ seen inside it). There is $no$ input neuron, but $\sigma_3$ is the output neuron, as seen by the arrow pointing towards the environment (not to another neuron). More formally, $\Pi$ can be represented as follows:
+
+$\Pi = (\{a\}, \sigma_1, \sigma_2, \sigma_3, syn, out)$ where $\sigma_1 = (2, R_1)$, $n_1 = 2, ~R_1 = \{a^2/a \rightarrow a\}$, (neurons 2 to 3 and their $n_i$s and $R_i$s can be similarly shown), $syn = \{(1,2),(1,3),(2,1),(2,3)\}$ are the synapses for $\Pi$, $out= \sigma_3$. This SN P system generates all numbers in the set $\mathbb N$ - \{$1$\}, hence it doesn't $halt$, which can be easily verified by applying the rules in $\Pi$, and checking the spikes produced by the output neuron $\sigma_3$.
 
 
 	\begin{figure}
@@ -325,6 +329,7 @@ spiking vector at the $kth$ step, and $M_{\Pi}$:
 C_{k+1} =  C_{k} ~ + ~ S_{k}\cdot M_{\Pi}.
 \end{equation}
 
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{the NVIDIA CUDA architecture}
 
