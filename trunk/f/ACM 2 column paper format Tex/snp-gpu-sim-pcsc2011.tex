@@ -172,7 +172,7 @@ A matrix representation of SN P systems seem somewhat intuitive due to their gra
 
 This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
 
-The objective of this work is to start the foundations for the creation of P system simulators, in this particular case an SN P system, using highly parallel devices such as GPGPUs. Correctness, in terms of implementation algorithms and hardware design considerations, of the output and fidelity to the computing model is part of this scope.
+The objective of this work is to start the foundations for the creation of P system simulators, in this particular case an SN P system, using highly parallel devices such as GPGPUs. Correctness, in terms of implementation algorithms and hardware design considerations, of the output and fidelity to the computing model is a part of this objective.
 
 %MENTION matrix implementation on parallel/GPU systems + citations (DONE)
 
@@ -183,7 +183,7 @@ The objective of this work is to start the foundations for the creation of P sys
 \section{Spiking neural p systems}
 
 \subsection{Computing with SN P systems}\label{computesnp}
-The type of SNP systems focused on by this paper are those without delays i.e. those that spike or transmit signals the moment they are able to do so \cite{snpbrain}\cite{snpmat}. A variant, which allows for delays before a neuron produces a spike, are also available \cite{snp}. An SNP system without delay is of the form:
+The type of SNP systems focused on by this paper (scope) are those without delays i.e. those that spike or transmit signals the moment they are able to do so \cite{snpbrain}\cite{snpmat}. A variant, which allows for delays before a neuron produces a spike, are also available \cite{snp}. An SNP system without delay is of the form:
 
 %MODIFY the following defitions or CITE them instead
 
