@@ -39,6 +39,9 @@
 
 \documentclass{acm_proc_article-sp}
 \usepackage{amsmath,amssymb,latexsym,graphicx,url,listings, algorithm}
+
+\newtheorem{definition}{Definition}
+\newtheorem{algorithmic}{Definition}
 \begin{document}
 
 
@@ -126,7 +129,7 @@ Miguel Mart\'inez-del-Amor \\
 % is the number that will appear on the first page PLUS the
 % number that will appear in the \additionalauthors section.
 
-\maketitle
+\maketitle 
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
@@ -220,15 +223,13 @@ if $\sigma_i$ contains $s$ spikes, then $s$ spikes are forgotten or
 removed once the rule is used. Rules of type (b-1) can be
 simplified with the notation
 
-\begin{definition}
+\begin{equation}
 \begin{enumerate}
-\begin{enumerate}
-%\begin{enumerate}
-\item[(b-3)]$a^k \rightarrow a$
-%\end{enumerate}
+
+\item [(b-3)]$a^k \rightarrow a$
+
 \end{enumerate}
-\end{enumerate}
-\end{definition}
+\end{equation}
 %b-3) a → a
 
 where the regular expression $E = a^k$, again consuming $k$ spikes and producing a spike.
@@ -288,8 +289,8 @@ possible if we use rule (2) over rule (1) instead (but not both
 at the same time, hence we cannot have a vector equal to
 < 1, 1, 1, 1, 0>, so this $S_k$ is invalid ). $Validity$ in this case means that only one among several applicable rules is used and thus represented in the spiking vector. We can have all the possible vectors composed of $0$s and $1$s with length equal to the number of rules, but have only some of them be valid, given by $\Psi$ later at subsection \ref{siminspect}.
 
-\textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_i_j$
-elements where $a_i_j$ is given as
+\textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_{ij}$
+elements where $a_{ij}$ is given as
 
 \begin{definition}\label{defi-snp-mat}
 $$
@@ -929,8 +930,6 @@ GPGPUs running NVIDIA CUDA.
 %ACKNOWLEDGMENTS are optional
 \section{ Acknowledgments }
 The authors from UP Diliman are supported by the \textit{ERDT program}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of the \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. Finally, they would also like to thank the valuable insights of Mr. Neil Ibo.
-
-%HOW to acknowledge Mr. Miguel del-Amor?
 
 %and the \textbf{.cls} and \textbf{.tex} files that it describes.
 

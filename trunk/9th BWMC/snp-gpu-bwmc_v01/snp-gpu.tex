@@ -3,7 +3,7 @@
 
 
 \setcounter{page}{1}
-\authorrunning{Francis Cabarle et al.}
+\authorrunning{F. Cabarle, H. Adorna, Mart\'inez--del--Amor}
 \titlerunning{Simulating Spiking Neural P systems without delays using GPGPUs}
 
 %\usepackage{amsmath,amssymb,latexsym,graphicx,url}
@@ -250,6 +250,8 @@ C_{k+1} =  C_{k} ~ + ~ S_{k}\cdot M_{\Pi}.
 
 \section{the NVIDIA CUDA architecture}
 
+%MENTION the setup used - iMac OS X 10.5.8 CUDA version
+
 NVIDIA, a well known manufacturer of GPUs, released in
 2006 the CUDA programming model and architecture \cite{cudapage}.
 Using extensions of the widely known C language, a
@@ -484,6 +486,7 @@ which part/s the simulator code runs in, either in the device \textbf{(DEVICE)} 
 %\begin{algorithm}
 %\caption{Overview of the algorithm for the SNP system simulator}
 \todo[color=red]{I'm sorry, I had to comment the begin\{algorithm\} since latex couldn't compile it (Float(s) lost error)}.
+
 \label{sim-algo}
 \begin{algorithmic}
 \item [\textbf{Require}]: creation of files $confVec$, \redmark{$M$}\todo[color=yellow]{$M$ is not defined here, it's defined later}, and $r$\\
@@ -694,7 +697,7 @@ possible \{\textit{1,0}\} strings (spiking vectors) for neurons 1, 2, and 3 (sep
 
 First, pair the strings of neurons 1 and 2, and then distribute them exhaustively to the other neuron's possible and valid strings, concatenating them in the process (since they are considered as $strings$ in Python). 
 
-'10'  +	'1' => '101'\\
+'10'  +	'1' $\rightarrow$ '101'\\
 '01' 
 
 and 
