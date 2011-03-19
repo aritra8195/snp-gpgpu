@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  17 MAR 2011 09:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  19 MAR 2011 12:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -509,9 +509,7 @@ LaTeX Info: Redefining \addtolength on input line 77.
 \ULC@box=\box44
 Package: ulem 2000/05/26
 \ULdepth=\dimen185
-) (./snp-gpu.aux
-\contentsline {mtchap}{References}{18}
-)
+) (./snp-gpu.aux)
 \openout1 = `snp-gpu.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
@@ -526,7 +524,8 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
- (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count162
 \scratchdimen=\dimen186
@@ -575,7 +574,11 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 <figures/snp-img.png, id=31, 444.91219pt x 281.55188pt>
 File: figures/snp-img.png Graphic file (type png)
 
-<use figures/snp-img.png> [5 <./figures/snp-img.png (PNG copy)>]
+<use figures/snp-img.png>
+
+LaTeX Warning: Reference `siminspect' on page 5 undefined on input line 204.
+
+[5 <./figures/snp-img.png (PNG copy)>]
 <figures/cuda-scaling.jpeg, id=36, 486.31688pt x 431.36156pt>
 File: figures/cuda-scaling.jpeg Graphic file (type jpg)
 
@@ -601,7 +604,10 @@ LaTeX Warning: Marginpar on page 9 moved.
 LaTeX Warning: Marginpar on page 11 moved.
 
 
-LaTeX Warning: Marginpar on page 11 moved.
+LaTeX Warning: Reference `sim-algo' on page 11 undefined on input line 481.
+
+
+LaTeX Warning: Reference `sim-algo' on page 11 undefined on input line 482.
 
 
 LaTeX Warning: Marginpar on page 11 moved.
@@ -613,13 +619,36 @@ LaTeX Warning: Marginpar on page 11 moved.
 LaTeX Warning: Marginpar on page 11 moved.
 
 
-Overfull \hbox (39.44208pt too wide) in paragraph at lines 549--549
+LaTeX Warning: Marginpar on page 11 moved.
+
+
+LaTeX Warning: Reference `snp-sim-algo' on page 11 undefined on input line 516.
+
+
+
+LaTeX Warning: Reference `sim-algo' on page 11 undefined on input line 521.
+
+
+LaTeX Warning: Reference `sim-algo' on page 11 undefined on input line 528.
+
+
+LaTeX Warning: Reference `snp-sim-algo' on page 11 undefined on input line 533.
+
+
+
+LaTeX Warning: Reference `sim-algo' on page 11 undefined on input line 537.
+
+
+LaTeX Warning: Reference `sim-algo' on page 11 undefined on input line 542.
+
+
+Overfull \hbox (39.44208pt too wide) in paragraph at lines 550--550
 \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 O; ^^[[]; [] ; ^^[[]; syn; in; out\OT1/cmr/m/
 n/10 )$, 
  []
 
 
-Overfull \hbox (39.44208pt too wide) in paragraph at lines 549--549
+Overfull \hbox (39.44208pt too wide) in paragraph at lines 550--550
 \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 O; ^^[[]; [] ; ^^[[]; syn; in; out\OT1/cmr/m/
 n/10 )$, 
  []
@@ -631,53 +660,95 @@ LaTeX Warning: Marginpar on page 11 moved.
 LaTeX Warning: Marginpar on page 11 moved.
 
 [11]
+
+LaTeX Warning: Reference `sim-algo' on page 12 undefined on input line 566.
+
+
+LaTeX Warning: Reference `sim-algo2' on page 12 undefined on input line 566.
+
+
+LaTeX Warning: Reference `sim-algo' on page 12 undefined on input line 570.
+
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 587.
- [12] [13] [14] [15]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 588.
+
+LaTeX Warning: Reference `sim-algo2' on page 12 undefined on input line 600.
+
+
+LaTeX Warning: Reference `sim-algo2' on page 12 undefined on input line 600.
+
+
+LaTeX Warning: Reference `sim-algo2' on page 12 undefined on input line 602.
+
+[12]
+
+LaTeX Warning: Reference `sim-algo2' on page 13 undefined on input line 657.
+
+
+LaTeX Warning: Reference `sim-algo2' on page 13 undefined on input line 660.
+
+
+LaTeX Warning: Reference `sim-algo2' on page 13 undefined on input line 693.
+
+[13] [14] [15]
+
+LaTeX Warning: Reference `c211_tree' on page 16 undefined on input line 796.
+
 <figures/c211_tree.jpeg, id=77, 170.13562pt x 459.21562pt>
 File: figures/c211_tree.jpeg Graphic file (type jpg)
 
-<use figures/c211_tree.jpeg> [16] [17 <./figures/c211_tree.jpeg>]
+<use figures/c211_tree.jpeg>
+
+LaTeX Warning: Reference `c211_tree' on page 16 undefined on input line 806.
+
+[16] [17 <./figures/c211_tree.jpeg>]
 
 LaTeX Warning: Marginpar on page 18 moved.
 
 
-Underfull \hbox (badness 7667) in paragraph at lines 881--882
+Underfull \hbox (badness 7667) in paragraph at lines 882--883
 []\OT1/cmr/m/n/9 P sys-tems re-source web-site. ([]|   [] 2011? [], Jan) [On-li
 ne]. Avail-able:
  []
 
 [18] (./snp-gpu.aux
 \contentsline {mtchap}{References}{18}
-) ) 
+)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  10835 strings out of 495061
  176790 string characters out of 1182621
- 267372 words of memory out of 3000000
+ 265322 words of memory out of 3000000
  13779 multiletter control sequences out of 15000+50000
  12176 words of font info for 50 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  54i,15n,82p,1913b,1515s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/publ
-ic/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/ty
-pe1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr
-7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/s
-hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fon
-ts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
-s/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.
-pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on snp-gpu.pdf (18 pages, 485575 bytes).
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
+cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
+/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texli
+ve/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/typ
+e1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7
+.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texmf-t
+exlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/font
+s/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on snp-gpu.pdf (18 pages, 486302 bytes).
 PDF statistics:
  155 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
