@@ -40,6 +40,21 @@ TODOS:
 START of KERNEL functions
 */
 //START vector addition kernel function
+void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int Width ){
+	
+	//due to row-major ordering of matrix elements
+	//int Pvalue = 0;
+	for ( int ty = 0; ty < Width; ++ty ){
+	for ( int k = 0; k < Width; ++k ){
+		int Mdelement = Md[ ty * Width + k ];
+		int Ndelement = Nd[ ty * Width + k ];
+		Pd[ ty * Width + k ] = Mdelement + Ndelement;
+	}
+	}
+	//Pd[ ty * Width + tx  ] = Pvalue;	
+}
+
+/*
 __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int Width ){
 	// MatrixAddKernel<<< dimGrid, dimBlock >>>( Md, Nd, Pd, Width );
 	//dim3 dimBlock( Width, Width ); dim3 dimGrid( 1, 1 );
@@ -53,7 +68,7 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int Width ){
 		Pd[ ty * Width + k ] = Mdelement + Ndelement;
 	}
 	//Pd[ ty * Width + tx  ] = Pvalue;
-}							
+} */							
 //END of kernel addition
 
 
@@ -200,12 +215,13 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, ch
 
 	// Ck+1 = confVec + Ck => Qd = Od + Pd
 //	MatrixAddKernel<<< dimGrid, dimBlock >>>( Od, Pd, Qd, Width );
+	MatrixAddKernel( matD, matC, matE, Width );
 
 //	cudaMemcpy( matE, Qd, size, cudaMemcpyDeviceToHost );
-//	printf( " \n%s + %s * %s : \n", filename0, filename1, filename2 );
-//	printMatrix( matE, Width, Width );
+	printf( " \n%s + %s * %s : \n", filename0, filename1, filename2 );
+	printMatrix( matE, Width, Width );
 
-//	writeMatFile( Cnext, matE, Width );
+	writeMatFile( Cnext, matE, Width );
 
 	free( matA ); free( matB ); free( matC ); free( matD ); free( matE );
 //	cudaFree( Md ); cudaFree( Nd ); cudaFree ( Pd ); cudaFree( Od ); cudaFree( Qd );
