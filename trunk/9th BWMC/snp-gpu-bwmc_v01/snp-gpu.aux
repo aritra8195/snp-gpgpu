@@ -5,16 +5,13 @@
 \citation{cudapage}
 \citation{cudabook}
 \citation{cudaguide}
+\citation{gpgpu}
 \@writefile{toc}{\contentsline {title}{Simulating Spiking Neural P systems without delays using GPGPUs }{1}}
 \@writefile{toc}{\contentsline {author}{Francis Cabarle\unskip {}, Henry Adorna\unskip {}, Miguel A. Mart\'inez--del--Amor\unskip {}}{1}}
-\@writefile{tdo}{\contentsline {todo}{{GPGPU is not a device, it's the technique for General Purpose computation on GPUs}}{1}}
-\pgfsyspdfmark {pgfid1}{11737474}{28435108}
-\pgfsyspdfmark {pgfid4}{35171823}{30347257}
-\pgfsyspdfmark {pgfid5}{38104559}{28244645}
-\@writefile{tdo}{\contentsline {todo}{{We should consider the measure of simulation time, with a CPU-GPU comparative, so we can validate the decision of implementing the simulation algorithm on the GPU.}}{1}}
-\pgfsyspdfmark {pgfid6}{17122579}{19784356}
-\pgfsyspdfmark {pgfid9}{35171823}{23515131}
-\pgfsyspdfmark {pgfid10}{38104559}{19113297}
+\@writefile{tdo}{\contentsline {todo}{{We should consider the measure of simulation time, with a CPU-GPU comparative, so we can validate the decision of implementing the simulation algorithm on the GPU. - Sequential Python SNP system simulator?}}{1}}
+\pgfsyspdfmark {pgfid1}{12592156}{18342564}
+\pgfsyspdfmark {pgfid4}{35171823}{23404083}
+\pgfsyspdfmark {pgfid5}{38104559}{18152101}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Parallel computing: Via graphics processing units (GPUs)}{1}}
 \citation{introtomem}
@@ -24,31 +21,31 @@
 \citation{snp}
 \citation{snpbrain}
 \citation{snpmat}
-\citation{matrixgpu1}
-\citation{matrixgpu2}
-\citation{matrixgpu1}
-\citation{matrixgpu2}
-\@writefile{tdo}{\contentsline {todo}{{Here I wanted to define what is GPGPU, related to the execution of arithmetic operations (not graphical) on the GPU.}}{2}}
-\pgfsyspdfmark {pgfid11}{8209694}{36695517}
-\pgfsyspdfmark {pgfid12}{4523294}{39706077}
-\pgfsyspdfmark {pgfid13}{7456030}{36483891}
+\@writefile{tdo}{\contentsline {todo}{{Here I wanted to define what is GPGPU, related to the execution of arithmetic operations (not graphical) on the GPU. - DONE}}{2}}
+\pgfsyspdfmark {pgfid6}{20410335}{35122653}
+\pgfsyspdfmark {pgfid7}{4523294}{38133213}
+\pgfsyspdfmark {pgfid8}{7456030}{34911027}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Parallel computing: Via Membranes}{2}}
+\citation{matrixgpu1}
+\citation{matrixgpu2}
+\citation{matrixgpu1}
+\citation{matrixgpu2}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Simulating SNP systems in {GPUs}}{3}}
+\@writefile{tdo}{\contentsline {todo}{{I suggest to better introduce the efficient behaviour of GPUs with matrix operations, since it's the key of the paper.}}{3}}
+\pgfsyspdfmark {pgfid11}{22525117}{33353181}
+\pgfsyspdfmark {pgfid14}{35171823}{36034241}
+\pgfsyspdfmark {pgfid15}{38104559}{33141555}
+\@writefile{tdo}{\contentsline {todo}{{I suggest to introduce CUDA in a new paragraph in a more extensive way, as follows}}{3}}
+\pgfsyspdfmark {pgfid16}{16157769}{25488861}
+\pgfsyspdfmark {pgfid19}{35171823}{27379847}
+\pgfsyspdfmark {pgfid20}{38104559}{25277235}
+\@writefile{tdo}{\contentsline {todo}{{we should add a paragraph/subsection introducing previous work of simulators based on GPU, FPGA, clusters... if you agree, I can write it from my previous papers.}}{3}}
+\pgfsyspdfmark {pgfid21}{13588484}{11333085}
+\pgfsyspdfmark {pgfid24}{35171823}{15193793}
+\pgfsyspdfmark {pgfid25}{38104559}{11121459}
 \citation{snpbrain}
 \citation{snpmat}
 \citation{snp}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Simulating SNP systems in \color  {red} \sout  {GP} GPUs \color  {black}}{3}}
-\@writefile{tdo}{\contentsline {todo}{{I suggest to better introduce the efficient behaviour of GPUs with matrix operations, since it's the key of the paper.}}{3}}
-\pgfsyspdfmark {pgfid16}{24000773}{36826589}
-\pgfsyspdfmark {pgfid19}{35171823}{39507649}
-\pgfsyspdfmark {pgfid20}{38104559}{36614963}
-\@writefile{tdo}{\contentsline {todo}{{I suggest to introduce CUDA in a new paragraph in a more extensive way, as follows}}{3}}
-\pgfsyspdfmark {pgfid21}{20120883}{28962269}
-\pgfsyspdfmark {pgfid24}{35171823}{30853255}
-\pgfsyspdfmark {pgfid25}{38104559}{28750643}
-\@writefile{tdo}{\contentsline {todo}{{we should add a paragraph/subsection introducing previous work of simulators based on GPU, FPGA, clusters... if you agree, I can write it from my previous papers.}}{3}}
-\pgfsyspdfmark {pgfid26}{13588484}{14806493}
-\pgfsyspdfmark {pgfid29}{35171823}{18667201}
-\pgfsyspdfmark {pgfid30}{38104559}{14594867}
 \citation{snp}
 \citation{snpbrain}
 \citation{snpmat}
@@ -73,81 +70,81 @@
 \newlabel{next-config}{{2}{6}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}the NVIDIA CUDA architecture}{6}}
 \@writefile{tdo}{\contentsline {todo}{{I don't know in the new CUDA 4.0, but each grid is executed at one time in a GPU, where each core executes the instruction of single threads.}}{6}}
-\pgfsyspdfmark {pgfid31}{31336146}{21301769}
-\pgfsyspdfmark {pgfid32}{4523294}{24705545}
-\pgfsyspdfmark {pgfid33}{7456030}{21090143}
+\pgfsyspdfmark {pgfid26}{27311355}{17369609}
+\pgfsyspdfmark {pgfid27}{4523294}{20773385}
+\pgfsyspdfmark {pgfid28}{7456030}{17157983}
 \@writefile{tdo}{\contentsline {todo}{{to define which is the role of the host and the device.}}{6}}
-\pgfsyspdfmark {pgfid36}{14429524}{15010313}
-\pgfsyspdfmark {pgfid37}{4523294}{16448009}
-\pgfsyspdfmark {pgfid38}{7456030}{14798687}
+\pgfsyspdfmark {pgfid31}{14425071}{11078153}
+\pgfsyspdfmark {pgfid32}{4523294}{12515849}
+\pgfsyspdfmark {pgfid33}{7456030}{10866527}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces NVIDIA CUDA automatic scaling, hence more cores result to faster execution, from \cite  {cudaguide}.}}{7}}
 \newlabel{cuda_scale}{{2}{7}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces NVIDIA CUDA programming model showing the sequential execution of the $host$ code alongside the parallel execution of the $kernel$ function on the $device$ side, from \cite  {sat}.}}{7}}
 \newlabel{cuda_model}{{3}{7}}
 \newlabel{cuda-code}{{1}{8}}
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {1}General code flow for CUDA programming}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Design considerations for the hardware and software setup}{8}}
 \citation{cudabook}
 \citation{sat}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Design considerations for the hardware and software setup}{9}}
 \@writefile{tdo}{\contentsline {todo}{{first, we have to copy to the device the input data of the kernel}}{9}}
-\pgfsyspdfmark {pgfid41}{17317713}{44559837}
-\pgfsyspdfmark {pgfid44}{35171823}{44140681}
-\pgfsyspdfmark {pgfid45}{38104559}{42491359}
+\pgfsyspdfmark {pgfid36}{17317713}{43262082}
+\pgfsyspdfmark {pgfid39}{35171823}{44284718}
+\pgfsyspdfmark {pgfid40}{38104559}{42635396}
 \@writefile{tdo}{\contentsline {todo}{{so much ``in order'' in this sentence}}{9}}
-\pgfsyspdfmark {pgfid46}{30935647}{38268381}
-\pgfsyspdfmark {pgfid49}{35171823}{39312861}
-\pgfsyspdfmark {pgfid50}{38104559}{38056755}
+\pgfsyspdfmark {pgfid41}{30935647}{36970626}
+\pgfsyspdfmark {pgfid44}{35171823}{38015106}
+\pgfsyspdfmark {pgfid45}{38104559}{36759000}
 \newlabel{row-maj}{{3}{9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Matrix computations and CPU-\color  {red} \sout  {GP} GPU \color  {black} interactions}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Matrix computations and CPU- {GPU} interactions}{9}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Simulator design and implementation}{10}}
 \newlabel{sect-snp-algo}{{4}{10}}
 \newlabel{rules}{{4}{10}}
 \newlabel{confvec}{{5}{10}}
 \newlabel{rule-list}{{6}{10}}
 \@writefile{tdo}{\contentsline {todo}{{I prefer the term ``simulation algorithm'' instead of ``algorithm simulator''}}{11}}
-\pgfsyspdfmark {pgfid51}{13600456}{44566664}
-\pgfsyspdfmark {pgfid54}{35171823}{43747465}
-\pgfsyspdfmark {pgfid55}{38104559}{41704927}
+\pgfsyspdfmark {pgfid46}{13600456}{44566664}
+\pgfsyspdfmark {pgfid49}{35171823}{43747465}
+\pgfsyspdfmark {pgfid50}{38104559}{41704927}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}\color  {red} \sout  {Algorithm simulator implementation} Simulation algorithm implementation \color  {black}\todo {I prefer the term ``simulation algorithm'' instead of ``algorithm simulator''}}{11}}
 \newlabel{snp-sim-algo}{{4.1}{11}}
 \@writefile{tdo}{\contentsline {todo}{{text moved from below}}{11}}
-\pgfsyspdfmark {pgfid56}{16033958}{41545181}
-\pgfsyspdfmark {pgfid59}{35171823}{40514357}
-\pgfsyspdfmark {pgfid60}{38104559}{39651467}
+\pgfsyspdfmark {pgfid51}{16836775}{41545181}
+\pgfsyspdfmark {pgfid54}{35171823}{40514357}
+\pgfsyspdfmark {pgfid55}{38104559}{39651467}
 \@writefile{tdo}{\contentsline {todo}{{I'm sorry, I had to comment the begin\{algorithm\} since latex couldn't compile it (Float(s) lost error)}}{11}}
-\pgfsyspdfmark {pgfid61}{9192734}{40758749}
-\pgfsyspdfmark {pgfid64}{35171823}{36412897}
-\pgfsyspdfmark {pgfid65}{38104559}{33502007}
+\pgfsyspdfmark {pgfid56}{9192734}{40758749}
+\pgfsyspdfmark {pgfid59}{35171823}{36412897}
+\pgfsyspdfmark {pgfid60}{38104559}{33502007}
 \newlabel{sim-algo}{{4.1}{11}}
 \@writefile{tdo}{\contentsline {todo}{{$M$ is not defined here, it's defined later}}{11}}
-\pgfsyspdfmark {pgfid66}{19933890}{39841247}
-\pgfsyspdfmark {pgfid69}{35171823}{31918221}
-\pgfsyspdfmark {pgfid70}{38104559}{30662115}
+\pgfsyspdfmark {pgfid61}{19933890}{39841247}
+\pgfsyspdfmark {pgfid64}{35171823}{31918221}
+\pgfsyspdfmark {pgfid65}{38104559}{30662115}
 \@writefile{tdo}{\contentsline {todo}{{these matrices remain unchanged during the computation of the SNP system}}{11}}
-\pgfsyspdfmark {pgfid71}{26929358}{37481951}
-\pgfsyspdfmark {pgfid74}{35171823}{28228181}
-\pgfsyspdfmark {pgfid75}{38104559}{26121927}
+\pgfsyspdfmark {pgfid66}{26929358}{37481951}
+\pgfsyspdfmark {pgfid69}{35171823}{28228181}
+\pgfsyspdfmark {pgfid70}{38104559}{26121927}
 \@writefile{tdo}{\contentsline {todo}{{text moved above for the sake of simplicity}}{11}}
-\pgfsyspdfmark {pgfid76}{12935556}{19262945}
-\pgfsyspdfmark {pgfid79}{35171823}{20371141}
-\pgfsyspdfmark {pgfid80}{38104559}{19051319}
+\pgfsyspdfmark {pgfid71}{12935556}{19262945}
+\pgfsyspdfmark {pgfid74}{35171823}{20371141}
+\pgfsyspdfmark {pgfid75}{38104559}{19051319}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Closer inspection of the SN P system simulator}{11}}
 \newlabel{siminspect}{{4.2}{11}}
 \newlabel{sigma}{{7}{11}}
 \@writefile{tdo}{\contentsline {todo}{{This number $|r|$ is also defined as number $m$ in the SNP system $\Pi =(O,\sigma _1,\ldots  , \sigma _m, syn, in, out)$, should we consider to use this number instead or additionally?}}{11}}
-\pgfsyspdfmark {pgfid81}{8209694}{12381665}
-\pgfsyspdfmark {pgfid84}{35171823}{15026317}
-\pgfsyspdfmark {pgfid85}{38104559}{11328995}
+\pgfsyspdfmark {pgfid76}{8209694}{12381665}
+\pgfsyspdfmark {pgfid79}{35171823}{15026317}
+\pgfsyspdfmark {pgfid80}{38104559}{11328995}
 \newlabel{psi}{{8}{11}}
 \@writefile{tdo}{\contentsline {todo}{{however, $n$ is actually $\Sigma $ (the number of neurons), what about replacing $n \leq \infty $ by $n=\Sigma $?}}{12}}
-\pgfsyspdfmark {pgfid86}{8209694}{45346269}
-\pgfsyspdfmark {pgfid89}{35171823}{43432529}
-\pgfsyspdfmark {pgfid90}{38104559}{40933059}
+\pgfsyspdfmark {pgfid81}{8209694}{45346269}
+\pgfsyspdfmark {pgfid84}{35171823}{43432529}
+\pgfsyspdfmark {pgfid85}{38104559}{40933059}
 \@writefile{tdo}{\contentsline {todo}{{this definition can be moved above, next to algorithm 1?}}{12}}
-\pgfsyspdfmark {pgfid91}{28472028}{37481949}
-\pgfsyspdfmark {pgfid92}{4523294}{38919645}
-\pgfsyspdfmark {pgfid93}{7456030}{37270323}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Algorithm further detailing part II in Algorithm \G@refundefinedtrue \text  {\normalfont  \bfseries  ??}\GenericWarning  {               }{LaTeX Warning: Reference `sim-algo' on page 12 undefined}}}{12}}
+\pgfsyspdfmark {pgfid86}{28472028}{37481949}
+\pgfsyspdfmark {pgfid87}{4523294}{38919645}
+\pgfsyspdfmark {pgfid88}{7456030}{37270323}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Algorithm further detailing part II in Algorithm 4.1\hbox {}}}{12}}
 \newlabel{sim-algo2}{{1}{12}}
 \newlabel{sk-211-1}{{9}{13}}
 \newlabel{sk-211-2}{{10}{13}}
@@ -156,22 +153,23 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The computation tree graphically representing the output of the simulator run over $\Pi $ with $C_0$ = [2, 1, 1]}}{17}}
 \newlabel{c211_tree}{{4}{17}}
 \@writefile{toc}{\contentsline {section}{\numberline {7} Acknowledgments }{17}}
-\bibcite{molecular}{1}
-\bibcite{snp}{2}
-\bibcite{snpbrain}{3}
-\bibcite{snpmat}{4}
-\bibcite{introtomem}{5}
-\bibcite{ppage}{6}
-\bibcite{sat}{7}
-\bibcite{cudabook}{8}
-\bibcite{cudaguide}{9}
-\bibcite{cudapage}{10}
-\bibcite{matrixgpu1}{11}
-\bibcite{matrixgpu2}{12}
+\bibcite{gpgpu}{1}
+\bibcite{molecular}{2}
+\bibcite{snp}{3}
+\bibcite{snpbrain}{4}
+\bibcite{snpmat}{5}
+\bibcite{introtomem}{6}
+\bibcite{ppage}{7}
+\bibcite{sat}{8}
+\bibcite{cudabook}{9}
+\bibcite{cudaguide}{10}
+\bibcite{cudapage}{11}
+\bibcite{matrixgpu1}{12}
+\bibcite{matrixgpu2}{13}
 \immediate\closeout\minitoc
 \@writefile{tdo}{\contentsline {todo}{{Please, I will thank you a lot if we could add the acknowledge of Sevilla's projects, which is very important for my predoctoral grant.}}{18}}
-\pgfsyspdfmark {pgfid96}{10149475}{43773405}
-\pgfsyspdfmark {pgfid97}{4523294}{42504101}
-\pgfsyspdfmark {pgfid98}{7456030}{39218199}
+\pgfsyspdfmark {pgfid91}{10149475}{43773405}
+\pgfsyspdfmark {pgfid92}{4523294}{42504101}
+\pgfsyspdfmark {pgfid93}{7456030}{39218199}
 \@writefile{toc}{\contentsline {section}{References}{18}}
 \@mtwritefile{\contentsline {mtchap}{References}{18}}

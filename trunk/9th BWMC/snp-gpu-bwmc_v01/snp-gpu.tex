@@ -51,12 +51,8 @@ Research Group on Natural Computing \\
  
 \begin{abstract}
 
-This paper presents a parallel simulator for a type of P system known as spiking neural P system (SNP system) using \sredmark{general purpose graphics processing units (GPGPUs)}{} \todo{GPGPU is not a device, it's the technique for General Purpose computation on GPUs}. \sredmark{GP}{GPUs}, unlike the more conventional and general purpose, multi-core CPUs, are \sredmark{used}{well-suited} for parallelizable problems due to their architectural optimization for parallel computations.
 
-Membrane computing or P systems on the other hand, are cell-inspired computational models which compute in a maximally parallel and non-deterministic manner. SNP systems, w/c compute via time separated spikes and whose inspiration was taken from the way neurons operate in living organisms, have been represented as matrices.
-
-The matrix representation of SNP systems provides a crucial step into their simulation on parallel devices such as \sredmark{GP}{GPUs}. Simulating the highly parallel nature of SNP systems necessitates the use of hardware intended for parallel computations. The \sredmark{simulator}{simulation} algorithms, design considerations, and implementation are presented. Finally, simulation results, observations, and analyses using an SNP system that generates all numbers in $\mathbb N$ - \{$1$\} are discussed.\todo{We should consider the measure of simulation time, with a CPU-GPU comparative, so we can validate the decision of implementing the simulation algorithm on the GPU.}
-
+We present in this paper our work regarding simulating a type of P system known as a spiking neural P system (SNP system) using graphics processing units (GPUs). GPUs, because of their architectural optimization for parallel computations, are well-suited for highly parallelizable problems. Due to the advent of general purpose GPU computing in recent years, GPUs are not limited to graphics and video processing alone, but include computationally intensive scientific and mathematical applications as well. Moreover P systems, including SNP systems, are inherently and maximally parallel computing models whose inspirations are taken from the functioning and dynamics of the living cell. In particular, SNP systems try to give a modest but formal representation of a special type of cell known as the neuron and their interactions with one another. The nature of SNP systems allowed their representation as matrices, which is a crucial step in simulting them on highly parallel devices such as GPUs. Simulating the highly parallel nature of SNP systems necessitates the use of hardware intended for parallel computations. The simulation algorithms, design considerations, and implementation are presented. Finally, simulation results, observations, and analyses using an SNP system that generates all numbers in $\mathbb N$ - \{$1$\} are discussed, as well as recommendations for future work. \todo{We should consider the measure of simulation time, with a CPU-GPU comparative, so we can validate the decision of implementing the simulation algorithm on the GPU. - Sequential Python SNP system simulator?}
 
 \end{abstract}
 
@@ -67,27 +63,27 @@ The matrix representation of SNP systems provides a crucial step into their simu
 \section{Introduction}
 
 \subsection{Parallel computing: Via graphics processing units (GPUs)}
-The trend for massively parallel computation is moving from the more common multi-core CPUs towards \sredmark{GP}{GPUs} for several significant reasons \cite{cudabook}\cite{cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of \sredmark{GP}{GPUs} compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance \cite{cudapage}. Another more important reason is that \sredmark{GP}{GPUs} are architectured for massively parallel computations since unlike \sredmark{the architectures of}{} most general purpose CPUs, a large part of \redmark{the architecture of }\sredmark{GP}{GPUs} \sredmark{are}{is} devoted for arithmetic operations and not on control and caching \cite{cudabook}\cite{cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with larger speedups when done in parallel as compared to performing them sequentially. \redmark{In order to perform these arithmetic operations on the GPU, there is a set of techniques called GPGPU (General Purpose computations on the GPU). This term was coined by Mark Harris in 2002.} \todo{Here I wanted to define what is GPGPU, related to the execution of arithmetic operations (not graphical) on the GPU.}
+The trend for massively parallel computation is moving from the more common multi-core CPUs towards  {GPUs} for several significant reasons \cite{cudabook, cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of  {GPUs} compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance \cite{cudapage}. Another more important reason is that  {GPUs} are architectured for massively parallel computations since unlike most general purpose multicore CPUs, a large part of the architecture of GPUs are devoted to parallel execution of arithmetic operations, and not on control and caching just like in CPUs \cite{cudabook, cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with larger speedups when done in parallel as compared to performing them sequentially. In order to perform these arithmetic operations on the GPU, there is a set of techniques called GPGPU (General Purpose computations on the GPU) coined by Mark Harris back in 2002 \cite{gpgpu} which allows programmers to do computations on GPUs and not be limited to just graphics and videos processing alone. \todo{Here I wanted to define what is GPGPU, related to the execution of arithmetic operations (not graphical) on the GPU. - DONE}
 
 \subsection{Parallel computing: Via Membranes}
-Membrane computing or its more specific counterpart, a P system, are Turing complete computing models (for some P system types or variants) that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of {\it natural computing} (e.g. DNA/molecular computing, neural networks, quantum computing), from nature \cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane. Before proceeding, it is important to clarify what is meant when it is said that nature $computes$, particularly life or the cell: computation in this case involves reading information from memory from past or present stimuli, rewrite and retrieve this data as a stimuli from the environment, process the gathered data and act accordingly due to this processing \cite{molecular}. Thus, \sredmark{we}{they?} extend the classical meaning of computation presented by Allan Turing.
+Membrane computing or its more specific counterpart, a P system, are Turing complete computing models (for some P system types or variants) that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration, similar to other members of {\it natural computing} (e.g. DNA/molecular computing, neural networks, quantum computing), from nature \cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's skin membrane. Before proceeding, it is important to clarify what is meant when it is said that nature $computes$, particularly life or the cell: computation in this case involves reading information from memory from past or present stimuli, rewrite and retrieve this data as a stimuli from the environment, process the gathered data and act accordingly due to this processing \cite{molecular}. Thus, we try to extend the classical meaning of computation presented by Allan Turing.
 
 %Can add more to this by explaining ions, molecules in the cell's 'soup' are represented by a multiset of objects (data structure) at least for most types of P systems. The cell is seen as 'computing' or processing information through these things. (from New Computational Paradigms book)
 
-SN P systems differ from other types of P systems precisely because they are mono-membranar and \sredmark{only use one type of object in their computations}{the working alphabet contains only one object type}. These characteristics, among others, are meant to capture the workings of a special type of cell known as the $neuron$. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as action potential or \textit{spikes} \cite{snp}. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, but by means of time duration, as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval \cite{snp}. The time duration between two spikes, or several successive spikes, transmit the information.  
+SN P systems differ from other types of P systems precisely because they are mono-membranar and the working alphabet contains only one object type. These characteristics, among others, are meant to capture the workings of a special type of cell known as the $neuron$. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct electro-chemical  signals more commonly known as action potential or \textit{spikes} \cite{snp}. Information is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, but by means of time duration, as well as the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval \cite{snp}. The time duration between two spikes, or several successive spikes, transmit the information.  
 
-It has been shown that SN P systems, given their nature, are representable by matrices \cite{snpbrain}\cite{snpmat}. This representation allows design and implementation of an SN P system simulator using parallel computing machines such as \sredmark{GP}{GPUs}. 
+It has been shown that SN P systems, given their nature, are representable by matrices \cite{snpbrain}\cite{snpmat}. This representation allows design and implementation of an SN P system simulator using parallel computing machines such as  {GPUs}. 
 
 %\pagebreak
 
-\subsection{Simulating SNP systems in \sredmark{GP}{GPUs}}
-A matrix representation of SN P systems seem somewhat intuitive due to their graph-like nature and properties (as will be further shown in the succeeding sections such as in subsection \ref{computesnp}). \sredmark{Matrix operations, algorithms and such in parallel computing literature (e.g. \cite{matrixgpu1} and \cite{matrixgpu2} to name a few recent ones done on GPGPUs) have been studied and are available in vast quantities for years now}{On the other side, linear algebra operations have been efficiently implemented on parallel platforms in the past years. For instance, there is a large number of algorithms implementing matrix-matrix and vector-matrix operations on the GPU. These algorithms offer huge performance since dense linear algebra readily maps to the data-parallel architecture of the GPUs \cite{matrixgpu1,matrixgpu2}}\todo{I suggest to better introduce the efficient behaviour of GPUs with matrix operations, since it's the key of the paper.}. It would thus seem then that a matrix represented SN P system simulator implementation on highly parallel computing devices such as \sredmark{GP}{GPUs} be a natural confluence of the previous points made. The matrix representation of SN P systems bridges the gap between the theoretical yet still computationally powerful SN P systems and the applicative and more tangible \sredmark{GP}{GPUs}, via an SN P system simulator. \sredmark{The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and allows programmers to perform parallel computations, via GPGPUs manufactured by NVIDIA}{} \todo{I suggest to introduce CUDA in a new paragraph in a more extensive way, as follows}.
+\subsection{Simulating SNP systems in  {GPUs}}
+A matrix representation of SN P systems seem somewhat intuitive due to their graph-like nature and properties (as will be further shown in the succeeding sections such as in subsection \ref{computesnp}). \sredmark{Matrix operations, algorithms and such in parallel computing literature (e.g. \cite{matrixgpu1} and \cite{matrixgpu2} to name a few recent ones done on GPGPUs) have been studied and are available in vast quantities for years now}{On the other side, linear algebra operations have been efficiently implemented on parallel platforms in the past years. For instance, there is a large number of algorithms implementing matrix-matrix and vector-matrix operations on the GPU. These algorithms offer huge performance since dense linear algebra readily maps to the data-parallel architecture of the GPUs \cite{matrixgpu1,matrixgpu2}}\todo{I suggest to better introduce the efficient behaviour of GPUs with matrix operations, since it's the key of the paper.}. It would thus seem then that a matrix represented SN P system simulator implementation on highly parallel computing devices such as  {GPUs} be a natural confluence of the previous points made. The matrix representation of SN P systems bridges the gap between the theoretical yet still computationally powerful SN P systems and the applicative and more tangible  {GPUs}, via an SN P system simulator. \sredmark{The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and allows programmers to perform parallel computations, via GPGPUs manufactured by NVIDIA}{} \todo{I suggest to introduce CUDA in a new paragraph in a more extensive way, as follows}.
 
 \redmark{The design and implementation of the simulator, including the algorithms deviced, architectural considerations, are then implemented using CUDA. The Compute Unified Device Architecture (CUDA) programming model, launched by Nvidia in mid-2007, is composed as both, hardware and software architecture for issuing and managing computations on their most recent GPU families (G80 family onward), making it operate as a highly parallel computing device. CUDA programming model extends the widely known ANSI C programming language, allowing programmers to easily design the code to be executed on the GPU, avoiding the use of low-level graphical primitives.}
 
 This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
 
-The objective of this work is to start the foundations for the creation of P system simulators \todo{we should add a paragraph/subsection introducing previous work of simulators based on GPU, FPGA, clusters... if you agree, I can write it from my previous papers.}, in this particular case an SN P system, using highly parallel devices such as \sredmark{GP}{GPUs}. Correctness, in terms of implementation algorithms and hardware design considerations, of the output and fidelity to the computing model is a part of this objective.
+The objective of this work is to start the foundations for the creation of P system simulators \todo{we should add a paragraph/subsection introducing previous work of simulators based on GPU, FPGA, clusters... if you agree, I can write it from my previous papers.}, in this particular case an SN P system, using highly parallel devices such as  {GPUs}. Correctness, in terms of implementation algorithms and hardware design considerations, of the output and fidelity to the computing model is a part of this objective.
 
 %MENTION matrix implementation on parallel/GPU systems + citations (DONE)
 
@@ -258,8 +254,8 @@ Using extensions of the widely known C language, a
 programmer can write parallel code which will then execute
 in multiple threads within multiple thread blocks, each
 contained within a grid of (thread) blocks. These grids
-belong to a single device i.e. a single \sredmark{GP}{GPU}. Each
-device/\sredmark{GP}{GPU} has multiple cores, each capable of running
+belong to a single device i.e. a single  {GPU}. Each
+device/ {GPU} has multiple cores, each capable of running
 its own \sredmark{grids}{threads}\todo{I don't know in the new CUDA 4.0, but each grid is executed at one time in a GPU, where each core executes the instruction of single threads.}. The program run in the CUDA model scales
 up or down, depending on the number of cores the
 programmer currently has in a device. This scaling is done
@@ -288,7 +284,7 @@ result to faster execution, from \cite{cudaguide}.}
 Figure \ref{cuda_model} shows another important feature of the CUDA model:
 the host and the device parts. \redmark{The host controls the execution flow while the device
 is a highly-parallel co-processor.}\todo{to define which is the role of the host and the device.} Device
-pertains to the \sredmark{GP}{GPU}/s of the system, while the host
+pertains to the  {GPU}/s of the system, while the host
 pertains to the CPU/s. A function known as a \textit{kernel
 function}, is a function called from the host but executed in
 the device.
@@ -391,7 +387,7 @@ of working on multiple data or instructions at a given time in parallel,
 hence the current dichotomy of the CUDA programming model \cite{sat}.
 This division of labor is observed in Listing \ref{cuda-code} .
 
-\subsection{Matrix computations and CPU-\sredmark{GP}{GPU} interactions}
+\subsection{Matrix computations and CPU- {GPU} interactions}
 
 Once all 3 initial and necessary inputs are loaded, as is to be
 expected from equation \ref{next-config}, the device is first instructed to
@@ -535,7 +531,7 @@ important point to notice is that either of the stopping
 criterion from \ref{snp-sim-algo} could allow for a deeply nested computation tree,
 one that can continue executing for a significantly lengthy amount of
 time even with a multi-core CPU and even the more parallelized
-\sredmark{GP}{GPU}.
+ {GPU}.
 \sredmark{Each line in Algorithm \ref{sim-algo} mentions which part/s the simulator code runs in, either in the device \textbf{(DEVICE)} or in the host \textbf{(HOST)} part.}{}\todo{text moved above for the sake of simplicity}
 
 \subsection{Closer inspection of the SN P system
@@ -810,7 +806,7 @@ The $confVecs$ followed by (...) are the $confVecs$ that went deeper i.e. produc
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusions and future work}
-Using a highly parallel computing device such as a \sredmark{GP}{GPU}, \redmark{and the}
+Using a highly parallel computing device such as a  {GPU}, \redmark{and the}
 \sredmark{particularly}{} NVIDIA CUDA \redmark{programming model}, an SN P system simulator was
 successfully designed and implemented as per the objective of this work. The simulator was shown to model the workings of an SN P system without delay. The use of a high
 level programming language such as Python for host tasks,
@@ -819,7 +815,7 @@ of values (vector/matrix elements) \redmark{has} provided the necessary
 expressivity to implement the algorithms created to produce
 and exhaust all possible and valid configuration and spiking
 vectors. For the device tasks, CUDA C allowed the
-manipulation of the NVIDIA CUDA enabled \sredmark{GP}{GPU} which
+manipulation of the NVIDIA CUDA enabled  {GPU} which
 took care of repetitive and highly parallel computations
 (\redmark{vector-matrix} addition and multiplication essentially).
 
@@ -838,7 +834,7 @@ thread/block communication, for extremely large systems
 with equally large matrices, is required. These
 improvements as well as the current version of the simulator
 should also be run in a machine or setup with higher versions of
-\sredmark{GP}{GPUs} \sredmark{running}{supporting} NVIDIA CUDA.
+ {GPUs} \sredmark{running}{supporting} NVIDIA CUDA.
 %ADD simulation in larger CUDA systems
 
 %\end{document}  % This is where a 'short' article might terminate
@@ -862,6 +858,8 @@ Finally, they would also like to thank the valuable insights of Mr. Neil Ibo.
 %MUST learn how to use bibtex
 
 %\bibitem{adorna} H. Adorna, Gh. P\u aun, M. P\'{e}rez-Jim\'{e}nez : On Communication Complexity in Evolution-Communication P Systems, {\it Proc. Eighth Brainstorming Week on Membrane Computing, Sevilla, February 1-5, 2010}
+
+\bibitem{gpgpu} M. Harris, ``Mapping computational concepts to GPUs'', {\it ACM SIGGRAPH 2005 Courses}, NY, USA, 2005.
 
 %journal citation
 \bibitem{molecular} M. Gross,  ``Molecular computation'', {\it Chapter 2 of Non-Standard Computation}, (T. Gramss,
