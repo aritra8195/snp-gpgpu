@@ -833,22 +833,22 @@ The $confVecs$ followed by (...) are the $confVecs$ that went deeper i.e. produc
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusions and future work}
-Using a highly parallel computing device such as a  {GPU}, \redmark{and the}
-\sredmark{particularly}{} NVIDIA CUDA \redmark{programming model}, an SN P system simulator was
+Using a highly parallel computing device such as a  {GPU}, {and the}
+ NVIDIA CUDA {programming model}, an SN P system simulator was
 successfully designed and implemented as per the objective of this work. The simulator was shown to model the workings of an SN P system without delay. The use of a high
 level programming language such as Python for host tasks,
 mainly for logic and string representation and manipulation
-of values (vector/matrix elements) \redmark{has} provided the necessary
+of values (vector/matrix elements) {has} provided the necessary
 expressivity to implement the algorithms created to produce
 and exhaust all possible and valid configuration and spiking
 vectors. For the device tasks, CUDA C allowed the
 manipulation of the NVIDIA CUDA enabled  {GPU} which
 took care of repetitive and highly parallel computations
-(\redmark{vector-matrix} addition and multiplication essentially).
+({vector-matrix} addition and multiplication essentially).
 
 Future versions of the SNP system simulator will focus on
 several improvements. These improvements include the use
-of an \redmark{optimized} algorithm for matrix computations \redmark{on the GPU} without requiring
+of an {optimized} algorithm for matrix computations {on the GPU} without requiring
 the input matrix to be transformed into a square matrix (this is
 currently handled by the simulator by padding zeros to an
 otherwise non-square matrix input). Another improvement
@@ -861,7 +861,7 @@ thread/block communication, for very large systems
 with equally large matrices, is required. These
 improvements as well as the current version of the simulator
 should also be run in a machine or setup with higher versions of
- {GPUs} \sredmark{running}{supporting} NVIDIA CUDA.
+ {GPUs} {supporting} NVIDIA CUDA.
 %ADD simulation in larger CUDA systems
 
 %\end{document}  % This is where a 'short' article might terminate
