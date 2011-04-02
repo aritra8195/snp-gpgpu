@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  1 APR 2011 15:45
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  2 APR 2011 16:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -590,13 +590,13 @@ LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 321.
  [8]
 [9] [10]
-Overfull \hbox (39.44208pt too wide) in paragraph at lines 569--569
+Overfull \hbox (39.44208pt too wide) in paragraph at lines 571--571
 \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 O; ^^[[]; [] ; ^^[[]; syn; in; out\OT1/cmr/m/
 n/10 )$, 
  []
 
 
-Overfull \hbox (39.44208pt too wide) in paragraph at lines 569--569
+Overfull \hbox (39.44208pt too wide) in paragraph at lines 571--571
 \OT1/cmr/m/n/10 (\OML/cmm/m/it/10 O; ^^[[]; [] ; ^^[[]; syn; in; out\OT1/cmr/m/
 n/10 )$, 
  []
@@ -607,6 +607,8 @@ LaTeX Warning: Marginpar on page 11 moved.
 [11]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 608.
+LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 620.
  [12] [13] [14] [15]
 <figures/c211_tree.jpeg, id=77, 170.13562pt x 459.21562pt>
 File: figures/c211_tree.jpeg Graphic file (type jpg)
@@ -616,7 +618,7 @@ File: figures/c211_tree.jpeg Graphic file (type jpg)
 LaTeX Warning: Marginpar on page 18 moved.
 
 
-Underfull \hbox (badness 7667) in paragraph at lines 904--905
+Underfull \hbox (badness 7667) in paragraph at lines 909--910
 []\OT1/cmr/m/n/9 P sys-tems re-source web-site. ([]|   [] 2011? [], Jan) [On-li
 ne]. Avail-able:
  []
@@ -625,10 +627,10 @@ ne]. Avail-able:
 \contentsline {mtchap}{References}{18}
 ) ) 
 Here is how much of TeX's memory you used:
- 10761 strings out of 495061
- 174696 string characters out of 1182621
- 246454 words of memory out of 3000000
- 13705 multiletter control sequences out of 15000+50000
+ 10763 strings out of 495061
+ 174720 string characters out of 1182621
+ 246571 words of memory out of 3000000
+ 13707 multiletter control sequences out of 15000+50000
  12176 words of font info for 50 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  54i,15n,74p,1482b,1141s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -651,7 +653,7 @@ lic/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
 s/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on snp-gpu.pdf (18 pages, 481397 bytes).
+Output written on snp-gpu.pdf (18 pages, 481569 bytes).
 PDF statistics:
  155 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
