@@ -89,7 +89,9 @@ It would thus seem then that a matrix represented SN P system simulator implemen
 
 This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
 
-The objective of this work is to start the foundations for the creation of P system simulators \todo{we should add a paragraph/subsection introducing previous work of simulators based on GPU, FPGA, clusters... if you agree, I can write it from my previous papers. - Yes please -Francis}, in this particular case an SN P system, using highly parallel devices such as  {GPUs}. Fidelity to the computing model (the type of SNP system in this paper) is a part of this objective.
+The objective of this work is to start the foundations for the creation of P system simulators 
+%\todo{we should add a paragraph/subsection introducing previous work of simulators based on GPU, FPGA, clusters... if you agree, I can write it from my previous papers. - Yes please -Francis}
+, in this particular case an SN P system, using highly parallel devices such as  {GPUs}. Fidelity to the computing model (the type of SNP system in this paper) is a part of this objective.
 
 %MENTION matrix implementation on parallel/GPU systems + citations (DONE)
 
@@ -200,7 +202,7 @@ rule is applicable (has value \textit{1}) or not (has value \textit{0} instead).
 spiking vector $S_k = < 1, 0, 1, 1, 0 >$ given $C_0$.
 Note that a 2nd spiking vector, $S_k = < 1, 0, 1, 1, 0 >$, is
 possible if we use rule (2) over rule (1) instead (but not both at the same time, hence we cannot have a vector equal to
-$< 1, 1, 1, 1, 0>$\sredmark{, so this $S_k$ is invalid }{}). $Validity$ in this case means that only one among several applicable rules is used and thus represented in the spiking vector. We can have all the possible vectors composed of $0$s and $1$s with length equal to the number of rules, but have only some of them be valid, given by $\Psi$ later at subsection \ref{siminspect}.
+$< 1, 1, 1, 1, 0>${, so this $S_k$ is invalid }{}). $Validity$ in this case means that only one among several applicable rules is used and thus represented in the spiking vector. We can have all the possible vectors composed of $0$s and $1$s with length equal to the number of rules, but have only some of them be valid, given by $\Psi$ later at subsection \ref{siminspect}.
 
 \textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_{ij}$
 elements where $a_{ij}$ is given as
@@ -400,7 +402,7 @@ of working on multiple data at a given time in parallel,
 hence the current dichotomy of the CUDA programming model \cite{sat}. The GPU acts as a $co-processor$ of the central processor.
 This division of labor is observed in Listing \ref{cuda-code} .
 
-\subsection{Matrix computations and CPU- {GPU} interactions}
+\subsection{Matrix computations and CPU-{GPU} interactions}
 
 Once all 3 initial and necessary inputs are loaded, as is to be
 expected from equation \ref{next-config}, the device is first instructed to
@@ -568,12 +570,13 @@ Recall from the definition of an SNP system (Definitin \ref{snpdefn}) that we ha
 |r| = m
 \end{equation}
 
-\todo{This number $|r|$ is also defined as number $m$ in the SNP system $\Pi=(O,\sigma_1,\ldots, \sigma_m, syn, in, out)$, should we consider to use this number instead or additionally? - DONE}
+%\todo{This number $|r|$ is also defined as number $m$ in the SNP system $\Pi=(O,\sigma_1,\ldots, \sigma_m, syn, in, out)$, should we consider to use this number instead or additionally? - DONE}
 {
 \begin{equation}\label{psi}
 \Psi = |{\sigma_{V_1}}| |{\sigma_{V_2}}| ...|{\sigma_{V_m}}|
 \end{equation}
-}\todo{however, $n$ is actually $\Sigma$ (the number of neurons), what about replacing $n \leq \infty$ by $n=\Sigma$? - DONE}
+}
+%\todo{however, $n$ is actually $\Sigma$ (the number of neurons), what about replacing $n \leq \infty$ by $n=\Sigma$? - DONE}
 
 where
 
@@ -585,7 +588,9 @@ We also define $\omega$ as both the largest and last integer value in the sub-li
 During the exposition of the algorithm, the previous Python
 lists (from their vector/matrix counterparts in earlier
 sections) (\ref{confvec}) and (\ref{rule-list}) will be utilized. For part $II$ Algorithm \ref{sim-algo} we have a sub-algorithm (Algorithm \ref{sim-algo2}) for generating all valid
-and possible spiking vectors given input files $M$\todo{this definition can be moved above, next to algorithm 1? - DONE}, $confVec$, and $r$.
+and possible spiking vectors given input files $M$, $confVec$, and $r$.
+%\todo{this definition can be moved above, next to algorithm 1? - DONE}
+
  %\redmark{(the $list$ version of (\ref{row-maj}))}
 
 \begin{algorithm}
@@ -869,7 +874,7 @@ should also be run in a machine or setup with higher versions of
 %ACKNOWLEDGMENTS are optional
 \section{ Acknowledgments }
 The authors from UP Diliman are supported by the \textit{ERDT program}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of the \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. {The last author acknowledge the support of the project TIN2009--13192 of the Ministerio de Educaci\'on y Ciencia of Spain, and the support of the ``Proyecto de Excelencia con Investigador de Reconocida Val\'ia'' of the Junta de Andaluc\'{\i}a under grant P08-TIC04200, both co-financed by FEDER funds.}
-\todo{Please, I will thank you a lot if we could add the acknowledge of Sevilla's projects, which is very important for my predoctoral grant. - DONE}
+%\todo{Please, I will thank you a lot if we could add the acknowledge of Sevilla's projects, which is very important for my predoctoral grant. - DONE}
 Finally, they would also like to thank the valuable insights of Mr. Neil Ibo.
 
 %and the \textbf{.cls} and \textbf{.tex} files that it describes.

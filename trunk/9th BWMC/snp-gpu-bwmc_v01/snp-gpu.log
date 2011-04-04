@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  2 APR 2011 16:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  4 APR 2011 15:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -566,7 +566,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 164.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 166.
 
 <figures/snp-img.png, id=31, 444.91219pt x 281.55188pt>
 File: figures/snp-img.png Graphic file (type png)
@@ -581,44 +581,25 @@ File: figures/cuda-model.jpeg Graphic file (type jpg)
 
 <use figures/cuda-model.jpeg> [6] [7 <./figures/cuda-scaling.jpeg> <./figures/c
 uda-model.jpeg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 321.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 323.
 
  (/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 321.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 323.
  [8]
-[9] [10]
-Overfull \hbox (39.44208pt too wide) in paragraph at lines 571--571
-\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 O; ^^[[]; [] ; ^^[[]; syn; in; out\OT1/cmr/m/
-n/10 )$, 
- []
-
-
-Overfull \hbox (39.44208pt too wide) in paragraph at lines 571--571
-\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 O; ^^[[]; [] ; ^^[[]; syn; in; out\OT1/cmr/m/
-n/10 )$, 
- []
-
-
-LaTeX Warning: Marginpar on page 11 moved.
-
-[11]
+[9] [10] [11]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 608.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 613.
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 620.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 625.
  [12] [13] [14] [15]
 <figures/c211_tree.jpeg, id=77, 170.13562pt x 459.21562pt>
 File: figures/c211_tree.jpeg Graphic file (type jpg)
 
 <use figures/c211_tree.jpeg> [16] [17 <./figures/c211_tree.jpeg>]
-
-LaTeX Warning: Marginpar on page 18 moved.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 910--911
+Underfull \hbox (badness 10000) in paragraph at lines 915--916
 []\OT1/cmr/m/n/9 P sys-tems re-source web-site. (2011, Jan) [On-line]. Avail-ab
 le:
  []
@@ -627,13 +608,13 @@ le:
 \contentsline {mtchap}{References}{18}
 ) ) 
 Here is how much of TeX's memory you used:
- 10763 strings out of 495061
- 174720 string characters out of 1182621
- 246571 words of memory out of 3000000
- 13707 multiletter control sequences out of 15000+50000
+ 10714 strings out of 495061
+ 173645 string characters out of 1182621
+ 244739 words of memory out of 3000000
+ 13658 multiletter control sequences out of 15000+50000
  12176 words of font info for 50 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 54i,15n,74p,1482b,1141s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 54i,15n,51p,1482b,1141s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-t
 exlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts
@@ -653,7 +634,7 @@ lic/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
 s/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on snp-gpu.pdf (18 pages, 481082 bytes).
+Output written on snp-gpu.pdf (18 pages, 477821 bytes).
 PDF statistics:
  155 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
