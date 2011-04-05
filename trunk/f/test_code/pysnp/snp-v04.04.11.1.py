@@ -2,6 +2,7 @@ import sys
 import os
 import math
 import numpy
+from numy import *
 
 #
 # Try implementing a bit more complex rules e.g. a^3(aa)^+/a^2 -> a
@@ -36,13 +37,21 @@ cudaBin = 'snp-cuda'
 ########################
 
 #START of function to import vectors/matrices from file/s
+def importArr( filename ) :
+	arr = []
+	infile = open( filename, 'rb')
+	for line in infile.readlines():
+		numbers = map( int, line.split() )
+		arr.append( numbers )
+	return array( arr ) # return as a numpy array
+
 def importVec( filename ) :
 	filePtr = open( filename, 'rb' )
 	Vec = filePtr.read( )
 	Vec = Vec.split( )
 	for idx, vec in enumerate( Vec ) :
-		#print idx, Vec[ idx ]
-		Vec[ idx ] = int( vec )
+		print idx, Vec[ idx ]
+		#Vec[ idx ] = int( vec )
 	return Vec
 #END of function to import vectors/matrices from file/s	
 
