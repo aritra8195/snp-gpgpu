@@ -3,7 +3,7 @@ import os
 import math
 import numpy
 from numpy import *
-
+ 
 #
 # Try implementing a bit more complex rules e.g. a^3(aa)^+/a^2 -> a
 #
