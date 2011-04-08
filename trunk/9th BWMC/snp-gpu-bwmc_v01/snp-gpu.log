@@ -1,6 +1,5 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.9)  4 APR 2011 15:41
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.5)  8 APR 2011 03:17
 entering extended mode
- restricted \write18 enabled.
  %&-line parsing enabled.
 **snp-gpu.tex
 (./snp-gpu.tex
@@ -566,7 +565,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 166.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 172.
 
 <figures/snp-img.png, id=31, 444.91219pt x 281.55188pt>
 File: figures/snp-img.png Graphic file (type png)
@@ -579,64 +578,78 @@ File: figures/cuda-scaling.jpeg Graphic file (type jpg)
 <figures/cuda-model.jpeg, id=37, 356.0803pt x 354.57469pt>
 File: figures/cuda-model.jpeg Graphic file (type jpg)
 
-<use figures/cuda-model.jpeg> [6] [7 <./figures/cuda-scaling.jpeg> <./figures/c
-uda-model.jpeg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 323.
+<use figures/cuda-model.jpeg>
 
- (/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
+LaTeX Warning: Citation `sat' on page 6 undefined on input line 295.
+
+
+LaTeX Warning: Citation `sat' on page 6 undefined on input line 295.
+
+[6] [7 <./figures/cuda-scaling.jpeg> <./figures/cuda-model.jpeg>]
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 329.
+
+
+(/usr/share/texmf-texlive/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 323.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 329.
  [8]
+
+LaTeX Warning: Citation `sat' on page 9 undefined on input line 408.
+
 [9] [10] [11]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 613.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 619.
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 625.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 631.
  [12] [13] [14] [15]
 <figures/c211_tree.jpeg, id=77, 170.13562pt x 459.21562pt>
 File: figures/c211_tree.jpeg Graphic file (type jpg)
 
 <use figures/c211_tree.jpeg> [16] [17 <./figures/c211_tree.jpeg>]
-Underfull \hbox (badness 10000) in paragraph at lines 915--916
+Underfull \hbox (badness 10000) in paragraph at lines 922--923
 []\OT1/cmr/m/n/9 P sys-tems re-source web-site. (2011, Jan) [On-line]. Avail-ab
 le:
  []
 
-[18] (./snp-gpu.aux
+[18] [19] (./snp-gpu.aux
 \contentsline {mtchap}{References}{18}
-) ) 
+)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 10714 strings out of 495061
- 173645 string characters out of 1182621
- 244739 words of memory out of 3000000
- 13658 multiletter control sequences out of 15000+50000
+ 10748 strings out of 495061
+ 174207 string characters out of 1182622
+ 245757 words of memory out of 3000000
+ 13692 multiletter control sequences out of 15000+50000
  12176 words of font info for 50 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 54i,15n,51p,1482b,1141s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-t
-exlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts
-/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/publ
-ic/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pf
-b></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/shar
-e/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texl
-ive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/ty
-pe1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/public/am
-sfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr
-7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/s
-hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fon
-ts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/pub
-lic/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
-s/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.
-pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/sh
-are/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on snp-gpu.pdf (18 pages, 477821 bytes).
+ 54i,15n,74p,1482b,1141s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/publi
+c/amsfonts/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/
+cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi6.pfb
+></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share
+/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-texli
+ve/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/typ
+e1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/public/ams
+fonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr7
+.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texmf-t
+exlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/font
+s/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmti9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on snp-gpu.pdf (19 pages, 481663 bytes).
 PDF statistics:
- 155 PDF objects out of 1000 (max. 8388607)
+ 159 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  33 words of extra memory for PDF output out of 10000 (max. 10000000)
 
