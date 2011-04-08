@@ -49,7 +49,7 @@ Research Group on Natural Computing \\
 
 
 We present in this paper our work regarding simulating a type of P system known as a spiking neural P system (SNP system) using graphics processing units (GPUs). GPUs, because of their architectural optimization for parallel computations, are well-suited for highly parallelizable problems. Due to the advent of general purpose GPU computing in recent years, GPUs are not limited to graphics and video processing alone, but include computationally intensive scientific and mathematical applications as well. Moreover P systems, including SNP systems, are inherently and maximally parallel computing models whose inspirations are taken from the functioning and dynamics of a living cell. In particular, SNP systems try to give a modest but formal representation of a special type of cell known as the neuron and their interactions with one another. The nature of SNP systems allowed their representation as matrices, which is a crucial step in simulating them on highly parallel devices such as GPUs. The highly parallel nature of SNP systems necessitate the use of hardware intended for parallel computations. The simulation algorithms, design considerations, and implementation are presented. Finally, simulation results, observations, and analyses using an SNP system that generates all numbers in $\mathbb N$ - \{$1$\} are discussed, as well as recommendations for future work. 
-%\todo{We should consider the measure of simulation time, with a CPU-GPU comparative, so we can validate the decision of implementing the simulation algorithm on the GPU. - Sequential Python SNP system simulator?}
+
 
 \end{abstract}
 
@@ -61,52 +61,41 @@ We present in this paper our work regarding simulating a type of P system known 
 
 \subsection{Parallel computing: Via graphics processing units (GPUs)}
 The trend for massively parallel computation is moving from the more common multi-core CPUs towards  {GPUs} for several significant reasons \cite{cudabook, cudaguide}. One important reason for such a trend in recent years include the low consumption in terms of power of  {GPUs} compared to setting up machines and infrastructure which will utilize multiple CPUs in order to obtain the same level of parallelization and performance \cite{cudapage}. Another more important reason is that  {GPUs} are architectured for \textit{massively parallel computations} since unlike most general purpose multicore CPUs, a large part of the architecture of GPUs are devoted to parallel execution of arithmetic operations, and not on control and caching just like in CPUs \cite{cudabook, cudaguide}. Arithmetic operations are at the heart of many basic operations as well as scientific computations, and these are performed with larger speedups when done in parallel as compared to performing them sequentially. In order to perform these arithmetic operations on the GPU, there is a set of techniques called $GPGPU$ (General Purpose computations on the GPU) coined by Mark Harris in 2002 which allows programmers to do computations on GPUs and not be limited to just graphics and video processing alone \cite{gpgpu}. 
-%\todo{Here I wanted to define what is GPGPU, related to the execution of arithmetic operations (not graphical) on the GPU. - DONE}
+
 
 \subsection{Parallel computing: Via Membranes}
-\textit{Membrane computing} or its more specific counterpart, a \textit{P system}, is a Turing complete computing model (for several P system variants) that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration and abstraction, similar to other members of {\it Natural computing} (e.g. DNA/molecular computing, neural networks, quantum computing), from nature \cite{introtomem}\cite{ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's $skin$ (the cell's outermost membrane). Before proceeding, it is important to clarify what is meant when it is said that nature $computes$, particularly life or the cell: computation in this case involves reading information from memory from past or present stimuli, rewrite and retrieve this data as a stimuli from the environment, process the gathered data and act accordingly due to this processing \cite{molecular}. Thus, we try to extend the classical meaning of computation presented by Allan Turing.
+\textit{Membrane computing} or its more specific counterpart, a \textit{P system}, is a Turing complete computing model (for several P system variants) that perform computations nondeterministically, exhausting all possible  computations at any given time. This type of unconventional model of computation was introduced by Gheorghe P\u aun in 1998 and takes inspiration and abstraction, similar to other members of {\it Natural computing} (e.g. DNA/molecular computing, neural networks, quantum computing), from nature \cite{introtomem,ppage}. Specifically, P systems try to mimic the constitution and dynamics of the living cell: the multitude of elements inside it, and their interactions within themselves and their environment, or outside the cell's $skin$ (the cell's outermost membrane). Before proceeding, it is important to clarify what is meant when it is said that nature $computes$, particularly life or the cell: computation in this case involves reading information from memory from past or present stimuli, rewrite and retrieve this data as a stimuli from the environment, process the gathered data and act accordingly due to this processing \cite{molecular}. Thus, we try to extend the classical meaning of computation presented by Allan Turing.
 
-%Can add more to this by explaining ions, molecules in the cell's 'soup' are represented by a multiset of objects (data structure) at least for most types of P systems. The cell is seen as 'computing' or processing information through these things. (from New Computational Paradigms book)
 
 SN P systems differ from other types of P systems precisely because they are $mono-membranar$ and the working alphabet contains only \textit{one object type}. These characteristics, among others, are meant to capture the workings of a special type of cell known as the $neuron$. Neurons, such as those in the human brain, communicate or 'compute' by sending indistinct signals more commonly known as action potential or \textit{spikes} \cite{snp}. $Information$ is then communicated and encoded not by the spikes themselves, since the spikes are unrecognizable from one another, but by (a) the time elapsed between spikes, as well as (b) the number of spikes sent/received from one neuron to another, oftentimes under a certain time interval \cite{snp}.
 
 It has been shown that SN P systems, given their nature, are representable by matrices \cite{snpbrain}\cite{snpmat}. This representation allows design and implementation of an SN P system simulator using parallel devices such as GPUs. 
 
-%\pagebreak
 
 \subsection{Simulating SNP systems in  {GPUs}}
 
-\redmark{
-Since the model of P systems was presented, many simulators and software applications have been produced \cite{swhandbook}. In terms of High Performance Computing, many P system simulators have been also designed for clusters of computers \cite{CiWe04}, for reconfigurable hardware as FPGA \cite{nguyen}, and for GPUs \cite{amgpu,satgpu}. All of these efforts have shown that parallel architectures are well-suited in performance to simulate P systems. However, they are designed for simulating cell-like P systems. Thus, the efficient simulation of SNP systems is a new challenge that requires novel attempts.
-}\todo{Here I add a new paragraph about related work, I don't know if it's better to place in other part of the paper, this is opt to you.}
+
+Since the time P systems were presented, many simulators and software applications have been produced \cite{swhandbook}. In terms of \textit{High Performance Computing}, many P system simulators have been also designed for clusters of computers \cite{CiWe04}, for reconfigurable hardware as in FPGAs \cite{nguyen}, and even for GPUs \cite{amgpu,satgpu}. All of these efforts have shown that parallel architectures are well-suited in performance to simulate P systems. However, these previous works on hardware are designed to simulate \textit{cell-like} P system variants, which are among the first P system variants to have been introduced. Thus, the efficient simulation of SNP systems is a new challenge that requires novel attempts.
 
 
 A matrix representation of SN P systems is quite intuitive and natural due to their graph-like configurations and properties (as will be further shown in the succeeding sections such as in subsection \ref{computesnp}). 
-%\sredmark{Matrix operations, algorithms and such in parallel computing literature (e.g. \cite{matrixgpu1} and \cite{matrixgpu2} to name a few recent ones done on GPGPUs) have been studied and are available in vast quantities for years now}
+
 {On the other hand, \textit{linear algebra} operations have been efficiently implemented on parallel platforms and devices in the past years. For instance, there is a large number of algorithms implementing $matrix-matrix$ and $vector-matrix$ operations on the GPU. These algorithms offer huge performance since dense linear algebra readily maps to the data-parallel architecture of GPUs \cite{matrixgpu1,matrixgpu2}}.
-%\todo{I suggest to better introduce the efficient behaviour of GPUs with matrix operations, since it's the key of the paper.-DONE}.
+
 It would thus seem then that a matrix represented SN P system simulator implementation on highly parallel computing devices such as  {GPUs} be a natural confluence of the earlier points made. The matrix representation of SN P systems bridges the gap between the theoretical yet still computationally powerful SN P systems and the applicative and more tangible  {GPUs}, via an SN P system simulator. 
-%\sredmark{The design of the simulator, including the algorithms deviced, architectural considerations, are then implemented using a particular type of GPGPU, namely NVIDIA CUDA (compute unified device architecture). NVIDIA CUDA extends the widely known ANSI C programming language and allows programmers to perform parallel computations, via GPGPUs manufactured by NVIDIA}{} \todo{I suggest to introduce CUDA in a new paragraph in a more extensive way, as follows}.
+
 {The design and implementation of the simulator, including the algorithms deviced, architectural considerations, are then implemented using CUDA. The Compute Unified Device Architecture (CUDA) programming model, launched by NVIDIA in mid-2007, is a hardware and software architecture for issuing and managing computations on their most recent GPU families (G80 family onward), making the GPU operate as a highly parallel computing device \cite{cudapage}. CUDA programming model extends the widely known ANSI C programming language (among other languages which can interface with CUDA), allowing programmers to easily design the code to be executed on the GPU, avoiding the use of low-level graphical primitives. CUDA also provides other benefits for the programmer such as abstracted and automated scaling of the parallel executed code.}
 
 This paper starts out by introducing and defining the type of SNP system that will be simulated. Afterwards the NVIDIA CUDA model and architecture are discussed, baring the scalability and parallelization CUDA offers. Next, the design of the simulator, constraints and considerations, as well as the details of the algorithms used to realize the SNP system are discussed. The simulation results are presented next, as well as observations and analysis of these results. The paper ends by providing the conclusions and future work.
 
-The objective of this work is to start the foundations for the creation of P system simulators 
-%\todo{we should add a paragraph/subsection introducing previous work of simulators based on GPU, FPGA, clusters... if you agree, I can write it from my previous papers. - Yes please -Francis}
+The objective of this work is to continue the creation of P system simulators 
 , in this particular case an SN P system, using highly parallel devices such as  {GPUs}. Fidelity to the computing model (the type of SNP system in this paper) is a part of this objective.
 
-%MENTION matrix implementation on parallel/GPU systems + citations (DONE)
-
-%MENTION overview of paper + contributions BRIEFLY (DONE)
-
-%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Spiking neural p systems}
 
 \subsection{Computing with SN P systems}\label{computesnp}
-The type of SNP systems focused on by this paper (scope) are those without delays i.e. those that spike or transmit signals the moment they are able to do so \cite{snpbrain}\cite{snpmat}. A variant, which allows for delays before a neuron produces a spike, are also available \cite{snp}. An SNP system without delay is of the form:
-
-%MODIFY the following defitions or CITE them instead
+The type of SNP systems focused on by this paper (scope) are those without delays i.e. those that spike or transmit signals the moment they are able to do so \cite{snpbrain,snpmat}. Variants which allow for delays before a neuron produces a spike, are also available \cite{snp}. An SNP system without delay is of the form:
 
 \begin{definition}\label{snpdefn}
 $$\Pi=(O,\sigma_1,\ldots, \sigma_m, syn, in, out),$$
@@ -124,6 +113,7 @@ where:
 \item[(b-1)]$E/a^c \rightarrow a^p$, are known as \textit{Spiking rules}, where $E$ is a regular expression
 over $a$, and $c\geq 1$, such that $p\geq 1$ number of spikes are produced, one for each adjacent neuron with $\sigma_i$ as the originating neuron and $a^c \in L(E)$.
 \item[(b-2)]$a^s\rightarrow \lambda$, are known as \textit{Forgetting rules}, for $s\geq 1$, such that for each rule $E/a^c\rightarrow a$ of type (b-1) from $R_i$, $a^s\notin L(E)$. 
+\item[(b-3)]$a^k \rightarrow a$, a special case of (b-1) where $E$ = $a^c$, $k \geq c$.
 \end{enumerate}
 \end{enumerate}
 \item[3.] $syn= \{ (i,j)\, |\, 1\leq i,j \leq m, \, i\neq j\, \}$ are the synapses i.e. connection between neurons.
@@ -138,26 +128,12 @@ spikes, $a^k \in L(E)$ and $k \geq c$. Using this type of rule uses up
 or consumes $k$ spikes from the neuron, producing a spike to
 each of the neurons connected to it via a forward pointing arrow i.e. away from the neuron. In this manner, for rules of type (b-2)
 if $\sigma_i$ contains $s$ spikes, then $s$ spikes are forgotten or
-removed once the rule is used. Rules of type (b-1) can be
-simplified with the notation
-
-\begin{definition}
-\begin{enumerate}
-\begin{enumerate}
-%\begin{enumerate}
-\item[(b-3)]$a^k \rightarrow a$
-%\end{enumerate}
-\end{enumerate}
-\end{enumerate}
-\end{definition}
-%b-3) a → a
-
-where the regular expression $E = a^k$, again consuming $k$ spikes and producing a spike.
+removed once the rule is used. 
 
 The non-determinism of SN P systems comes with the fact
 that more than one rule of the several types are applicable at a given time, given enough spikes. The rule to be used is
 chosen non-deterministically in the neuron. However, only
-one rule can be applied or used at a given time \cite{snp}\cite{snpbrain}\cite{snpmat}. The
+one rule can be applied or used at a given time \cite{snp,snpbrain,snpmat}. The
 neurons in an SN P system operate in parallel and in unison,
 under a global clock \cite{snp}. For Figure \ref{snp_ex} no input neuron is present,
 but neuron 3 is the output neuron, hence the arrow pointing
@@ -171,31 +147,14 @@ $\Pi = (\{a\}, \sigma_1, \sigma_2, \sigma_3, syn, out)$ where $\sigma_1 = (2, R_
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=.35]{figures/snp-img.png} 
-%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
 		\caption{An SNP P system $\Pi$, generating all numbers in $\mathbb N$ - \{$1$\}, from \cite{snpmat}.}
 		\label{snp_ex}
 	\end{figure}
-%$<$
-
-%cite references for figures used!!!
-
-%\subsection{Type Changes and {\subsecit Special} Characters}
-%of\footnote{A fourth, and last, footnote.}
-
-%\subsection{Math Equations}
-%You may want to display math equations in three distinct styles: the three are discussed in the next sections.
-
-%\subsubsection{Inline (In-text) Equations}
-%A formula that appears in the running text is called an
-
-%\subsubsection{Display Equations}
-%A numbered display equation -- one set off by vertical space
-
 
 
 \subsection{Matrix representation of SNP systems}
 A matrix representation of an SN P system makes use of the
-following vectors and matrix definitions \cite{snpbrain}\cite{snpmat} . It is important to note that, just as in Figure \ref{snp_ex}, a total ordering of rules is {considered}.
+following vectors and matrix definitions \cite{snpbrain,snpmat} . It is important to note that, just as in Figure \ref{snp_ex}, a total ordering of rules is {considered}.
 
 \textit{Configuration vector} $C_k$ is the vector containing all spikes in every neuron on the $kth$ computation step/time, where $C_0$ is the initial vector containing all spikes in the system at the beginning of the computation. For $\Pi$ (in Figure \ref{snp_ex} ) the initial configuration vector is $C_0 = < 2, 1, 1 >$.
 
@@ -209,7 +168,6 @@ $< 1, 1, 1, 1, 0>${, so this $S_k$ is invalid }{}). $Validity$ in this case mean
 \textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_{ij}$
 elements where $a_{ij}$ is given as
 
-%\pagebreak
 
 \begin{definition}\label{defi-snp-mat}
 $$
@@ -227,7 +185,6 @@ $$
 For $\Pi$, the $M_{\Pi}$ is as follows:
 
 \begin{equation}\label{snp_mat}
-%$$
 M_{\Pi} = \left(
 \begin{array}{ccc}
   -1 & 1 & 1\\
@@ -236,7 +193,6 @@ M_{\Pi} = \left(
    0 & 0 & -1\\
    0 & 0& -2
 \end{array}\right)
-%$$
 \end{equation}
 
 In such a scheme, rows represent rules and columns
@@ -246,16 +202,11 @@ Finally, the following equation provides the configuration
 vector at the $(k+1)th$ step, given the configuration vector and
 spiking vector at the $kth$ step, and $M_{\Pi}$:
 
-%Ck+1 = Ck + Sk * M
 \begin{equation}\label{next-config}
 C_{k+1} =  C_{k} ~ + ~ S_{k}\cdot M_{\Pi}.
 \end{equation}
 
-%%%%%%%%%%%%%%%%%%%%%%%%
-
 \section{The NVIDIA CUDA architecture}
-
-%MENTION the setup used - iMac OS X 10.5.8 CUDA version
 
 NVIDIA, a well known manufacturer of GPUs, released in
 2007 the CUDA programming model and architecture \cite{cudapage}.
@@ -266,7 +217,6 @@ contained within a grid of (thread) blocks. These grids
 belong to a single device i.e. a single  {GPU}. Each
 device/ {GPU} has multiple cores, each capable of running
 its own \textit{block of threads}
-%\todo{I don't know in the new CUDA 4.0, but each grid is executed at one time in a GPU, where each core executes the instruction of single threads.}.
 The program run in the CUDA model scales
 up or down, depending on the number of cores the
 programmer currently has in a device. This scaling is done
@@ -278,7 +228,6 @@ than with fewer ones \cite{cudaguide}.
 	\begin{figure}
 		\centering
 		\includegraphics[scale=.5]{figures/cuda-scaling.jpeg} 
-%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
 		\caption{NVIDIA CUDA automatic scaling, hence more cores
 result to faster execution, from \cite{cudaguide}.}
 		\label{cuda_scale}
@@ -287,15 +236,13 @@ result to faster execution, from \cite{cudaguide}.}
 	\begin{figure}
 		\centering
 		\includegraphics[scale=.6]{figures/cuda-model.jpeg} 
-%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
-		\caption{NVIDIA CUDA programming model showing the sequential execution of the $host$ code alongside the parallel execution of the $kernel$ function on the $device$ side, from \cite{sat}.}
+		\caption{NVIDIA CUDA programming model showing the sequential execution of the $host$ code alongside the parallel execution of the $kernel$ function on the $device$ side, from \cite{amgpu}.}
 		\label{cuda_model}
 	\end{figure}
 
 Figure \ref{cuda_model} shows another important feature of the CUDA model:
 the host and the device parts. {The host controls the execution flow while the device
 is a highly-parallel co-processor.}
-%\todo{to define which is the role of the host and the device.}
 Device pertains to the  {GPU}/s of the system, while the host
 pertains to the CPU/s. A function known as a \textit{kernel
 function}, is a function called from the host but executed in
@@ -306,9 +253,7 @@ shown in Listing \ref{cuda-code}.
 
 
 \lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, label=cuda_gencode}
-% This concludes the preamble
 
-\pagebreak
 
 \begin{lstlisting}[label=cuda-code,caption=General code flow for CUDA programming written in the CUDA extended C language]
 //allocate memory on GPU e.g.
@@ -362,14 +307,12 @@ $N$ in this case allows the programmer to specify $N$ number of
 threads which will execute the $add$ kernel function in parallel, with 1
 specifying only one block of thread for all $N$ threads.
 
-\pagebreak
 
 \subsection{Design considerations for the hardware and software
 setup}
 
 Since the kernel function is executed in parallel in
 the device, the function needs to have its {inputs}
-%\todo{first, we have to copy to the device the input data of the kernel}
 initially moved from the CPU/host to the device, and then back from the device to the
 host after computation { for the results}. This movement of data back and forth should be minimized in order to obtain more efficient,
 in terms of time, execution.
@@ -380,7 +323,6 @@ mind. In this case, $C_k$, $S_k$, and $M_{\Pi}$ are loaded, manipulated, and pre
 before being sent to the kernel function which will perform
 computations on these function arguments in parallel.
 To represent $C_k$, $S_k$, and $M_{\Pi}$, text files are created 
-%\sredmark{in order}{}\todo{so much ``in order'' in this sentence} 
 to house each input, whereby each element of the
 vector or matrix is entered in the file in order, from left to right, with a blank space in between as a delimiter. The
 matrix however is entered in row-major ( a linear array of all
@@ -401,7 +343,7 @@ that these operations in the host/CPU provide logic and
 control of the data/inputs, while the device/GPU provides
 the arithmetic or computational 'muscle', the laborious task
 of working on multiple data at a given time in parallel,
-hence the current dichotomy of the CUDA programming model \cite{sat}. The GPU acts as a $co-processor$ of the central processor.
+hence the current dichotomy of the CUDA programming model \cite{amgpu}. The GPU acts as a \textit{co-processor} of the central processor.
 This division of labor is observed in Listing \ref{cuda-code} .
 
 \subsection{Matrix computations and CPU-{GPU} interactions}
@@ -435,7 +377,6 @@ as manipulated in ways which will be elaborated in the
 following sections along with the discussion of the
 algorithm for producing all possible and valid $S_k$s and $C_k$s given initial conditions. The host code/Python part thus implements the logic and control as mentioned earlier, while in it, the device/GPU code which is written in C executes the parallel parts of the simulator for CUDA to be utilized.
 
-%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Simulator design and implementation}\label{sect-snp-algo}
 
@@ -485,7 +426,6 @@ Neuron 1's rules are given by accessing the sub-lists of $r$
 Finally, we have the input file $M$, which holds the Python $list$ version of (\ref{row-maj}).
 
 \subsection{Simulation algorithm implementation}\label{snp-sim-algo}
-%\todo{I prefer the term ``simulation algorithm'' instead of ``algorithm simulator'' - DONE}}
 
 	
 The general algorithm is shown in Algorithm \ref{sim-algo}. {Each line in Algorithm \ref{sim-algo} mentions
@@ -499,55 +439,35 @@ being the fact that all previously generated configuration
 vectors have been produced in an earlier time or
 computation, hence using them again in part I of Algorithm \ref{sim-algo} would be pointless, since a
 redundant, infinite loop will only be formed.
-%\todo[color=blue]{text moved from below}
 
-\begin{algorithm}                      % enter the algorithm environment
-\caption{Overview of the algorithm for the SNP system simulator}          % give the algorithm a caption
-\label{sim-algo}                           % and a label for \ref{} commands later in the document
-\begin{algorithmic}                    % enter the algorithmic environment
+\begin{algorithm}                   
+\caption{Overview of the algorithm for the SNP system simulator}         \label{sim-algo}                           
+\begin{algorithmic}                    
 \REQUIRE Input files: $confVec$, $M,r$.
 
-[I.] \textbf{(HOST)} Load input files.
+I. \textbf{(HOST)} Load input files.
 Note that $M$ and $r$ need only be loaded once since they are unchanging, $C_0$ is loaded once, and then $C_k$s are loaded afterwards.
-%\sredmark{for}{in} an SN P system \redmark{computation}\todo[color=green]{these matrices remain unchanged during the computation of the SNP system}
 
 
-[II.] \textbf{(HOST)} Determine if a rule/element in $r$ 
+II. \textbf{(HOST)} Determine if a rule/element in $r$ 
 is applicable based on its corresponding spike value 
 in $confVec$, and then generate all valid and
 possible spiking vectors in a list of lists $spikVec$ given the 3 initial inputs.
 
 
-[III.] \textbf{(DEVICE)} From part II., run the kernel 
+III. \textbf{(DEVICE)} From part II., run the kernel 
 function on $spikVec$, which contains all 
 the valid and possible spiking vectors for 
 the current $confVec$ and $r$. This will 
 generate the succeeding $C_k$s and their corresponding $S_k$s.
 
 
-[IV.] \textbf{(HOST+DEVICE)} Repeat steps I to IV (except instead of loading $C_0$ as $confVec$, use the generated $C_k$s in III) until
+IV. \textbf{(HOST+DEVICE)} Repeat steps I to IV (except instead of loading $C_0$ as $confVec$, use the generated $C_k$s in III) until
 a zero configuration vector (vector with 
 only zeros as elements) or further $C_k$s
 produced are repetitions of a $C_k$
 produced at an earlier time. (Stopping criteria in subsection \ref{snp-sim-algo} )
-%\ENSURE $y = x^n$
-%\STATE $y \Leftarrow 1$
-%\IF{$n < 0$}
-%\STATE $X \Leftarrow 1 / x$
-%\STATE $N \Leftarrow -n$
-%\ELSE
-%\STATE $X \Leftarrow x$
-%\STATE $N \Leftarrow n$
-%\ENDIF
-%\WHILE{$N \neq 0$}
-%\IF{$N$ is even}
-%\STATE $X \Leftarrow X \times X$
-%\STATE $N \Leftarrow N / 2$
-%\ELSE[$N$ is odd]
-%\STATE $y \Leftarrow y \times X$
-%\STATE $N \Leftarrow N - 1$
-%\ENDIF
-%\ENDWHILE
+
 \end{algorithmic}
 \end{algorithm}	
 
@@ -557,28 +477,23 @@ criterion from \ref{snp-sim-algo} could allow for a deeply nested computation tr
 one that can continue executing for a significantly lengthy amount of
 time even with a multi-core CPU and even the more parallelized
  {GPU}.
-%\sredmark{Each line in Algorithm \ref{sim-algo} mentions which part/s the simulator code runs in, either in the device \textbf{(DEVICE)} or in the host \textbf{(HOST)} part.}{}\todo{text moved above for the sake of simplicity}
+
 
 \subsection{Closer inspection of the SN P system
 simulator}\label{siminspect}
 	
 The more detailed algorithm for part $II$ of Algorithm \ref{sim-algo} is as follows.
 
-%A few definitions are in order at this point:
-
 Recall from the definition of an SNP system (Definitin \ref{snpdefn}) that we have $m$ number of $\sigma$s. We related $m$ to our implementation by noticing the cardinality of the Python list $r$.
-%redmark{
 \begin{equation}\label{rcard}
 |r| = m
 \end{equation}
 
-%\todo{This number $|r|$ is also defined as number $m$ in the SNP system $\Pi=(O,\sigma_1,\ldots, \sigma_m, syn, in, out)$, should we consider to use this number instead or additionally? - DONE}
 {
 \begin{equation}\label{psi}
 \Psi = |{\sigma_{V_1}}| |{\sigma_{V_2}}| ...|{\sigma_{V_m}}|
 \end{equation}
 }
-%\todo{however, $n$ is actually $\Sigma$ (the number of neurons), what about replacing $n \leq \infty$ by $n=\Sigma$? - DONE}
 
 where
 
@@ -591,21 +506,19 @@ During the exposition of the algorithm, the previous Python
 lists (from their vector/matrix counterparts in earlier
 sections) (\ref{confvec}) and (\ref{rule-list}) will be utilized. For part $II$ Algorithm \ref{sim-algo} we have a sub-algorithm (Algorithm \ref{sim-algo2}) for generating all valid
 and possible spiking vectors given input files $M$, $confVec$, and $r$.
-%\todo{this definition can be moved above, next to algorithm 1? - DONE}
 
- %\redmark{(the $list$ version of (\ref{row-maj}))}
 
 \begin{algorithm}
 \caption{Algorithm further detailing part II in Algorithm \ref{sim-algo}}
 \label{sim-algo2}
 \begin{algorithmic}
-\item [II-1] Create a list $tmp$, a copy of $r$, marking
+\item [II-1.] Create a list $tmp$, a copy of $r$, marking
 each element of $tmp$ in increasing order of $\mathbb N$,
 as long as the element/s satisfy the rule's 
 regular expression $E$ of a rule (given by list
 $r$ ). Elements that don't satisfy $E$ are marked with 0.\\
  
-\item [II-2] To generate all possible and valid spiking vectors from
+\item [II-2.] To generate all possible and valid spiking vectors from
 $tmp$, we go through each neuron i.e. all elements of $tmp$,
 since we know a priori $m$ as well as the number of
 elements per neuron which satisfy $E$. We only need to iterate
@@ -614,7 +527,7 @@ through each neuron/element of $tmp$, $\omega$ times.
 made up of a sub-list of strings from all possible and valid
 \textit{\{1,0\}} strings i.e. spiking vectors per neuron.\\
 
-\item  [II-3]. To obtain all possible and valid \textit{\{1,0\}}
+\item  [II-3.] To obtain all possible and valid \textit{\{1,0\}}
 strings ($S_k$s), given that there are multiple strings
 to be concatenated ( as in $tmp2$'s case ), pairing up the
 neurons first, in order, and then exhaustively distributing
@@ -665,16 +578,16 @@ $tmp = [ [ 1, 2 ], [ 1 ], [ 1, 0 ] ]$
 At this point we have the following, based on the
 earlier definitions:
 
-$\Sigma$ = 3 ( 3 neurons in total, one per element/value of
+$m$ = 3 ( 3 neurons in total, one per element/value of
 $confVec$)
 
 $\Psi = |\sigma_{V_1}| |\sigma_{V_2}| |\sigma_{V_3}| = 2 * 1 * 1 = 2$
 
 $\Psi$ tells us the number of valid strings of \textit{1}s and \textit{0}s i.e.
-spiking vectors, which needs to be produced later, for a
-given configuration, in this case we have $confvec$. There are only
-2 valid spiking vectors from (\ref{confvec}) and the
-rules given in (\ref{rule-list}) encoded in the Python list $r$. These spiking vectors are
+$S_k$s, which need to be produced later, for a
+given $C_k$ which in this case is $confvec$. There are only
+2 valid $S_k$s/spiking vectors from (\ref{confvec}) and the
+rules given in (\ref{rule-list}) encoded in the Python list $r$. These $S_k$s are
 \begin{equation}\label{sk-211-1}
 < 0, 1, 1, 1, 0>
 \end{equation}
@@ -758,7 +671,6 @@ The final output of the sub-algorithm for the generation of all valid and possib
 As mentioned earlier, $\Psi$ = 2 is the number of valid and possible $S_k$s to be expected from $r$, $M_\Pi$, and $C_0$ = [2,1,1] in $\Pi$. Thus $tmp3$ is the list of all possible and valid spiking vectors given (\ref{confvec}) and (\ref{rule-list}) in this illustration. Furthermore, $tmp3$ includes all possible and valid spiking vectors for a given neuron in a given configuration of an SN P system with all its rules and 
 synapses (interconnections). Part II-3 is done ( $m - 1$) times, albeit exhaustively still so, between the two lists/neurons in the pair. 
 
-%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Simulation results, observations, and analyses}
 The SNP system simulator (combination of Python
@@ -830,25 +742,23 @@ Graphically (though not shown exhaustively) the computation tree for $\Pi$ is sh
 	\begin{figure}[tb]
 		\centering
 		\includegraphics[scale=.7]{figures/c211_tree.jpeg} 
-%		\includegraphics[height=2in, width=2.5in]{snp-img.PNG}
 		\caption{The computation tree graphically representing the output of the simulator run over $\Pi$ with $C_0$ = [2, 1, 1]}
 		\label{c211_tree}
 	\end{figure}
 
 The $confVecs$ followed by (...) are the $confVecs$ that went deeper i.e. produced more $C_k$s than Figure \ref{c211_tree} has shown.
 
-%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusions and future work}
 Using a highly parallel computing device such as a  {GPU}, {and the}
- NVIDIA CUDA {programming model}, an SN P system simulator was
-successfully designed and implemented as per the objective of this work. The simulator was shown to model the workings of an SN P system without delay. The use of a high
+ NVIDIA CUDA {programming model}, an SNP system simulator was
+successfully designed and implemented as per the objective of this work. The simulator was shown to model the workings of an SN P system without delay using the system's matrix representation. The use of a high
 level programming language such as Python for host tasks,
 mainly for logic and string representation and manipulation
 of values (vector/matrix elements) {has} provided the necessary
 expressivity to implement the algorithms created to produce
 and exhaust all possible and valid configuration and spiking
-vectors. For the device tasks, CUDA C allowed the
+vectors. For the device tasks, CUDA allowed the
 manipulation of the NVIDIA CUDA enabled  {GPU} which
 took care of repetitive and highly parallel computations
 ({vector-matrix} addition and multiplication essentially).
@@ -869,55 +779,35 @@ with equally large matrices, is required. These
 improvements as well as the current version of the simulator
 should also be run in a machine or setup with higher versions of
  {GPUs} {supporting} NVIDIA CUDA.
-%ADD simulation in larger CUDA systems
 
-%\end{document}  % This is where a 'short' article might terminate
-
-%ACKNOWLEDGMENTS are optional
 \section{ Acknowledgments }
-The authors from UP Diliman are supported by the \textit{ERDT program}. They also wish to acknowledge the \textit{Algorithms and Complexity laboratory} of the \textit{UP Diliman Department of Computer Science} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs, which provided the proper environment for the simulations, their development, design and tests. {The last author acknowledge the support of the project TIN2009--13192 of the Ministerio de Educaci\'on y Ciencia of Spain, and the support of the ``Proyecto de Excelencia con Investigador de Reconocida Val\'ia'' of the Junta de Andaluc\'{\i}a under grant P08-TIC04200, both co-financed by FEDER funds.}
-%\todo{Please, I will thank you a lot if we could add the acknowledge of Sevilla's projects, which is very important for my predoctoral grant. - DONE}
+Francis Cabarle is supported by the {DOST-ERDT scholarship program}. Henry Adorna is funded by the {DOST-ERDT research grant} and the Alexan professorial chair of the {UP Diliman Department of Computer Science, University of the Philippines Diliman}. They would also like to acknowledge the {Algorithms and Complexity laboratory} for the use of Apple iMacs with NVIDIA CUDA enabled GPUs for this work.. {Miguel A. Mart\'inez--del--Amor is supported by the project TIN2009--13192 of the Ministerio de Educaci\'on y Ciencia of Spain, and the support of the ``Proyecto de Excelencia con Investigador de Reconocida Val\'ia'' of the Junta de Andaluc\'{\i}a under grant P08-TIC04200, both co-financed by FEDER funds.}
 Finally, they would also like to thank the valuable insights of Mr. Neil Ibo.
 
-%and the \textbf{.cls} and \textbf{.tex} files that it describes.
-
-%
-% The following two commands are all you need in the
-% initial runs of your .tex file to
-% produce the bibliography for the citations in your paper.
-%\bibliographystyle{abbrv}
-%\bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
 
 \begin{thebibliography}{9999}
 
-%MUST learn how to use bibtex
 
-%\bibitem{adorna} H. Adorna, Gh. P\u aun, M. P\'{e}rez-Jim\'{e}nez : On Communication Complexity in Evolution-Communication P Systems, {\it Proc. Eighth Brainstorming Week on Membrane Computing, Sevilla, February 1-5, 2010}
 
 \bibitem{gpgpu} M. Harris, ``Mapping computational concepts to GPUs'', {\it ACM SIGGRAPH 2005 Courses}, NY, USA, 2005.
 
-%journal citation
 \bibitem{molecular} M. Gross,  ``Molecular computation'', {\it Chapter 2 of Non-Standard Computation}, (T. Gramss,
 S. Bornholdt, M. Gross, M. Mitchel, Th. Pellizzari, eds.), Wiley-VCH, Weinheim, 1998.
 
 
 \bibitem{snp} M. Ionescu, Gh. P\u aun, T. Yokomori, ``Spiking Neural P Systems'', {\it Journal Fundamenta Informaticae  }, vol. 71, issue 2,3 pp. 279-308, Feb. 2006.
 
-%proceedings/brainstorming citation
-\redmark{
+
 \bibitem{snpbrain} X. Zeng, H. Adorna, M. A. Mart\'{i}nez-del-Amor, L. Pan, ``When Matrices Meet Brains'', {\it Proceedings of the Eighth Brainstorming Week on Membrane Computing }, Sevilla, Spain, Feb. 2010.
 
-%conference citation
 \bibitem{snpmat} X. Zeng, H. Adorna, M. A. Mart\'{i}nez-del-Amor, L. Pan, M. P\'{e}rez-Jim\'{e}nez, ``Matrix Representation of Spiking Neural P Systems'', {\it 11th International Conference on Membrane Computing }, Jena, Germany, Aug. 2010.
-}
-%\bibitem{backward} M.A. Gutierrez-Naranjo, M.J. P\'{e}rez-Jim\'{e}nez: Computing Backwards with P Systems, $WMC10$, Curtea de Arge\c s, Romania, (2009), 282-295.
+
 
 \bibitem{introtomem} Gh. P\u aun, G. Ciobanu, M. P\'{e}rez-Jim\'{e}nez (Eds), {\it ``Applications of Membrane Computing'' }, Natural Computing Series, Springer, 2006.
 
-%website citation (IEEE format)
 \bibitem{ppage} P systems resource website. (2011, Jan) [Online]. Available: {\tt www.ppage.psystems.eu}.
 
-\redmark{
+
 
 \bibitem{satgpu} J.M. Cecilia, J.M. Garc\'{i}a, G.D. Guerrero, M.A. Mart\'{i}nez-del-Amor, I. P\'{e}rez-Hurtado, M.J. P\'{e}rez-Jim\'{e}nez, ``Simulating a P system based efficient solution to SAT by using GPUs'', {\it Journal of Logic and Algebraic Programming}, Vol 79, issue 6, pp. 317-325, Apr. 2010.
 
@@ -929,20 +819,13 @@ S. Bornholdt, M. Gross, M. Mitchel, Th. Pellizzari, eds.), Wiley-VCH, Weinheim, 
 
 \bibitem{nguyen} V. Nguyen, D. Kearney, G. Gioiosa. A Region-Oriented Hardware Implementation for Membrane Computing Applications and Its Integration into Reconfig-P. \textit{Lecture Notes in Computer Science}, 5957, 385-409, 2010.
 
-}
 
-%book citation (IEEE format)
 \bibitem{cudabook} D. Kirk, W. Hwu, {\it ``Programming Massively Parallel Processors: A Hands On Approach'' }, 1st ed. MA, USA: Morgan Kaufmann, 2010.
 
 \bibitem{cudaguide} NVIDIA corporation, {\it ``NVIDIA CUDA C programming guide'' }, version 3.0, CA, USA: NVIDIA, 2010.
 
-\bibitem{cudapage} NVIDIA CUDA developers resources page: tools, presentations, whitepapers. (2010, Jan) [Online]. Available: {\tt http://developer.nvidia.com/page/home.html }.
+\bibitem{cudapage} NVIDIA CUDA developers resources page: tools, presentations, whitepapers. (2010, Jan) [Online]. Available: {\tt http://developer.nvidia.com/page/home.html }
 
-%ADD matrix on parallel computers book citation
-
-%William Schmeister. 2006. Review of "Algorithms: Sequential, Parallel, and Distributed by Kenneth A. Berman and Jerome L. Paul", Thomson Course Technology, 2005. SIGACT News 37, 2 (June 2006), 17-22. DOI=10.1145/1140612.1140616 http://doi.acm.org/10.1145/1140612.1140616
-
-%ADD citation to figures used!!
 
 \bibitem{matrixgpu1} V. Volkov, J. Demmel, ``Benchmarking GPUs to tune dense linear algebra'', {\it Proceedings of the 2008 ACM/IEEE conference on Supercomputing}, NJ, USA, 2008.
 
@@ -951,17 +834,4 @@ S. Bornholdt, M. Gross, M. Mitchel, Th. Pellizzari, eds.), Wiley-VCH, Weinheim, 
 \end{thebibliography}
 
 
-% You must have a proper ".bib" file
-%  and remember to run:
-% latex bibtex latex latex
-% to resolve all references
-%
-% ACM needs 'a single self-contained file'!
-%
-%APPENDICES are optional
-%\balancecolumns
-
-%removed appendices
-
-% That's all folks!
 \end{document}
