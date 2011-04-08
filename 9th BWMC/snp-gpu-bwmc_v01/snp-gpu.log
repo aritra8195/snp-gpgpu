@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 APR 2011 14:29
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 APR 2011 15:56
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -549,18 +549,18 @@ Package: ulem 2010/01/21
 )
 \openout1 = `snp-gpu.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
  (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count162
@@ -620,35 +620,35 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \c@lstlisting=\count167
-LaTeX Font Info:    Try loading font information for U+msa on input line 49.
+LaTeX Font Info:    Try loading font information for U+msa on input line 45.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 49.
+LaTeX Font Info:    Try loading font information for U+msb on input line 45.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 49.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 45.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 55.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 51.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 55.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 51.
  [1
 
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
  [4]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 172.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 168.
 
 <figures/snp-img.png, id=32, 444.91219pt x 281.55188pt>
 File: figures/snp-img.png Graphic file (type png)
@@ -663,35 +663,35 @@ File: figures/cuda-model.jpeg Graphic file (type jpg)
 
 <use figures/cuda-model.jpeg>
 
-LaTeX Warning: Citation `sat' on page 6 undefined on input line 295.
+LaTeX Warning: Citation `sat' on page 6 undefined on input line 291.
 
 
-LaTeX Warning: Citation `sat' on page 6 undefined on input line 295.
+LaTeX Warning: Citation `sat' on page 6 undefined on input line 291.
 
 [6] [7 <./figures/cuda-scaling.jpeg> <./figures/cuda-model.jpeg>]
-LaTeX Font Info:    Try loading font information for OML+cmr on input line 329.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 325.
 
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 329.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 325.
  [8]
 
-LaTeX Warning: Citation `sat' on page 9 undefined on input line 408.
+LaTeX Warning: Citation `sat' on page 9 undefined on input line 404.
 
 [9] [10] [11]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 619.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 615.
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 631.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 627.
  [12] [13] [14] [15]
 <figures/c211_tree.jpeg, id=78, 170.13562pt x 459.21562pt>
 File: figures/c211_tree.jpeg Graphic file (type jpg)
 
 <use figures/c211_tree.jpeg> [16] [17 <./figures/c211_tree.jpeg>]
-Underfull \hbox (badness 10000) in paragraph at lines 922--923
+Underfull \hbox (badness 10000) in paragraph at lines 918--919
 []\OT1/cmr/m/n/9 P sys-tems re-source web-site. (2011, Jan) [On-line]. Avail-ab
 le:
  []
