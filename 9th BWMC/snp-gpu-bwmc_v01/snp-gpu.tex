@@ -3,7 +3,7 @@
 
 
 \setcounter{page}{1}
-\authorrunning{F. Cabarle, H. Adorna, Mart\'inez--del--Amor}
+\authorrunning{F. Cabarle, H. Adorna, M. Mart\'inez--del--Amor}
 \titlerunning{Simulating Spiking Neural P systems without delays using GPUs}
 
 %\usepackage{amsmath,amssymb,latexsym,graphicx,url}
@@ -79,6 +79,12 @@ It has been shown that SN P systems, given their nature, are representable by ma
 %\pagebreak
 
 \subsection{Simulating SNP systems in  {GPUs}}
+
+\redmark{
+Since the model of P systems was presented, many simulators and software applications have been produced \cite{swhandbook}. In terms of High Performance Computing, many P system simulators have been also designed for clusters of computers \cite{CiWe04}, for reconfigurable hardware as FPGA \cite{nguyen}, and for GPUs \cite{amgpu,satgpu}. All of these efforts have shown that parallel architectures are well-suited in performance to simulate P systems. However, they are designed for simulating cell-like P systems. Thus, the efficient simulation of SNP systems is a new challenge that requires novel attempts.
+}\todo{Here I add a new paragraph about related work, I don't know if it's better to place in other part of the paper, this is opt to you.}
+
+
 A matrix representation of SN P systems is quite intuitive and natural due to their graph-like configurations and properties (as will be further shown in the succeeding sections such as in subsection \ref{computesnp}). 
 %\sredmark{Matrix operations, algorithms and such in parallel computing literature (e.g. \cite{matrixgpu1} and \cite{matrixgpu2} to name a few recent ones done on GPGPUs) have been studied and are available in vast quantities for years now}
 {On the other hand, \textit{linear algebra} operations have been efficiently implemented on parallel platforms and devices in the past years. For instance, there is a large number of algorithms implementing $matrix-matrix$ and $vector-matrix$ operations on the GPU. These algorithms offer huge performance since dense linear algebra readily maps to the data-parallel architecture of GPUs \cite{matrixgpu1,matrixgpu2}}.
@@ -207,7 +213,7 @@ $< 1, 1, 1, 1, 0>${, so this $S_k$ is invalid }{}). $Validity$ in this case mean
 \textit{Spiking transition matrix} $M_{\Pi}$ is a matrix comprised of $a_{ij}$
 elements where $a_{ij}$ is given as
 
-\pagebreak
+%\pagebreak
 
 \begin{definition}\label{defi-snp-mat}
 $$
@@ -902,11 +908,12 @@ S. Bornholdt, M. Gross, M. Mitchel, Th. Pellizzari, eds.), Wiley-VCH, Weinheim, 
 \bibitem{snp} M. Ionescu, Gh. P\u aun, T. Yokomori, ``Spiking Neural P Systems'', {\it Journal Fundamenta Informaticae  }, vol. 71, issue 2,3 pp. 279-308, Feb. 2006.
 
 %proceedings/brainstorming citation
-\bibitem{snpbrain} X. Zeng, H. Adorna, M. A. Martinez-del-Amor, L. Pan, ``When Matrices Meet Brains'', {\it Proceedings of the Eighth Brainstorming Week on Membrane Computing }, Sevilla, Spain, Feb. 2010.
+\redmark{
+\bibitem{snpbrain} X. Zeng, H. Adorna, M. A. Mart\'{i}nez-del-Amor, L. Pan, ``When Matrices Meet Brains'', {\it Proceedings of the Eighth Brainstorming Week on Membrane Computing }, Sevilla, Spain, Feb. 2010.
 
 %conference citation
-\bibitem{snpmat} X. Zeng, H. Adorna, M. A. Martinez-del-Amor, L. Pan, M. P\'{e}rez-Jim\'{e}nez, ``Matrix Representation of Spiking Neural P Systems'', {\it 11th International Conference on Membrane Computing }, Jena, Germany, Aug. 2010.
-
+\bibitem{snpmat} X. Zeng, H. Adorna, M. A. Mart\'{i}nez-del-Amor, L. Pan, M. P\'{e}rez-Jim\'{e}nez, ``Matrix Representation of Spiking Neural P Systems'', {\it 11th International Conference on Membrane Computing }, Jena, Germany, Aug. 2010.
+}
 %\bibitem{backward} M.A. Gutierrez-Naranjo, M.J. P\'{e}rez-Jim\'{e}nez: Computing Backwards with P Systems, $WMC10$, Curtea de Arge\c s, Romania, (2009), 282-295.
 
 \bibitem{introtomem} Gh. P\u aun, G. Ciobanu, M. P\'{e}rez-Jim\'{e}nez (Eds), {\it ``Applications of Membrane Computing'' }, Natural Computing Series, Springer, 2006.
@@ -914,7 +921,19 @@ S. Bornholdt, M. Gross, M. Mitchel, Th. Pellizzari, eds.), Wiley-VCH, Weinheim, 
 %website citation (IEEE format)
 \bibitem{ppage} P systems resource website. (2011, Jan) [Online]. Available: {\tt www.ppage.psystems.eu}.
 
-\bibitem{sat} J. Cecilia, J. Garcia, G. Guerrero, M. Martinez-del-Amor, I. Perez-Jurtado, M.J. P\'{e}rez-Jim\'{e}nez, ``Simulating a P system based efficient solution to SAT by using GPUs'', {\it Journal of Logic and Algebraic Programming }, Vol 79, issue 6, pp. 317-325, Apr. 2010.
+\redmark{
+
+\bibitem{satgpu} J.M. Cecilia, J.M. Garc\'{i}a, G.D. Guerrero, M.A. Mart\'{i}nez-del-Amor, I. P\'{e}rez-Hurtado, M.J. P\'{e}rez-Jim\'{e}nez, ``Simulating a P system based efficient solution to SAT by using GPUs'', {\it Journal of Logic and Algebraic Programming}, Vol 79, issue 6, pp. 317-325, Apr. 2010.
+
+\bibitem{amgpu} J.M. Cecilia, J.M. Garc\'{i}a, G.D. Guerrero, M.A. Mart\'{i}nez-del-Amor, I. P\'{e}rez-Hurtado, M.J. P\'{e}rez-Jim\'{e}nez, ``Simulation of P systems with active membranes on CUDA'', {\it Briefings in Bioinformatics}, Vol 11, issue 3, pp. 313-322, Mar. 2010.
+
+\bibitem{swhandbook} D. D\'{i}az, C. Graciani, M.A. Guti\'{e}rrez, I. P\'{e}rez-Hurtado, M.J. P\'{e}rez-Jim\'{e}nez. Software for P systems. In Gh. P\u{a}un, G. Rozenberg, A. Salomaa (eds.) \textit{The Oxford Handbook of Membrane Computing}, Oxford University Press, Oxford (U.K.), Chapter 17, pp. 437-454, 2009.
+
+\bibitem{CiWe04} G. Ciobanu, G. Wenyuan. P Systems Running on a Cluster of Computers. \textit{Lecture Notes in Computer Science}, 2933, 123-139, 2004.
+
+\bibitem{nguyen} V. Nguyen, D. Kearney, G. Gioiosa. A Region-Oriented Hardware Implementation for Membrane Computing Applications and Its Integration into Reconfig-P. \textit{Lecture Notes in Computer Science}, 5957, 385-409, 2010.
+
+}
 
 %book citation (IEEE format)
 \bibitem{cudabook} D. Kirk, W. Hwu, {\it ``Programming Massively Parallel Processors: A Hands On Approach'' }, 1st ed. MA, USA: Morgan Kaufmann, 2010.
