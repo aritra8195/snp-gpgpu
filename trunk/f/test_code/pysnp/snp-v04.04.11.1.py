@@ -2,8 +2,7 @@ import sys
 import os
 import math
 import numpy
-from numpy import *
- 
+
 #
 # Try implementing a bit more complex rules e.g. a^3(aa)^+/a^2 -> a
 #
@@ -36,7 +35,7 @@ cudaBin = 'snp-cuda'
 #START of AUX functions#
 ########################
 
-#START of function to import vectors/matrices from file/s
+#START of function
 def importArr( filename ) :
 	arr = []
 	infile = open( filename, 'rb')
@@ -44,15 +43,13 @@ def importArr( filename ) :
 		numbers = map( int, line.split() )
 		arr.append( numbers )
 	return array( arr ) # return as a numpy array
+#END of function
 
+#START of function to import vectors/matrices from file/s
 def importVec( filename ) :
 	filePtr = open( filename, 'rb' )
 	Vec = filePtr.read( )
-	Vec = Vec.split( )
-	for idx, vec in enumerate( Vec ) :
-		print idx, Vec[ idx ]
-		#Vec[ idx ] = int( vec )
-	return Vec
+	return Vec.split( )
 #END of function to import vectors/matrices from file/s	
 
 #START of function
@@ -329,19 +326,6 @@ def concatConfVec( lst ):
 #END of function
 
 #START of function
-
-def multMat( spikTransMatFile, Sk ) :
-#	print 'Matrix ' + spikTransMatFile
-#	print ' Sk ' + Sk
-	M = importVec( spikTransMatFile)
-#	Sk = importVec( Sk ) # no need to do this as Sk is already THE Sk
-	print M	
-	
-	
-
-#END of function
-
-#START of function
 def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 	#using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
@@ -357,10 +341,9 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 		Ck_1 = 'c_' + Ck_1_str
 		Sk = 's_' + spikVec
 		#print Ck, Sk #works!
-		M_Sk = multMat( spikTransMatFile, Sk ) 		
-#		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
+		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
 		#print  cudaCmd 		
-#		os.popen( cudaCmd )
+		os.popen( cudaCmd )
 
 #END of function
 
