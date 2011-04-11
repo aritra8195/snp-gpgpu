@@ -4,8 +4,6 @@ import math
 import numpy
 
 #
-# Try implementing a bit more complex rules e.g. a^3(aa)^+/a^2 -> a
-#
 #TODOs:
 # 1. create function to improve implementation of the spike-rule selection (SRS) criterion
 # rather than just rules of type 3)
@@ -35,6 +33,7 @@ cudaBin = 'snp-cuda'
 #START of AUX functions#
 ########################
 
+
 #START of function
 def importArr( filename ) :
 	arr = []
@@ -42,7 +41,7 @@ def importArr( filename ) :
 	for line in infile.readlines():
 		numbers = map( int, line.split() )
 		arr.append( numbers )
-	return array( arr ) # return as a numpy array
+	return numpy.array( arr ) # return as a numpy array
 #END of function
 
 #START of function to import vectors/matrices from file/s
@@ -531,18 +530,18 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	while Ck != '' :
-			print 'Current spikVec:', spikVec, ' and Ck:', Ck
+		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
-			Ck = Ck.replace( '\n', '' )
+		Ck = Ck.replace( '\n', '' )
 
 		#no more spikes to be used by the P system
 		#if isConfVecZero( Ck ) or Ck == '214': #works
-#		if isConfVecZero( Ck ) : #works
-#			print '\tZero Ck/spikes. Stop.'
-#			print '\n********************************SN P system simulation run ENDS here***********************************\n'
-#			allGenCkFilePtr.close( )
-#			break
-#		else :
+		if isConfVecZero( Ck ) : #works
+			print '\tZero Ck/spikes. Stop.'
+			print '\n********************************SN P system simulation run ENDS here***********************************\n'
+			allGenCkFilePtr.close( )
+			break
+		else :
 			#write all valid config vectors onto each of their own files e.g. given 211, create file c_211 and write 211 in it
 			#print ' allGenCk ', allGenCk
 			createConfVecFiles( spikTransMat, allGenCk )
@@ -604,7 +603,7 @@ else :
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
-			print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
+	print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
 		#addTotalCk( allGenCk, '214' )
 		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
 
