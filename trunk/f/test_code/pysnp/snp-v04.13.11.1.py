@@ -9,6 +9,7 @@ import numpy
 # rather than just rules of type 3)
 # 2. What about Ck values/spikes that are greater than 9, since Cks are concat together as a single string
 # i.e. num of neurons = 3, Ck = (2,1,10) which is 2110 in concat form
+# 3. Refactor code to include STUB functions/s to collect smaller functions. Separate functions into a different file.
 #
 #NOTES:
 # 1.load confVec c0 (Ck+1 several times), spikVec s0 (Program must determine this!),
@@ -34,7 +35,7 @@ cudaBin = 'snp-cuda'
 ########################
 
 
-#START of function
+#START of function (DON'T NEED THIS ANYMORE)
 def importArr( filename ) :
 	arr = []
 	infile = open( filename, 'rb')
@@ -43,14 +44,14 @@ def importArr( filename ) :
 		arr.append( numbers )
 	return numpy.array( arr ) # return as a numpy array
 #END of function
-
+########################################################################
 #START of function to import vectors/matrices from file/s
 def importVec( filename ) :
 	filePtr = open( filename, 'rb' )
 	Vec = filePtr.read( )
 	return Vec.split( )
 #END of function to import vectors/matrices from file/s	
-
+########################################################################
 #START of function
 def getNeurNum( rules ) :
 #to get number of neurons, count the number of '$' instances + 1
@@ -62,7 +63,7 @@ def getNeurNum( rules ) :
 			cnt = cnt + 1
 	return cnt + 1
 #END of function
-
+########################################################################
 #START of function
 def genSpikVec( confVec, rules  ) :
 	y = 1
@@ -77,7 +78,7 @@ def genSpikVec( confVec, rules  ) :
 		y += 1
 
 #END of function
-
+########################################################################
 #START of function
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 def genSpikRuleList( confVec, rules ) :
@@ -106,7 +107,7 @@ def genSpikRuleList( confVec, rules ) :
 		y += 1
 	return spikRuleList
 #END of function
-
+########################################################################
 #START of function
 	#function to print neurons + rules criterion and total order
 def prNeurons( spikeRuleList ) :
@@ -119,7 +120,7 @@ def prNeurons( spikeRuleList ) :
 		v += 1	
 
 #END of function
-
+########################################################################
 #START of function
 	#generate a list of spikes + rules they are applicable to, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
@@ -155,7 +156,7 @@ def genPotentialSpikrule( spikRuleList ) :
 	return tmpList
 
 #END of function
-
+########################################################################
 
 #START of function
 def genNeurSpikVecStr( tmpList, neurNum ) :
@@ -215,7 +216,7 @@ def genNeurSpikVecStr( tmpList, neurNum ) :
 		#print tmp3tmp = [ '01', '10 ] tmp2 = [ '1' ] then tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
 	return tmp3
 #END of function
-
+########################################################################
 #START of function
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 def genNeurPairs( tmpList ) :	
@@ -240,7 +241,6 @@ def genNeurPairs( tmpList ) :
 				# place into a list all possible pairs between the 2 neurons
 				tmp7 = tmpList[ x ][ y ] + tmpList[ x + 1 ][ z ]
 				#print '\t\ttmp7 ', tmp7 
-				
 				w += 1				
 				z += 1
 				tmp6[ w: ] = [ tmp7 ]
@@ -259,7 +259,7 @@ def genNeurPairs( tmpList ) :
 	#print 'tmp5 ', tmp5
 	return tmp5
 #END of function
-
+########################################################################
 #START of function
 def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
@@ -283,7 +283,7 @@ def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 		outfile.close( )
 		#print spikVecFile + ' file written into ' 
 #END of function
-
+########################################################################
 #START of function
 def createConfVecFiles( spikTransMat, Ck_vec ) :
 #write the Ck string onto a file in the same format as the input matrix file
@@ -310,7 +310,7 @@ def createConfVecFiles( spikTransMat, Ck_vec ) :
 		outfile.close( )
 		#print confVecFile + ' file written into ' 
 #END of function
-
+########################################################################
 #START of function
 def concatConfVec( lst ):
 	index = 3
@@ -323,7 +323,7 @@ def concatConfVec( lst ):
 		index += 1
 	return confVec
 #END of function
-
+########################################################################
 #START of function
 def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 	#using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
@@ -345,7 +345,7 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 		os.popen( cudaCmd )
 
 #END of function
-
+########################################################################
 #START of function
 #add a Ck <type 'str'> into total list of generated Cks + write it into file \n separated
 def addTotalCk( allGenCk, Ck_1_str ) :
@@ -361,8 +361,7 @@ def addTotalCk( allGenCk, Ck_1_str ) :
 		return allGenCk
 
 #END of function
-
-
+########################################################################
 #START of function
 #works for strings 
 def isConfVecZero( Ck ) :
@@ -372,7 +371,7 @@ def isConfVecZero( Ck ) :
 				return False
 	return True
 #END of function
-
+########################################################################
 #START of function
 def printMatrix( spikTransMat ) :
 #takes as input a matrix in row-major format of <type 'list'> and prints the matrix 'nicely'
