@@ -35,14 +35,23 @@ cudaBin = 'snp-cuda'
 ########################
 
 
-#START of function (DON'T NEED THIS ANYMORE)
-def importArr( filename ) :
-	arr = []
-	infile = open( filename, 'rb')
-	for line in infile.readlines():
-		numbers = map( int, line.split() )
-		arr.append( numbers )
-	return numpy.array( arr ) # return as a numpy array
+#START of function (DON'T NEED THIS ANYMORE?)
+def toNumpyArr( filename, sqrMatWidth ) :
+	#1st, removes extraneous 1st 2 integers in the vector's/matrix' contents, then loads the remaining ints as a numpy
+	#array, then reshapes the 1D array to a square matrix
+	return fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( 5, 5)
+	#returns a file of the form array([[-1,  1,  1,  0,  0],
+    #   [-2,  1,  1,  0,  0],
+    #   [ 1, -1,  1,  0,  0],
+    #   [ 0,  0, -1,  0,  0],
+    #   [ 0,  0, -2,  0,  0]], dtype=int32)
+    
+	#arr = []
+	#infile = open( filename, 'rb')
+	#for line in infile.readlines():
+	#	numbers = map( int, line.split() )
+	#	arr.append( numbers )
+	#return numpy.array( arr ) # return as a numpy array
 #END of function
 ########################################################################
 #START of function to import vectors/matrices from file/s
@@ -262,7 +271,7 @@ def genNeurPairs( tmpList ) :
 ########################################################################
 #START of function
 def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
-	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
+	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file s_10110 and write 10110 in it
 	fileStrLen = len( spikTransMat )
 	#print ' length of spikTransMat is ', fileStrLen
 	for spikVec in  allValidSpikVec[ 0 ] :
@@ -341,6 +350,7 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str) :
 		Sk = 's_' + spikVec
 		#print Ck, Sk #works!
 		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
+		# In order to replace above .cu based code, do the same thing in python/numpy/pycuda
 		#print  cudaCmd 		
 		os.popen( cudaCmd )
 
@@ -479,7 +489,7 @@ else :
 	allGenCk = addTotalCk( allGenCk, Ck_1_str )
 
 
-	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
+	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file s_10110 and write 10110 in it
 	createSpikVecFiles( spikTransMat, allValidSpikVec )
 
 	#print confVec
@@ -568,7 +578,7 @@ else :
 
 			#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 			allValidSpikVec = genNeurPairs( tmpList )
-			#print '\tAll valid 10 strings i.e. spiking vectors are in allValidSpikVec =', allValidSpikVec
+			print '\tAll valid 10 strings i.e. spiking vectors are in allValidSpikVec =', allValidSpikVec
 
 			#write all valid spiking vectors onto each of their own files e.g. given 10110, create file s_10110 and write 10110 in it
 			createSpikVecFiles( spikTransMat, allValidSpikVec )
