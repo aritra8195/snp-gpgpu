@@ -1,7 +1,7 @@
 import sys
 import os
 import math
-import numpy
+from numpy import *
 
 #
 #TODOs:
@@ -606,6 +606,8 @@ else :
 
 			print '\t\tGenerated from Sk-1 = ', spikVec, 'and Ck-1 =', Ck, 'is Ck = ', C_k
 			addTotalCk( allGenCk, C_k )
+
+			print toNumpyArr( "M", 5 )
 
 			print '\tAll generated Cks are allGenCk =', allGenCk	
 			print '\n**\n**\n**'		
