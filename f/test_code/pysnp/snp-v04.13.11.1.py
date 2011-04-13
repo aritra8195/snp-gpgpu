@@ -325,7 +325,7 @@ def concatConfVec( lst ):
 #END of function
 ########################################################################
 #START of function
-def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
+def genCks( allValidSpikVec, sqrMatWidth, configVec_str) :
 	#using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
 	for spikVec in  allValidSpikVec[ 0 ] :
@@ -493,7 +493,7 @@ else :
 	createConfVecFiles( spikTransMat, allGenCk )
 	
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
-	genCks( allValidSpikVec, sqrMatWidth, concatConfVec( confVec ), allGenCk )
+	genCks( allValidSpikVec, sqrMatWidth, concatConfVec( confVec ) )
 
 	#add all Cks generated from C0
 	for spikVec in allValidSpikVec[ 0 ] :
@@ -581,7 +581,7 @@ else :
 			createConfVecFiles( spikTransMat, allGenCk )
 
 			#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
-			genCks( allValidSpikVec, sqrMatWidth, Ck, allGenCk )
+			genCks( allValidSpikVec, sqrMatWidth, Ck)
 
 			#add all Cks generated from C0
 			for spikVec in allValidSpikVec[ 0 ] :
