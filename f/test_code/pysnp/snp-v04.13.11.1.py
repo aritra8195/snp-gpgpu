@@ -1,7 +1,10 @@
 import sys
 import os
 import math
+import numpy as np
 from numpy import *
+from pycuda import driver, compiler, gpuarray, tools
+import pycuda.autoinit
 
 #
 #TODOs:
@@ -34,7 +37,35 @@ cudaBin = 'snp-cuda'
 #START of AUX functions#
 ########################
 
+#START
+matmul_kernel_temp = """
+ __global__ void MatrixMulKernel(int *a, int *b, int *c)
+ {
+  int tx = threadIdx.x;
+  int ty = threadIdx.y;
+ 
+ int Pvalue = 0;
+ for (int k = 0; k < %(MATRIX_SIZE)s; ++k) {
+ int Aelement = a[ty * %(MATRIX_SIZE)s + k];
+  int Belement = b[k * %(MATRIX_SIZE)s + tx];
+ Pvalue += Aelement * Belement;
+ }
+  c[ty * %(MATRIX_SIZE)s + tx] = Pvalue;
+ }
+"""
 
+matadd_kernel_temp = """
+__global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd ){
+    int ty = threadIdx.y;
+    for ( int k = 0; k < %(MATRIX_SIZE)s; ++k ){
+            int Mdelement = Md[ ty * %(MATRIX_SIZE)s + k ];
+            int Ndelement = Nd[ ty * %(MATRIX_SIZE)s + k ];
+            Pd[ ty * %(MATRIX_SIZE)s + k ] = Mdelement + Ndelement;
+    }
+} 
+ """
+#END
+########################################################################
 #START of function (DON'T NEED THIS ANYMORE?)
 def toNumpyArr( filename, sqrMatWidth ) :
 	#remove extraneous 1st 2 integers in the vector's/matrix' contents, then loads the remaining ints as a numpy
@@ -45,13 +76,6 @@ def toNumpyArr( filename, sqrMatWidth ) :
     #   [ 1, -1,  1,  0,  0],
     #   [ 0,  0, -1,  0,  0],
     #   [ 0,  0, -2,  0,  0]], dtype=int32)
-    
-	#arr = []
-	#infile = open( filename, 'rb')
-	#for line in infile.readlines():
-	#	numbers = map( int, line.split() )
-	#	arr.append( numbers )
-	#return numpy.array( arr ) # return as a numpy array
 #END of function
 ########################################################################
 #START of function to import vectors/matrices from file/s
@@ -348,6 +372,13 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str) :
 		Ck = 'c_' + Ck_1_str + '_' + spikVec
 		Ck_1 = 'c_' + Ck_1_str
 		Sk = 's_' + spikVec
+		MATRIX_SIZE = sqrMatWidth 
+		Ck_1 = toNumpyArr( Ck_1 )
+		Sk = toNumpyArr( Sk )
+		M = toNumpyArr( spikTransMatfile )
+		Ck_1gpu = gpuarray.to_gpu( Ck_1 )
+		Skgpu = gpuarray.to_gpu( Sk )
+		Mgpu = gpuarray.to_gpu( M )
 		#print Ck, Sk #works!
 		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
 		# In order to replace above .cu based code, do the same thing in python/numpy/pycuda
