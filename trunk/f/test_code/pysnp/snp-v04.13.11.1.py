@@ -65,6 +65,17 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd ){
 } 
  """
 #END
+
+#START
+def NDarrToFile( Ck, Ck_1gpu ) :
+		#write ND array into a file
+		outfile = open( Ck, "w" )
+		outfile.write( '$ $' )
+		for row in Ck_1gpu.get() :
+			for elem in row :
+				outfile.write( ' ' + str( elem ) )
+		outfile.close( )		
+#END
 ########################################################################
 #START of function (DON'T NEED THIS ANYMORE?)
 def toNumpyArr( filename, sqrMatWidth ) :
@@ -335,7 +346,7 @@ def createConfVecFiles( spikTransMat, Ck_vec ) :
 			if C != '-' :
 				outfile.write( ' ' + C )
 		
-		while x < fileStrLen - len( Ck ) - 2 :
+		while x < fileStrLen - len( Ck )  :
 			#print '\t', x
 			outfile.write( ' ' + '0' )
 			x += 1
@@ -358,7 +369,7 @@ def concatConfVec( lst ):
 #END of function
 ########################################################################
 #START of function
-def genCks( allValidSpikVec, sqrMatWidth, configVec_str) :
+def genCks( allValidSpikVec, sqrMatWidth, configVec_str, spikTransMatFile) :
 	#using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
 	for spikVec in  allValidSpikVec[ 0 ] :
@@ -372,18 +383,35 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str) :
 		Ck = 'c_' + Ck_1_str + '_' + spikVec
 		Ck_1 = 'c_' + Ck_1_str
 		Sk = 's_' + spikVec
-		MATRIX_SIZE = sqrMatWidth 
-		Ck_1 = toNumpyArr( Ck_1 )
-		Sk = toNumpyArr( Sk )
-		M = toNumpyArr( spikTransMatfile )
+		MATRIX_SIZE = sqrMatWidth
+		#import the vectors/Matrix as numpy ND arrays 
+		Ck_1 = toNumpyArr( Ck_1, MATRIX_SIZE )
+		Sk = toNumpyArr( Sk, MATRIX_SIZE )
+		M = toNumpyArr( spikTransMatFile, MATRIX_SIZE )
+		#allocate memory in the GPU
 		Ck_1gpu = gpuarray.to_gpu( Ck_1 )
 		Skgpu = gpuarray.to_gpu( Sk )
 		Mgpu = gpuarray.to_gpu( M )
-		#print Ck, Sk #works!
-		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
+		SkMgpu = gpuarray.empty( ( MATRIX_SIZE, MATRIX_SIZE), np.int32 )
+		Ckgpu = gpuarray.empty( ( MATRIX_SIZE, MATRIX_SIZE), np.int32 )
+		#get kernel code from template by specifying the constant MATRIX_SIZE
+		matmul_kernel = matmul_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
+		matadd_kernel = matadd_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
+		# compile the kernel code 
+		mulmod = compiler.SourceModule(matmul_kernel)
+		addmod = compiler.SourceModule(matadd_kernel)
+		matrixmul = mulmod.get_function( "MatrixMulKernel" )
+		matrixadd = addmod.get_function( "MatrixAddKernel" )
+		#call kernel functions
+		matrixmul( Skgpu, Mgpu, SkMgpu, block = (MATRIX_SIZE, MATRIX_SIZE, 1), )
+		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
+		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
+		#write ND array into a file
+		NDarrToFile( Ck, Ck_1gpu )
+		#cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
 		# In order to replace above .cu based code, do the same thing in python/numpy/pycuda
 		#print  cudaCmd 		
-		os.popen( cudaCmd )
+		#os.popen( cudaCmd )
 
 #END of function
 ########################################################################
@@ -534,7 +562,7 @@ else :
 	createConfVecFiles( spikTransMat, allGenCk )
 	
 	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
-	genCks( allValidSpikVec, sqrMatWidth, concatConfVec( confVec ) )
+	genCks( allValidSpikVec, sqrMatWidth, concatConfVec( confVec ),  spikTransMatFile )
 
 	#add all Cks generated from C0
 	for spikVec in allValidSpikVec[ 0 ] :
@@ -622,7 +650,7 @@ else :
 			createConfVecFiles( spikTransMat, allGenCk )
 
 			#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
-			genCks( allValidSpikVec, sqrMatWidth, Ck)
+			genCks( allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile)
 
 			#add all Cks generated from C0
 			for spikVec in allValidSpikVec[ 0 ] :
