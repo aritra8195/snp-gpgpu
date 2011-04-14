@@ -407,12 +407,11 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, spikTransMatFile) :
 		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
 		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
 		#write ND array into a file
-		NDarrToFile( Ck, Ck_1gpu )
+		NDarrToFile( Ck, Ckgpu )
 		#cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
 		# In order to replace above .cu based code, do the same thing in python/numpy/pycuda
 		#print  cudaCmd 		
 		#os.popen( cudaCmd )
-
 #END of function
 ########################################################################
 #START of function
@@ -585,16 +584,8 @@ else :
 	print ' initial total Ck list is allGenCk =', allGenCk
 	#exhaustively loop through total Ck list/list of all the generated Ck except C0
 
-#infile = open( 'newline', 'rb' )
-#Ck = infile.readline( )
-#strlen = len( Ck )
-#while Ck != '' :
-#	print Ck[ : strlen - 1 ]
-#	Ck = infile.readline( )
-#infile.close( )
-
 	allGenCkFilePtr = open( allGenCkFile, 'rb' )
-	Ck = allGenCkFilePtr.readline( )	
+#	Ck = allGenCkFilePtr.readline( )	
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	while Ck != '' :
