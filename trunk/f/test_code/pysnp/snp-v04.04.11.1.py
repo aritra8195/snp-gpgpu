@@ -5,9 +5,10 @@ import numpy
 
 #
 #TODOs:
-# 1. create function to improve implementation of the spike-rule selection (SRS) criterion
+# - MODularize python code, create stub functions
+# - create function to improve implementation of the spike-rule selection (SRS) criterion
 # rather than just rules of type 3)
-# 2. What about Ck values/spikes that are greater than 9, since Cks are concat together as a single string
+# - What about Ck values/spikes that are greater than 9, since Cks are concat together as a single string
 # i.e. num of neurons = 3, Ck = (2,1,10) which is 2110 in concat form
 #
 #NOTES:
@@ -340,9 +341,9 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 		Ck_1 = 'c_' + Ck_1_str
 		Sk = 's_' + spikVec
 		#print Ck, Sk #works!
-		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
+#		cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
 		#print  cudaCmd 		
-		os.popen( cudaCmd )
+#		os.popen( cudaCmd )
 
 #END of function
 
