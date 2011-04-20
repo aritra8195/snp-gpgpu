@@ -30,9 +30,6 @@ import pycuda.autoinit
 # (1)	CK = Ck-1 + Sk-1 * Msnp
 #
 
-#the compiled CUDA C file evaluation equation (1)
-cudaBin = 'snp-cuda'
-
 ########################
 #START of AUX functions#
 ########################
@@ -162,7 +159,6 @@ def prNeurons( spikeRuleList ) :
 			print ' (%d) ' % ( w ) + rule
 			w += 1
 		v += 1	
-
 #END of function
 ########################################################################
 #START of function
@@ -198,7 +194,6 @@ def genPotentialSpikrule( spikRuleList ) :
 		y = 1
 		sameCnt = 0
 	return tmpList
-
 #END of function
 ########################################################################
 
@@ -426,7 +421,6 @@ def addTotalCk( allGenCk, Ck_1_str ) :
 		totalCkFile.close( )
 		print 'Ck ', Ck_1_str, 'was written into file', allGenCkFile
 		return allGenCk
-
 #END of function
 ########################################################################
 #START of function
@@ -488,7 +482,7 @@ else :
 	neurNum = getNeurNum( rules )
 
 	#preliminary prints
-	print '\n********************************SN P system simulation run STARTS here********************************\n'
+	print '\n' + '*'*50 + 'SNP system simulation run STARTS here' + ''*'*50 + '\n'
 	print '\nSpiking transition Matrix: '
 	printMatrix( spikTransMat )
 	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
@@ -596,7 +590,7 @@ else :
 		#if isConfVecZero( Ck ) or Ck == '214': #works
 		if isConfVecZero( Ck ) : #works
 			print '\tZero Ck/spikes. Stop.'
-			print '\n********************************SN P system simulation run ENDS here***********************************\n'
+			print '\n' + '*'*50 + 'SNP system simulation run ENDS here' + ''*'*50 + '\n'
 			allGenCkFilePtr.close( )
 			break
 		else :
@@ -663,7 +657,7 @@ else :
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
-	print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
+	print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n' + '\n' + '*'*50 + 'SNP system simulation run ENDS here' + ''*'*50 + '\n'
 		#addTotalCk( allGenCk, '214' )
 		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
 
