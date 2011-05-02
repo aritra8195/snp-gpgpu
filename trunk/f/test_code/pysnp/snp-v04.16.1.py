@@ -29,11 +29,11 @@ import pycuda.autoinit
 #CUDA C program evaluates
 # (1)	CK = Ck-1 + Sk-1 * Msnp
 #
-
+ 
 ########################
 #START of AUX functions#
 ########################
-
+ 
 #START
 matmul_kernel_temp = """
  __global__ void MatrixMulKernel(int *a, int *b, int *c)
@@ -62,24 +62,7 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd ){
 } 
  """
 #END
-########################################################################
-#START of function to import rules from file/s
-def importRule( filename ) :
-	filePtr = open( filename, 'rb' )
-	rer = filePtr.read( )
-	rer = rer[ :-1 ].split( '&' )
-	lst = [ ]
-	for neuron in rer:
-		lst.append( neuron.split( '@' ) )
-	return lst #returns [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'a 1 0']] 
-#END of function to import rules from file/s	
-########################################################################
-#START of Function to check if number of spikes satisfy reg exp:
-def chkRegExp( regexp, spikNum ) :
-	spik = 'a' * spikNum #create the necessary amount of spikes
-	return bool( re.search( regexp, spik ) ) #returns true if spik is in L( E )
-#END of Function to check if number of spikes satisfy reg exp
-########################################################################
+
 #START
 def NDarrToFile( Ck, Ck_1gpu ) :
 		#write ND array into a file
@@ -116,7 +99,7 @@ def getNeurNum( rules ) :
 	cnt = 0
 #	print confVec[ 2: ]
 	for rule in rules[ 2: ] :
-		if rule == '&' :
+		if rule == '$' :
 			#print conf
 			cnt = cnt + 1
 	return cnt + 1
@@ -144,7 +127,6 @@ def genSpikRuleList( confVec, rules ) :
 	x = y = 0	
 	z = 1
 	w = 0
-	print 'rules: ', rules
 	for elem in confVec :
 		if elem == '-' :
 			del confVec[ x ]
@@ -189,17 +171,16 @@ def genPotentialSpikrule( spikRuleList ) :
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 	tmpList = spikRuleList
-	print 'spikRuleList ', spikRuleList
+	#print tmpList
 	x = sameCnt = 0
 	y = 1
 	for neuron in spikRuleList :
 		spike = neuron[ 0 ]
-		print 'spike, neuron', spike, neuron
+		#print spike
 		for rule in neuron[ 1: ] :
-			#print 'rule + spike' , int( rule ) , spike
+			#print int( rule ) + spike
 			# currently the SRS for rules of type 1) for now...
 			if int( rule ) <= int( spike ) :
-			#if chkRegExp( rer[ 0 ], 7 )
 				#print ' A %d %d ' % ( x, y )
 				#print tmpList
 				sameCnt += 1
@@ -212,7 +193,6 @@ def genPotentialSpikrule( spikRuleList ) :
 		x += 1
 		y = 1
 		sameCnt = 0
-		print tmpList
 	return tmpList
 #END of function
 ########################################################################
@@ -496,7 +476,7 @@ else :
 	confVec = importVec( confVecFile )
 	#spikVec = importVec( sys.argv[ 2 ] )
 	spikTransMat  = importVec( spikTransMatFile )
-	rules = importRule( rulesFile )
+	rules = importVec( rulesFile )
 
 	#first, determine number of neurons
 	neurNum = getNeurNum( rules )
@@ -524,8 +504,8 @@ else :
 #	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
-	#prNeurons( spikRuleList )
-	#print '\n'
+	prNeurons( spikRuleList )
+	print '\n'
 
 	#generate a list of spikes + rules they are applicable to, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
@@ -539,11 +519,11 @@ else :
 	# if tmp = [ '01', '10 ], tmp2 = [ '1' ], returns tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
 	tmpList = genNeurSpikVecStr( tmpList, neurNum )
 
-	print 'genNeurSpikVecStr(): tmpList = ', tmpList
+#	print 'genNeurSpikVecStr(): tmpList = ', tmpList
 
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 	allValidSpikVec = genNeurPairs( tmpList )
-	print 'genNeurPairs(): allValidSpikVec =', allValidSpikVec
+#	print 'genNeurPairs(): allValidSpikVec =', allValidSpikVec
 
 	#create total (not global) list of all generated Ck + Sk to prevent loops in the computation tree +extra file creation
 	allGenCk = [ ]
