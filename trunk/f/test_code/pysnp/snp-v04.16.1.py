@@ -62,7 +62,24 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd ){
 } 
  """
 #END
-
+########################################################################
+#START of function to import rules from file/s
+def importRule( filename ) :
+	filePtr = open( filename, 'rb' )
+	rer = filePtr.read( )
+	rer = rer[ :-1 ].split( '&' )
+	lst = [ ]
+	for neuron in rer:
+		lst.append( neuron.split( '@' ) )
+	return lst #returns [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'a 1 0']] 
+#END of function to import rules from file/s	
+########################################################################
+#START of Function to check if number of spikes satisfy reg exp:
+def chkRegExp( regexp, spikNum ) :
+	spik = 'a' * spikNum #create the necessary amount of spikes
+	return bool( re.search( regexp, spik ) ) #returns true if spik is in L( E )
+#END of Function to check if number of spikes satisfy reg exp
+########################################################################
 #START
 def NDarrToFile( Ck, Ck_1gpu ) :
 		#write ND array into a file
@@ -127,6 +144,7 @@ def genSpikRuleList( confVec, rules ) :
 	x = y = 0	
 	z = 1
 	w = 0
+	print 'rules: ', rules
 	for elem in confVec :
 		if elem == '-' :
 			del confVec[ x ]
@@ -171,16 +189,17 @@ def genPotentialSpikrule( spikRuleList ) :
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 	tmpList = spikRuleList
-	#print tmpList
+	print 'spikRuleList ', spikRuleList
 	x = sameCnt = 0
 	y = 1
 	for neuron in spikRuleList :
 		spike = neuron[ 0 ]
-		#print spike
+		print 'spike, neuron', spike, neuron
 		for rule in neuron[ 1: ] :
-			#print int( rule ) + spike
+			print 'rule + spike' , int( rule ) , spike
 			# currently the SRS for rules of type 1) for now...
 			if int( rule ) <= int( spike ) :
+			#if chkRegExp( rer[ 0 ], 7 )
 				#print ' A %d %d ' % ( x, y )
 				#print tmpList
 				sameCnt += 1
@@ -193,6 +212,7 @@ def genPotentialSpikrule( spikRuleList ) :
 		x += 1
 		y = 1
 		sameCnt = 0
+		print tmpList
 	return tmpList
 #END of function
 ########################################################################
