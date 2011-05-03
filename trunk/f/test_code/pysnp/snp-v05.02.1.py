@@ -196,7 +196,7 @@ def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 			# currently the SRS for rules of type 1) for now...
 			regexp = ruleregexp[ idx ][ idx2 ]
 			regexp = regexp.split( )
-			#print 'regexp = ', regexp
+			print 'regexp = ', regexp
 			#check more general regular expressions
 			if chkRegExp( regexp[ 0 ], int( spike ) ) :
 				#print ' A %d %d ' % ( x, y )
@@ -310,7 +310,7 @@ def genNeurPairs( tmpList ) :
 def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file s_10110 and write 10110 in it
 	fileStrLen = len( spikTransMat )
-	#print ' length of spikTransMat is ', fileStrLen
+	print ' length of spikTransMat is ', fileStrLen
 	for spikVec in  allValidSpikVec[ 0 ] :
 		x =  0
 		spikVecFile = 's_' + spikVec 
@@ -499,13 +499,10 @@ else :
 #####	works for rules of type 3) only for now
 
 	print '\nNumber of neurons for the SN P system is %d ' % ( neurNum )
-
-	#see if spikes in Neuron1 confVec match a rule criterion (SRS) in Neuron1 rules
-	#genSpikVec( confVec, rules )
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 	spikRuleList = genSpikRuleList( confVec, rules )
-#	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
+	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
 	#prNeurons( spikRuleList )
@@ -515,16 +512,16 @@ else :
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 	tmpList = genPotentialSpikrule( spikRuleList, ruleregexp )
-	#print 'genPotentialSpikrule(): tmpList = ', tmpList
+	print 'genPotentialSpikrule(): tmpList = ', tmpList
 	
 	# generate all possible + valid 10 strings PER neuron
 	# if tmp = [ '01', '10 ], tmp2 = [ '1' ], returns tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
 	tmpList = genNeurSpikVecStr( tmpList, neurNum )
-	#print 'genNeurSpikVecStr(): tmpList = ', tmpList
+	print 'genNeurSpikVecStr(): tmpList = ', tmpList
 
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 	allValidSpikVec = genNeurPairs( tmpList )
-#	print 'genNeurPairs(): allValidSpikVec =', allValidSpikVec
+	print 'genNeurPairs(): allValidSpikVec =', allValidSpikVec
 
 	#create total (not global) list of all generated Ck + Sk to prevent loops in the computation tree +extra file creation
 	allGenCk = [ ]
