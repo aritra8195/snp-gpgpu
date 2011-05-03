@@ -5,6 +5,7 @@ import numpy as np
 from numpy import *
 from pycuda import driver, compiler, gpuarray, tools
 import pycuda.autoinit
+import re
 
 #
 #TODOs:
@@ -29,11 +30,11 @@ import pycuda.autoinit
 #CUDA C program evaluates
 # (1)	CK = Ck-1 + Sk-1 * Msnp
 #
-
+ 
 ########################
 #START of AUX functions#
 ########################
-
+ 
 #START
 matmul_kernel_temp = """
  __global__ void MatrixMulKernel(int *a, int *b, int *c)
@@ -116,7 +117,7 @@ def getNeurNum( rules ) :
 	cnt = 0
 #	print confVec[ 2: ]
 	for rule in rules[ 2: ] :
-		if rule == '&' :
+		if rule == '$' :
 			#print conf
 			cnt = cnt + 1
 	return cnt + 1
@@ -144,7 +145,6 @@ def genSpikRuleList( confVec, rules ) :
 	x = y = 0	
 	z = 1
 	w = 0
-	print 'rules: ', rules
 	for elem in confVec :
 		if elem == '-' :
 			del confVec[ x ]
@@ -172,9 +172,9 @@ def genSpikRuleList( confVec, rules ) :
 def prNeurons( spikeRuleList ) :
 	v = w = 1
 	for neuron in spikRuleList :
-		print ' \nNeuron %d ' % ( v ) + ' rules criterion/criteria and total order '
+		#print ' \nNeuron %d ' % ( v ) + ' rules criterion/criteria and total order '
 		for rule in neuron[ 1: ] :
-			print ' (%d) ' % ( w ) + rule
+			#print ' (%d) ' % ( w ) + rule
 			w += 1
 		v += 1	
 #END of function
@@ -184,22 +184,25 @@ def prNeurons( spikeRuleList ) :
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 
-def genPotentialSpikrule( spikRuleList ) :
+def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 	#generate a list of spikes + rules they are applicable to via, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 	tmpList = spikRuleList
-	print 'spikRuleList ', spikRuleList
+	#print tmpList
 	x = sameCnt = 0
 	y = 1
-	for neuron in spikRuleList :
+	for idx, neuron in enumerate( spikRuleList ) :
 		spike = neuron[ 0 ]
-		print 'spike, neuron', spike, neuron
-		for rule in neuron[ 1: ] :
-			#print 'rule + spike' , int( rule ) , spike
+		#print spike
+		for idx2, rule in enumerate( neuron[ 1: ] ) :
+			#print int( rule ) + spike
 			# currently the SRS for rules of type 1) for now...
-			if int( rule ) <= int( spike ) :
-			#if chkRegExp( rer[ 0 ], 7 )
+			regexp = ruleregexp[ idx ][ idx2 ]
+			regexp = regexp.split( )
+			#print 'regexp = ', regexp
+			#if int( rule ) <= int( spike ) :
+			if chkRegExp( regexp[ 0 ], int( spike ) ) :
 				#print ' A %d %d ' % ( x, y )
 				#print tmpList
 				sameCnt += 1
@@ -212,7 +215,6 @@ def genPotentialSpikrule( spikRuleList ) :
 		x += 1
 		y = 1
 		sameCnt = 0
-		print tmpList
 	return tmpList
 #END of function
 ########################################################################
@@ -481,14 +483,15 @@ def printMatrix( spikTransMat ) :
 ############################
 
 #Check if correct number of cl args are entered
-if ( len( sys.argv ) < 4 ) :
-	print '\n Program usage:\n'+sys.argv[ 0 ] + ' confVec spikTransMat rules\n'
+if ( len( sys.argv ) < 5 ) :
+	print '\n Program usage:\n'+sys.argv[ 0 ] + ' confVec spikTransMat rules rules-in-reg-exp\n'
 
 #if correct, proceed
 else :
 	confVecFile = sys.argv[ 1 ]
 	spikTransMatFile = sys.argv[ 2 ]
 	rulesFile = sys.argv[ 3 ]
+	ruleRegExpFile = sys.argv[ 4 ]
 
 #####
 #{1}#	Input Ck (C0 initially), spiking transition matrix, rules
@@ -496,7 +499,8 @@ else :
 	confVec = importVec( confVecFile )
 	#spikVec = importVec( sys.argv[ 2 ] )
 	spikTransMat  = importVec( spikTransMatFile )
-	rules = importRule( rulesFile )
+	rules = importVec( rulesFile )
+	ruleregexp = importRule( ruleRegExpFile )
 
 	#first, determine number of neurons
 	neurNum = getNeurNum( rules )
@@ -506,7 +510,7 @@ else :
 	print '\nSpiking transition Matrix: '
 	printMatrix( spikTransMat )
 	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
-	print '\nRules of the form a^n/a^m -> a or a^n ->a loaded:\n', rules
+	#print '\nRules of the form a^n/a^m -> a or a^n ->a loaded:\n', rules
 	print '\nInitial configuration vector:\n', confVec, '\nor in dash delimited format:', concatConfVec( confVec )
 
 
@@ -530,20 +534,17 @@ else :
 	#generate a list of spikes + rules they are applicable to, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-	tmpList = genPotentialSpikrule( spikRuleList )
-#	print 'genPotentialSpikrule(): tmpList = ', tmpList
-
-	# get min/max values in a list: min( list) and max( list )
+	tmpList = genPotentialSpikrule( spikRuleList, ruleregexp )
+	#print 'genPotentialSpikrule(): tmpList = ', tmpList
 	
 	# generate all possible + valid 10 strings PER neuron
 	# if tmp = [ '01', '10 ], tmp2 = [ '1' ], returns tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
 	tmpList = genNeurSpikVecStr( tmpList, neurNum )
-
-	print 'genNeurSpikVecStr(): tmpList = ', tmpList
+	#print 'genNeurSpikVecStr(): tmpList = ', tmpList
 
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 	allValidSpikVec = genNeurPairs( tmpList )
-	print 'genNeurPairs(): allValidSpikVec =', allValidSpikVec
+#	print 'genNeurPairs(): allValidSpikVec =', allValidSpikVec
 
 	#create total (not global) list of all generated Ck + Sk to prevent loops in the computation tree +extra file creation
 	allGenCk = [ ]
@@ -631,7 +632,7 @@ else :
 			#generate a list of spikes + rules they are applicable to, in order
 			#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 			#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-			tmpList = genPotentialSpikrule( spikRuleList )
+			tmpList = genPotentialSpikrule( spikRuleList, ruleregexp )
 			#print '\tAfter generating list of spikes+rules, tmpList = ', tmpList
 
 			# generate all possible + valid 10 strings PER neuron
@@ -654,6 +655,7 @@ else :
 			createConfVecFiles( spikTransMat, allGenCk )
 
 			#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
+			#print 'allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile ' , allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile
 			genCks( allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile)
 
 			#add all Cks generated from C0
@@ -670,7 +672,7 @@ else :
 			print '\t\tGenerated from Sk-1 = ', spikVec, 'and Ck-1 =', Ck, 'is Ck = ', C_k
 			addTotalCk( allGenCk, C_k )
 
-			print toNumpyArr( "M", 5 )
+			print toNumpyArr( "M", sqrMatWidth )
 
 			print '\tAll generated Cks are allGenCk =', allGenCk	
 			print '\n**\n**\n**'		
