@@ -9,25 +9,22 @@ import re
 
 #
 #TODOs:
-# 1. create function to improve implementation of the spike-rule selection (SRS) criterion
-# rather than just rules of type 3)
-# 2. What about Ck values/spikes that are greater than 9, since Cks are concat together as a single string
-# i.e. num of neurons = 3, Ck = (2,1,10) which is 2110 in concat form
-# 3. Refactor code to include STUB functions/s to collect smaller functions. Separate functions into a different file.
+# - load only 1 type of rule file (more general reg exp)
+# - Refactor code to include STUB functions/s to collect smaller functions. Separate functions into a different file.
+# - create function to improve implementation of the spike-rule selection (SRS) criterion
+# rather than just rules of type 3) - DONE
+# - What about Ck values/spikes that are greater than 9, since Cks are concat together as a single string
+# i.e. num of neurons = 3, Ck = (2,1,10) which is 2110 in concat form - DONE
 #
 #NOTES:
 # 1.load confVec c0 (Ck+1 several times), spikVec s0 (Program must determine this!),
 # spikTransMat M (once), and rules r (once)
-# 2. works for rules of type 3) only for now
+# 2. works for rules of type 3) only for now - UPDATED
 # 3. Whenever both types are usable, spiking rules are preferred over forgetting rules
 # 4. Loops over vector and matrix lists start at index 2 (1st two indices have the dimensions of the Msnp )
 #
-#QUESTION: how to implement
-# 1) a( aa )+ ( a bit more elaborate reg ex)
-# 2) a^2/a -> a	(reg ex not equal to spikes consumed)
-# 3) a^2 -> a ???
 #
-#CUDA C program evaluates
+#CUDA C kernels evaluate:
 # (1)	CK = Ck-1 + Sk-1 * Msnp
 #
  
@@ -35,7 +32,7 @@ import re
 #START of AUX functions#
 ########################
  
-#START
+#START of CUDA C kernels
 matmul_kernel_temp = """
  __global__ void MatrixMulKernel(int *a, int *b, int *c)
  {
@@ -62,7 +59,7 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd ){
     }
 } 
  """
-#END
+#END of CUDA C kernels
 ########################################################################
 #START of function to import rules from file/s
 def importRule( filename ) :
@@ -135,7 +132,6 @@ def genSpikVec( confVec, rules  ) :
 		#if not ruleDone :
 		#	break
 		y += 1
-
 #END of function
 ########################################################################
 #START of function
@@ -201,7 +197,7 @@ def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 			regexp = ruleregexp[ idx ][ idx2 ]
 			regexp = regexp.split( )
 			#print 'regexp = ', regexp
-			#if int( rule ) <= int( spike ) :
+			#check more general regular expressions
 			if chkRegExp( regexp[ 0 ], int( spike ) ) :
 				#print ' A %d %d ' % ( x, y )
 				#print tmpList
@@ -218,7 +214,6 @@ def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 	return tmpList
 #END of function
 ########################################################################
-
 #START of function
 def genNeurSpikVecStr( tmpList, neurNum ) :
 	# generate all possible + valid 10 strings PER neuron
@@ -259,17 +254,7 @@ def genNeurSpikVecStr( tmpList, neurNum ) :
 			#print '\t\t FCN spikstr =', spikStr
 			tmp4[ y - 1: ] = [ spikStr ]
 			#print '\t\t', tmp4
-
-			#create function to implement the spike-rule selection (SRS) criterion
-			#QUESTION: how to implement
-			# 1) a( aa )+ ( a bit more elaborate reg ex)
-			# 2) a^2/a -> a	(reg ex not equal to spikes consumed)
-			# 3) a^2 -> a ???
-
-			#chkSRS (check SRS). Currently only type 3) are implemented here
-
 			# builds nested list: tmp = [ '01', '10 ] tmp2 = [ '1' ] then tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]	
-
 			#print '\tB' #works
 			y += 1 	
 		tmp3[ x: ] = [ tmp4 ]	
@@ -387,8 +372,7 @@ def concatConfVec( lst ):
 ########################################################################
 #START of function
 def genCks( allValidSpikVec, MATRIX_SIZE, configVec_str, spikTransMatFile) :
-	#using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
-	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
+	#using all generated valid spiking vector files, 'feed' the files to the CUDA C kernels to evaluate (1)
 	for spikVec in  allValidSpikVec[ 0 ] :
 		# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
 		# to configVec = 211 <string>
@@ -424,10 +408,6 @@ def genCks( allValidSpikVec, MATRIX_SIZE, configVec_str, spikTransMatFile) :
 		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
 		#write ND array into a file
 		NDarrToFile( Ck, Ckgpu )
-		#cudaCmd = './' + cudaBin + ' ' + Ck_1 + ' ' + Sk + ' ' + spikTransMatFile + ' ' + str( sqrMatWidth ) + ' ' + Ck
-		# In order to replace above .cu based code, do the same thing in python/numpy/pycuda
-		#print  cudaCmd 		
-		#os.popen( cudaCmd )
 #END of function
 ########################################################################
 #START of function
@@ -574,7 +554,7 @@ else :
 	#write all valid config vectors onto each of their own files e.g. given 211, create file c_211 and write 211 in it
 	createConfVecFiles( spikTransMat, allGenCk )
 	
-	#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
+	#use PyCUDA to evaluate equation (1) in parallel
 	genCks( allValidSpikVec, sqrMatWidth, concatConfVec( confVec ),  spikTransMatFile )
 
 	#add all Cks generated from C0
@@ -654,7 +634,6 @@ else :
 			#print ' All currently generated config vectors/Cks are allGenCk = ', allGenCk
 			createConfVecFiles( spikTransMat, allGenCk )
 
-			#execute CUDA C program e.g. os.popen('./snp-v12.26.10.1 c_211 s0 M 5 c_211_s0') given the generated spik vecs
 			#print 'allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile ' , allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile
 			genCks( allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile)
 
@@ -681,7 +660,6 @@ else :
 			Ck = allGenCkFilePtr.readline( )		
 	print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n' + '\n' + '*'*50 + 'SNP system simulation run ENDS here' + '*'*50 + '\n'
 		#addTotalCk( allGenCk, '214' )
-		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
 
 ##########################
 #END of MAIN Program Flow#
