@@ -91,6 +91,7 @@ def NDarrToFile( Ck, Ck_1gpu ) :
 ########################################################################
 #START of function (DON'T NEED THIS ANYMORE?)
 def toNumpyArr( filename, sqrMatWidth ) :
+	print 'sqrMatWidth = ', sqrMatWidth
 	#remove extraneous 1st 2 integers in the vector's/matrix' contents, then loads the remaining ints as a numpy
 	#array, then reshapes the 1D array to a square matrix
 	return fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( sqrMatWidth, sqrMatWidth )
@@ -490,7 +491,7 @@ else :
 	#preliminary prints
 	print '\n' + '*'*50 + 'SNP system simulation run STARTS here' + '*'*50 + '\n'
 	print '\nSpiking transition Matrix: '
-	printMatrix( spikTransMat )
+	#printMatrix( spikTransMat )
 	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
 	#print '\nRules of the form a^n/a^m -> a or a^n ->a loaded:\n', rules
 	print '\nInitial configuration vector:\n', confVec, '\nor in dash delimited format:', concatConfVec( confVec )
@@ -544,6 +545,7 @@ else :
 	createSpikVecFiles( spikTransMat, allValidSpikVec )
 
 	#print confVec
+	print ' spikTransMat len ', len( spikTransMat )
 	sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) )
 
 #####
