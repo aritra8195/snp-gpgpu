@@ -92,6 +92,7 @@ def NDarrToFile( Ck, Ck_1gpu ) :
 #START of function (DON'T NEED THIS ANYMORE?)
 def toNumpyArr( filename, sqrMatWidth ) :
 	print 'sqrMatWidth = ', sqrMatWidth
+	print 'filename = ', filename
 	#remove extraneous 1st 2 integers in the vector's/matrix' contents, then loads the remaining ints as a numpy
 	#array, then reshapes the 1D array to a square matrix
 	return fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( sqrMatWidth, sqrMatWidth )
@@ -267,45 +268,45 @@ def genNeurSpikVecStr( tmpList, neurNum ) :
 #START of function
 	#pair up sub-lists in tmpList to generate a single list of all possible + valid 10 strings
 def genNeurPairs( tmpList ) :	
-	print 'tmpList = ', tmpList
+	#print 'tmpList = ', tmpList
 	x = 0
 	tmp5 = [ ]
 	while x < len( tmpList ) - 1 :
-		print 'X ', x
-		print tmpList[ x ], tmpList[ x + 1 ]
+		#print 'X ', x
+		#print tmpList[ x ], tmpList[ x + 1 ]
 		# exhaustively pair up elements of each neuron i.e. r = [ [10,01], [10,01] ] do
 		# r[ 0 ][ 0 ] + r[ 1 ][ 0 ] = 1010, [ 0 ][ 0 ] + tmp[ 1 ][ 1 ] = 1001 ...
 		w = y = 0
 		tmp6 = [ ]
 		#loop over length of first neuron
 		while y < len( tmpList[ x ] ) :		
-			print '\tY', y
+			#print '\tY', y
 			z = 0
 			tmp7 = [ ]
 			# loop over length of 2nd neuron in the pair
 			while z < len( tmpList[ x + 1 ] ) :
-				print '\t\ttmp6 BEFORE: ', tmp6
-				print '\t\tZ', z
+				#print '\t\ttmp6 BEFORE: ', tmp6
+				#print '\t\tZ', z
 				# place into a list all possible pairs between the 2 neurons
 				tmp7 = tmpList[ x ][ y ] + tmpList[ x + 1 ][ z ]
-				print '\t\ttmp7 ', tmp7 
+				#print '\t\ttmp7 ', tmp7 
 				w += 1				
 				z += 1
 				tmp6[ w: ] = [ tmp7 ]
-				print '\t\ttmp6 AFTER: ', tmp6
+				#print '\t\ttmp6 AFTER: ', tmp6
 			y += 1 
-			print '\ttmp6 ', tmp6
+			#print '\ttmp6 ', tmp6
 		#insert the newly created list into the original list (tmpList), so it can be used in conjunction
 		#w/ the rest of the loop
 		tmpList[ x + 1 : x + 2 ] =  [ tmp6 ] 
-		print '\ttmpList inserted w/ tmp6', tmpList
-		print '\ttmp6 ', tmp6
+		#print '\ttmpList inserted w/ tmp6', tmpList
+		#print '\ttmp6 ', tmp6
 		x += 1
 		tmp5[ y: ] = [ tmp6 ]
-		print '\ttmp5, x ', tmp5, x
+		#print '\ttmp5, x ', tmp5, x
 	#delete excess/unnecessary lists generated from above, retain only the last generated list
 	del tmp5[ : -1 ]
-	print 'tmp5 ', tmp5
+	#print 'tmp5 ', tmp5
 	return tmp5
 #END of function
 ########################################################################
@@ -537,6 +538,7 @@ else :
 
 	# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
 	# to configVec = 211 <type 'str'>
+	print 'len of confVec ', len( confVec )
 	Ck_1_str = concatConfVec( confVec ) 
 	#write into total list of Cks
 	allGenCk = addTotalCk( allGenCk, Ck_1_str )
