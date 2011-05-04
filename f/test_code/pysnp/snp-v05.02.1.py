@@ -89,10 +89,11 @@ def NDarrToFile( Ck, Ck_1gpu ) :
 		outfile.close( )		
 #END
 ########################################################################
-#START of function (DON'T NEED THIS ANYMORE?)
+#START of function
 def toNumpyArr( filename, sqrMatWidth ) :
-	print 'sqrMatWidth = ', sqrMatWidth
-	print 'filename = ', filename
+	#print ' Function: toNumpyArr'
+	#print 'sqrMatWidth = ', sqrMatWidth
+	#print 'filename = ', filename
 	#remove extraneous 1st 2 integers in the vector's/matrix' contents, then loads the remaining ints as a numpy
 	#array, then reshapes the 1D array to a square matrix
 	return fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( sqrMatWidth, sqrMatWidth )
@@ -198,7 +199,7 @@ def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 			# currently the SRS for rules of type 1) for now...
 			regexp = ruleregexp[ idx ][ idx2 ]
 			regexp = regexp.split( )
-			print 'regexp = ', regexp
+			#print 'regexp = ', regexp
 			#check more general regular expressions
 			if chkRegExp( regexp[ 0 ], int( spike ) ) :
 				#print ' A %d %d ' % ( x, y )
@@ -338,22 +339,26 @@ def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 def createConfVecFiles( spikTransMat, Ck_vec ) :
 #write the Ck string onto a file in the same format as the input matrix file
 # TODO: create a list of lists to add info whether a given Ck file has been created already (Done, but using an external text file)
- 
+	#print 'Function: createConfVecFiles' 
 	fileStrLen = len( spikTransMat )
 	#print ' length of spikTransMat is ', fileStrLen
+	#print ' Ck_vec = ', Ck_vec
 	for Ck in  Ck_vec :
 		x =  0
 		confVecFile = 'c_' + Ck 
 		outfile = open( confVecFile, "w" )
-		#create function to turn confVec e.g. 211 to a format 'understood' by C CUDA program, padded w/ 0s 
+		#create function to turn confVec e.g. 211 to a format 'understood' by C CUDA kernel, padded w/ 0s 
 		#and 1 white space apart. Total length of file must be same as spikTransMat (the matrix file)
 		outfile.write( spikTransMat[ 0 ] + ' ' + spikTransMat[ 1 ] )
+		CkLen = 0
 		for C in  Ck  :
 			if C != '-' :
 				outfile.write( ' ' + C )
+				CkLen += 1
+		#print ' CkLen ', CkLen
 		
-		while x < fileStrLen - len( Ck )  :
-			#print '\t', x
+		while x < fileStrLen - CkLen -2  :
+			#print '\tx ', x
 			outfile.write( ' ' + '0' )
 			x += 1
 		#outfile.write( spikVec )
@@ -363,6 +368,7 @@ def createConfVecFiles( spikTransMat, Ck_vec ) :
 ########################################################################
 #START of function
 def concatConfVec( lst ):
+	#print 'Function concatConfVec'
 	index = 3
 	confVec = ''
 	#append first Ck element/spike before concatenating dashes
@@ -388,7 +394,7 @@ def genCks( allValidSpikVec, MATRIX_SIZE, configVec_str, spikTransMatFile) :
 		Ck = 'c_' + Ck_1_str + '_' + spikVec
 		Ck_1 = 'c_' + Ck_1_str
 		Sk = 's_' + spikVec
-		print ' Ck, Ck_1, Sk: ', Ck, Ck_1, Sk
+		#print ' Ck, Ck_1, Sk: ', Ck, Ck_1, Sk
 		#import the vectors/Matrix as numpy ND arrays 
 		Ck_1 = toNumpyArr( Ck_1, MATRIX_SIZE )
 		Sk = toNumpyArr( Sk, MATRIX_SIZE )
@@ -538,7 +544,7 @@ else :
 
 	# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
 	# to configVec = 211 <type 'str'>
-	print 'len of confVec ', len( confVec )
+	print 'len of confVec + confVec', len( confVec ), confVec
 	Ck_1_str = concatConfVec( confVec ) 
 	#write into total list of Cks
 	allGenCk = addTotalCk( allGenCk, Ck_1_str )
@@ -552,7 +558,7 @@ else :
 	sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) )
 
 #####
-#{3}#	using all generated valid spiking vector files, 'feed' the files to the CUDA C program to evaluate (1)
+#{3}#	using all generated valid spiking vector files, 'feed' the files to the CUDA C kernel to evaluate (1)
 #####	
 
 	#write all valid config vectors onto each of their own files e.g. given 211, create file c_211 and write 211 in it
@@ -655,7 +661,7 @@ else :
 			print '\t\tGenerated from Sk-1 = ', spikVec, 'and Ck-1 =', Ck, 'is Ck = ', C_k
 			addTotalCk( allGenCk, C_k )
 
-			print toNumpyArr( "M", sqrMatWidth )
+			print toNumpyArr( spikTransMatFile, sqrMatWidth )
 
 			print '\tAll generated Cks are allGenCk =', allGenCk	
 			print '\n**\n**\n**'		
