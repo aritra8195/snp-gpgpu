@@ -265,9 +265,9 @@ def genNeurPairs( tmpList ) :
 
 #START of function
 def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
-	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file c_10110 and write 10110 in it
+	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file s_10110 and write 10110 in it
 	fileStrLen = len( spikTransMat )
-	#print ' length of spikTransMat is ', fileStrLen
+	print ' length of spikTransMat is ', fileStrLen
 	for spikVec in  allValidSpikVec[ 0 ] :
 		x =  0
 		spikVecFile = 's_' + spikVec 

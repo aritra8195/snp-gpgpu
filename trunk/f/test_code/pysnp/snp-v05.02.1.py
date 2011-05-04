@@ -661,8 +661,6 @@ else :
 			print '\t\tGenerated from Sk-1 = ', spikVec, 'and Ck-1 =', Ck, 'is Ck = ', C_k
 			addTotalCk( allGenCk, C_k )
 
-			print toNumpyArr( spikTransMatFile, sqrMatWidth )
-
 			print '\tAll generated Cks are allGenCk =', allGenCk	
 			print '\n**\n**\n**'		
 
@@ -670,7 +668,6 @@ else :
 			Ck = allGenCkFilePtr.readline( )		
 	print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n' + '\n' + '*'*50 + 'SNP system simulation run ENDS here' + '*'*50 + '\n'
 		#addTotalCk( allGenCk, '214' )
-
 ##########################
 #END of MAIN Program Flow#
 ##########################
