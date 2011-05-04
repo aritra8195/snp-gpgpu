@@ -258,7 +258,7 @@ def genNeurPairs( tmpList ) :
 		x += 1
 		tmp5[ y: ] = [ tmp6 ]
 	#delete excess/unnecessary lists generated from above, retain only the last generated list
-	del tmp5[ : x - 1 ]
+	del tmp5[ : -1 ]
 	#print 'tmp5 ', tmp5
 	return tmp5
 #END of function
@@ -301,11 +301,13 @@ def createConfVecFiles( spikTransMat, Ck_vec ) :
 		#create function to turn confVec e.g. 211 to a format 'understood' by C CUDA program, padded w/ 0s 
 		#and 1 white space apart. Total length of file must be same as spikTransMat (the matrix file)
 		outfile.write( spikTransMat[ 0 ] + ' ' + spikTransMat[ 1 ] )
+		CkLen = 0		
 		for C in  Ck  :
 			if C != '-' :
 				outfile.write( ' ' + C )
+				CkLen += 1
 		
-		while x < fileStrLen - len( Ck ) - 2 :
+		while x < fileStrLen - CkLen -2  :
 			#print '\t', x
 			outfile.write( ' ' + '0' )
 			x += 1
@@ -457,8 +459,6 @@ else :
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 	tmpList = genPotentialSpikrule( spikRuleList, ruleregexp )
 #	print 'genPotentialSpikrule(): tmpList = ', tmpList
-
-	# get min/max values in a list: min( list) and max( list )
 	
 	# generate all possible + valid 10 strings PER neuron
 	# if tmp = [ '01', '10 ], tmp2 = [ '1' ], returns tmp = [ tmp, tmp2 ] to get tmp = [ [ '01', '10 ], [ '1' ] ]
@@ -521,14 +521,6 @@ else :
 	#Ck = confVec
 	print ' initial total Ck list is allGenCk =', allGenCk
 	#exhaustively loop through total Ck list/list of all the generated Ck except C0
-
-#infile = open( 'newline', 'rb' )
-#Ck = infile.readline( )
-#strlen = len( Ck )
-#while Ck != '' :
-#	print Ck[ : strlen - 1 ]
-#	Ck = infile.readline( )
-#infile.close( )
 
 	allGenCkFilePtr = open( allGenCkFile, 'rb' )
 	Ck = allGenCkFilePtr.readline( )	
@@ -609,8 +601,7 @@ else :
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
 			print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
-		#addTotalCk( allGenCk, '214' )
-		#os.popen( ' pwd ' ) #can't do 'cat' command using popen
+
 
 ##########################
 #END of MAIN Program Flow#
