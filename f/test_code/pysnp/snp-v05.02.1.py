@@ -592,7 +592,8 @@ else :
 #	Ck = allGenCkFilePtr.readline( )	
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
-	while Ck != '' :
+	CkCnt = 0
+	while (Ck != '') & ( CkCnt != 20 ) :
 		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 		Ck = Ck.replace( '\n', '' )
@@ -666,6 +667,7 @@ else :
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
+			CkCnt += 1
 	print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n' + '\n' + '*'*50 + 'SNP system simulation run ENDS here' + '*'*50 + '\n'
 		#addTotalCk( allGenCk, '214' )
 ##########################
