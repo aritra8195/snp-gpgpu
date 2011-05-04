@@ -9,7 +9,7 @@ import re
 
 #
 #TODOs:
-# - load only 1 type of rule file (more general reg exp)
+# - load ONLY 1 type of rule file (more general reg exp)
 # - Refactor code to include STUB functions/s to collect smaller functions. Separate functions into a different file.
 # - create function to improve implementation of the spike-rule selection (SRS) criterion
 # rather than just rules of type 3) - DONE
