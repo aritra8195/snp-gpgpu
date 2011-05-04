@@ -83,7 +83,7 @@ def NDarrToFile( Ck, Ck_1gpu ) :
 		#write ND array into a file
 		outfile = open( Ck, "w" )
 		outfile.write( '$ $' )
-		for row in Ck_1gpu.get() :
+		for row in Ck_1gpu.get( ) :
 			for elem in row :
 				outfile.write( ' ' + str( elem ) )
 		outfile.close( )		
@@ -387,6 +387,7 @@ def genCks( allValidSpikVec, MATRIX_SIZE, configVec_str, spikTransMatFile) :
 		Ck = 'c_' + Ck_1_str + '_' + spikVec
 		Ck_1 = 'c_' + Ck_1_str
 		Sk = 's_' + spikVec
+		print ' Ck, Ck_1, Sk: ', Ck, Ck_1, Sk
 		#import the vectors/Matrix as numpy ND arrays 
 		Ck_1 = toNumpyArr( Ck_1, MATRIX_SIZE )
 		Sk = toNumpyArr( Sk, MATRIX_SIZE )
