@@ -8,7 +8,7 @@ import re
 #%%%%%%%%%%%%%%%%%%%
 #
 #TODOs:
-# - load only 1 type of rule file (more general reg exp)
+# - load ONLY 1 type of rule file (more general reg exp)
 # - Refactor code to include STUB functions/s to collect smaller functions. Separate functions into a different file.
 # - create function to improve implementation of the spike-rule selection (SRS) criterion
 # rather than just rules of type 3) - DONE
@@ -526,7 +526,8 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
-	while Ck != '' :
+	CkCnt = 0
+	while (Ck != '') & ( CkCnt != 20 ) :
 			print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 			Ck = Ck.replace( '\n', '' )
@@ -600,6 +601,7 @@ else :
 
 			#go read the next Ck in the file allGenCkFile = "allGenCkFile.txt"	
 			Ck = allGenCkFilePtr.readline( )		
+			CkCnt += 1
 			print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n********************************SN P system simulation run ENDS here***********************************\n'
 
 
