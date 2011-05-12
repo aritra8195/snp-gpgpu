@@ -9,20 +9,14 @@ import re
 
 #
 #TODOs:
-# - load ONLY 1 type of rule file (more general reg exp)
+# - load ONLY 1 type of rule file (for the more general reg exp)
 # - Refactor code to include STUB functions/s to collect smaller functions. Separate functions into a different file.
-# - create function to improve implementation of the spike-rule selection (SRS) criterion
-# rather than just rules of type 3) - DONE
-# - What about Ck values/spikes that are greater than 9, since Cks are concat together as a single string
-# i.e. num of neurons = 3, Ck = (2,1,10) which is 2110 in concat form - DONE
 #
 #NOTES:
-# 1.load confVec c0 (Ck+1 several times), spikVec s0 (Program must determine this!),
+# - load confVec c0 (Ck+1 afterwards), spikVec s0 (Simulator determines this/these!),
 # spikTransMat M (once), and rules r (once)
-# 2. works for rules of type 3) only for now - UPDATED
-# 3. Whenever both types are usable, spiking rules are preferred over forgetting rules
-# 4. Loops over vector and matrix lists start at index 2 (1st two indices have the dimensions of the Msnp )
-#
+# - Whenever both types are usable, spiking rules are preferred over forgetting rules
+# - Loops over vector and matrix lists start at index 2 (1st two indices have the dimensions of the Msnp, Can+should do something about this)
 #
 #CUDA C kernels evaluate:
 # (1)	CK = Ck-1 + Sk-1 * Msnp
@@ -671,7 +665,6 @@ else :
 			Ck = allGenCkFilePtr.readline( )		
 			CkCnt += 1
 	print '\nNo more Cks to use (infinite loop/s otherwise). Stop.\n' + '\n' + '*'*50 + 'SNP system simulation run ENDS here' + '*'*50 + '\n'
-		#addTotalCk( allGenCk, '214' )
 ##########################
 #END of MAIN Program Flow#
 ##########################
