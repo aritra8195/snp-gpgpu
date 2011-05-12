@@ -589,13 +589,13 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
+#	while (Ck != '') :
 	while (Ck != '') & ( CkCnt != 20 ) :
 		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 		Ck = Ck.replace( '\n', '' )
 
 		#no more spikes to be used by the P system
-		#if isConfVecZero( Ck ) or Ck == '214': #works
 		if isConfVecZero( Ck ) : #works
 			print '\tZero Ck/spikes. Stop.'
 			print '\n' + '*'*50 + 'SNP system simulation run ENDS here' + '*'*50 + '\n'
