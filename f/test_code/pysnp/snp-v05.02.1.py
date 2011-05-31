@@ -124,6 +124,9 @@ def genSpikVec( confVec, rules  ) :
 #START of function
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 def genSpikRuleList( confVec, rules ) :
+#	ruleregexp [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
+	print ' Function genSpikRuleList'
+	print 'rules ', rules
 	spikRuleList = [ ]
 	x = y = 0	
 	z = 1
@@ -147,6 +150,7 @@ def genSpikRuleList( confVec, rules ) :
 		#if conf == '0' :
 		#	break
 		y += 1
+	print spikRuleList
 	return spikRuleList
 #END of function
 ########################################################################
@@ -299,7 +303,7 @@ def genNeurPairs( tmpList ) :
 def createSpikVecFiles( spikTransMat, allValidSpikVec ) :
 	#write all valid spiking vectors onto each of their own files e.g. given 10110, create file s_10110 and write 10110 in it
 	fileStrLen = len( spikTransMat )
-	print ' length of spikTransMat is ', fileStrLen
+	#print ' length of spikTransMat is ', fileStrLen
 	for spikVec in  allValidSpikVec[ 0 ] :
 		x =  0
 		spikVecFile = 's_' + spikVec 
@@ -443,7 +447,7 @@ def printMatrix( spikTransMat ) :
 		while y < matCols :
 			matRowElms += spikTransMat[ x * matCols + y ] + ' '
 			y += 1
-		print matRowElms
+		#print matRowElms
 		x += 1
 #END of function
 
@@ -478,7 +482,7 @@ else :
 	ruleregexp = importRule( ruleRegExpFile )
 
 	#first, determine number of neurons
-	#print ' ruleregexp', ruleregexp
+	print ' ruleregexp', ruleregexp
 	neurNum = len( ruleregexp )
 
 	#preliminary prints
