@@ -11,7 +11,7 @@ import re
 #TODOs:
 # - load ONLY 1 type of rule file (for the more general reg exp)
 # - Refactor code to include STUB functions/s to collect smaller functions. Separate functions into a different file.
-#
+# - Check spike debt/negative values in Ck.
 #NOTES:
 # - load confVec c0 (Ck+1 afterwards), spikVec s0 (Simulator determines this/these!),
 # spikTransMat M (once), and rules r (once)
@@ -106,18 +106,6 @@ def importVec( filename ) :
 	Vec = filePtr.read( )
 	return Vec.split( )
 #END of function to import vectors/matrices from file/s	
-########################################################################
-#START of function
-def getNeurNum( rules ) :
-#to get number of neurons, count the number of '$' instances + 1
-	cnt = 0
-#	print confVec[ 2: ]
-	for rule in rules[ 2: ] :
-		if rule == '$' :
-			#print conf
-			cnt = cnt + 1
-	return cnt + 1
-#END of function
 ########################################################################
 #START of function
 def genSpikVec( confVec, rules  ) :
@@ -490,7 +478,8 @@ else :
 	ruleregexp = importRule( ruleRegExpFile )
 
 	#first, determine number of neurons
-	neurNum = getNeurNum( rules )
+	#print ' ruleregexp', ruleregexp
+	neurNum = len( ruleregexp )
 
 	#preliminary prints
 	print '\n' + '*'*50 + 'SNP system simulation run STARTS here' + '*'*50 + '\n'
@@ -589,8 +578,8 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
-#	while (Ck != '') :
-	while (Ck != '') & ( CkCnt != 20 ) :
+	while (Ck != '') :
+#	while (Ck != '') & ( CkCnt != 20 ) :
 		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 		Ck = Ck.replace( '\n', '' )
