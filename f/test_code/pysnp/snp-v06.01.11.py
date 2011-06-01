@@ -124,7 +124,7 @@ def genSpikVec( confVec, rules  ) :
 #START of function
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ] e.g. [['1', '2', '2'], ['0', '1'], ['9', '1', '2']]
 def genSpikRuleList( confVec, rules, ruleregexp ) :
-#	ruleregexp [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
+#	ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
 	print ' Function genSpikRuleList'
 	print 'rules ', rules
 	spikRuleList = [ ]
@@ -174,7 +174,8 @@ def prNeurons( spikeRuleList ) :
 def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 	#generate a list of spikes + rules they are applicable to via, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
-	#input spikRuleList = [['2', '2', '2'], ['1', '1'], ['1', '1', '2']]
+	#input spikRuleList = [['2', '2', '2'], ['1', '1'], ['1', '1', '2']] and
+	#ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
 	tmpList = spikRuleList
 	#print tmpList
