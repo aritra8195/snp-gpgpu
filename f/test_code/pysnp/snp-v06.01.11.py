@@ -122,38 +122,15 @@ def genSpikVec( confVec, rules  ) :
 #END of function
 ########################################################################
 #START of function
-	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ] e.g. [['1', '2', '2'], ['0', '1'], ['9', '1', '2']]
-def genSpikRuleList( confVec, rules, ruleregexp ) :
+	#output: list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
+	#e.g. [['1', '2', '2'], ['0', '1'], ['9', '1', '2']]
+def genSpikRuleList( confVec, neurNum, rules, ruleregexp ) :
 #	ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
-	print ' Function genSpikRuleList'
-	print 'rules ', rules
+	#print ' Function genSpikRuleList'
+	#print 'rules ', rules
 	spikRuleList = [ ]
-	x = y = 0	
-	z = 1
-	w = 0
-	for elem in confVec :
-		if elem == '-' :
-			del confVec[ x ]
-		x += 1
-	#print 'In genSpikRuleList() confVec =', confVec
-	for conf in confVec[ 2 : 2 + neurNum ] : #loop starts @ index 2
-		spikRuleList.append( [ conf ] ) #append first conf/spike for first neuron
-		for rule in rules[ w: ] :
-			if rule == '$' :
-				w += 1
-				break
-			else :
-				#print z
-				spikRuleList[ y ].append( rule ) #append rule criteria to neuron's spike/s in the list
-				#print spikRuleList
-			w += 1
-
-		for neuron in ruleregexp :
-			for rule in neuron :
-				print ' neuron ', neuron, ' rule ',rule
-		#if conf == '0' :
-		#	break
-		y += 1
+	for spike in confVec[ 2: 2 + neurNum ] :
+		spikRuleList.append( spike )
 	print 'spikRuleList ',spikRuleList
 	return spikRuleList
 #END of function
@@ -171,18 +148,21 @@ def prNeurons( spikeRuleList ) :
 #END of function
 ########################################################################
 #START of function 
-def genPotentialSpikrule( spikRuleList, ruleregexp ) :
+def genPotentialSpikrule( spikRuleList, neurNum, ruleregexp ) :
 	#generate a list of spikes + rules they are applicable to via, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#input spikRuleList = [['2', '2', '2'], ['1', '1'], ['1', '1', '2']] and
 	#ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-	tmpList = spikRuleList
-	#print tmpList
+	tmpList = [ ]
+	for neuron in ruleregexp : #produces list of list similar to spikRuleList, but empty
+		tmp = [ [ ' ' ] * ( len( neuron) + 1 ) ]
+		tmpList.append( tmp[ 0 ] )
+	print tmpList
 	x = sameCnt = 0
 	y = 1
-	for idx, neuron in enumerate( spikRuleList ) :
-		spike = neuron[ 0 ]
+	for idx, spike in enumerate( spikRuleList ) :
+		spike = neuron
 		#print spike
 		for idx2, rule in enumerate( neuron[ 1: ] ) :
 			#print int( rule ) + spike
@@ -503,7 +483,7 @@ else :
 	print '\nNumber of neurons for the SN P system is %d ' % ( neurNum )
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-	spikRuleList = genSpikRuleList( confVec, rules, ruleregexp )
+	spikRuleList = genSpikRuleList( confVec, neurNum, rules, ruleregexp )
 	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
@@ -513,7 +493,7 @@ else :
 	#generate a list of spikes + rules they are applicable to, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-	tmpList = genPotentialSpikrule( spikRuleList, ruleregexp )
+	tmpList = genPotentialSpikrule( spikRuleList, neurNum, ruleregexp )
 	print 'genPotentialSpikrule(): tmpList = ', tmpList
 	
 	# generate all possible + valid 10 strings PER neuron
@@ -608,13 +588,13 @@ else :
 			C_k = concatConfVec( C_k_vec )
 
 			#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-			spikRuleList = genSpikRuleList( C_k_vec, rules, ruleregexp )
+			spikRuleList = genSpikRuleList( C_k_vec, neurNum, rules, ruleregexp )
 			#print '\tList of lists w/ spike + rule criterion, spikRuleList = ', spikRuleList, ' for Ck = ', C_k
 
 			#generate a list of spikes + rules they are applicable to, in order
 			#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 			#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-			tmpList = genPotentialSpikrule( spikRuleList, ruleregexp )
+			tmpList = genPotentialSpikrule( spikRuleList, neurNum, ruleregexp )
 			#print '\tAfter generating list of spikes+rules, tmpList = ', tmpList
 
 			# generate all possible + valid 10 strings PER neuron
