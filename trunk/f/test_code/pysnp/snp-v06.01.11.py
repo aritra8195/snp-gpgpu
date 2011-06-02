@@ -125,7 +125,7 @@ def genSpikVec( confVec, rules  ) :
 	#output: list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
 	#e.g. [['1', '2', '2'], ['0', '1'], ['9', '1', '2']]
 	#output: spikRuleList = ['2', '1', '1']
-def genSpikRuleList( confVec, ruleregexp ) :
+def genSpikRuleList( confVec ) :
 #	ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
 	#print ' Function genSpikRuleList'
 	#print 'rules ', rules
@@ -482,7 +482,7 @@ else :
 	print '\nNumber of neurons for the SN P system is %d ' % ( neurNum )
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-	spikRuleList = genSpikRuleList( confVec, ruleregexp )
+	spikRuleList = genSpikRuleList( confVec )
 	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
@@ -587,7 +587,7 @@ else :
 			C_k = concatConfVec( C_k_vec )
 
 			#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-			spikRuleList = genSpikRuleList( C_k_vec, ruleregexp )
+			spikRuleList = genSpikRuleList( C_k_vec )
 			#print '\tList of lists w/ spike + rule criterion, spikRuleList = ', spikRuleList, ' for Ck = ', C_k
 
 			#generate a list of spikes + rules they are applicable to, in order
