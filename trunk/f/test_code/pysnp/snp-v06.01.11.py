@@ -154,8 +154,7 @@ def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
 	#input spikRuleList = [['2', '2', '2'], ['1', '1'], ['1', '1', '2']] and
 	#ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
-	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-	#NEW spikRuleList =  ['2', '1', '1']
+	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]], NEW spikRuleList =  ['2', '1', '1']
 	tmpList = [ ]
 	for neuron in ruleregexp : #produces list of list similar to OLD spikRuleList, but empty
 		tmp = [ [ ' ' ] * ( len( neuron) + 1 ) ]
@@ -166,8 +165,7 @@ def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 #	for idx, spike in enumerate( spikRuleList ) :
 #		tmpList[ idx ][ 0 ] = spike
 	for idx2, neuron in enumerate( ruleregexp ) :
-		spike = spikRuleList[ idx2 ]
-		tmpList[ idx2 ][ 0 ] = spike 
+		tmpList[ idx2 ][ 0 ] = spike  = spikRuleList[ idx2 ]
 		for idx3, rule in enumerate( neuron ) :
 			#print ' neuron =', neuron
 			#print ' idx2, idx3: ', idx2, idx3
@@ -445,15 +443,15 @@ def printMatrix( spikTransMat ) :
 ############################
 
 #Check if correct number of cl args are entered
-if ( len( sys.argv ) < 5 ) :
-	print '\n Program usage:\n'+sys.argv[ 0 ] + ' confVec spikTransMat rules rules-in-reg-exp\n'
+if ( len( sys.argv ) < 4 ) :
+	print '\n Program usage:\n'+sys.argv[ 0 ] + ' confVec spikTransMat rules-in-reg-exp\n'
 
 #if correct, proceed
 else :
 	confVecFile = sys.argv[ 1 ]
 	spikTransMatFile = sys.argv[ 2 ]
-	rulesFile = sys.argv[ 3 ]
-	ruleRegExpFile = sys.argv[ 4 ]
+#	rulesFile = sys.argv[ 3 ]
+	ruleRegExpFile = sys.argv[ 3 ]
 
 #####
 #{1}#	Input Ck (C0 initially), spiking transition matrix, rules
@@ -461,7 +459,7 @@ else :
 	confVec = importVec( confVecFile )
 	#spikVec = importVec( sys.argv[ 2 ] )
 	spikTransMat  = importVec( spikTransMatFile )
-	rules = importVec( rulesFile )
+#	rules = importVec( rulesFile )
 	ruleregexp = importRule( ruleRegExpFile )
 
 	#first, determine number of neurons
