@@ -44,10 +44,8 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int Width, int TIL
 	// MatrixAddKernel<<< dimGrid, dimBlock >>>( Md, Nd, Pd, Width );
 	//dim3 dimBlock( Width, Width ); dim3 dimGrid( 1, 1 );
 	//int tx = threadIdx.x;
-
-        int row = blockIdx.y * TILE_WIDTH + threadIdx.y;
-        int col = blockIdx.x * TILE_WIDTH + threadIdx.x;
-
+	int row = blockIdx.y * TILE_WIDTH + threadIdx.y;
+	int col = blockIdx.x * TILE_WIDTH + threadIdx.x;
 	//int ty = threadIdx.y;
 	//due to row-major ordering of matrix elements
 	//int Pvalue = 0;
@@ -179,7 +177,7 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, in
 
 	cudaMalloc( ( void** ) &Od, size );//confVec	
 
-        cudaMemcpy( Od, matD, size, cudaMemcpyHostToDevice );
+	cudaMemcpy( Od, matD, size, cudaMemcpyHostToDevice );
 	
 	// final matrix: Ck+1 = confVec + Ck
 	cudaMalloc( ( void** ) &Qd, size );
@@ -187,9 +185,9 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, in
 	// Ck = spikVec * spikTransMat => Pd = Md * Nd
 	MatrixMulKernel<<< dimGrid, dimBlock >>>( Md, Nd, Pd, Width, TILE_WIDTH );
 
-//	cudaMemcpy( matE, Qd, size, cudaMemcpyDeviceToHost );
+	cudaMemcpy( matE, Pd, size, cudaMemcpyDeviceToHost );
 	printf( " \n%s * %s : \n", filename1, filename2 );
-	printMatrix( matC, Width, Width );
+	printMatrix( matE, Width, Width );
 
 	// Ck+1 = confVec + Ck => Qd = Od + Pd
 	MatrixAddKernel<<< dimGrid, dimBlock >>>( Od, Pd, Qd, Width, TILE_WIDTH );
