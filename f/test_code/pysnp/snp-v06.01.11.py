@@ -41,6 +41,21 @@ matmul_kernel_temp = """
  }
   c[ty * %(MATRIX_SIZE)s + tx] = Pvalue;
  }
+
+__global__ void MatrixMulKernel ( int  *Md, int *Nd, int *Pd /*, int Width, int TILE_WIDTH */){
+	int row = blockIdx.y * %(TILE_WIDTH)s + threadIdx.y;
+	int col = blockIdx.x * %(TILE_WIDTH)s + threadIdx.x;
+	//due to row-major ordering of matrix elements
+	int Pvalue = 0;
+	for ( int k = 0; k < %(MATRIX_SIZE)s; ++k ){
+		//int Mdelement = Md[ ty * Width + k ];
+		//int Ndelement = Nd[ k * Width + tx ];
+		//Pvalue += Mdelement * Ndelement;
+		Pvalue += Md[ row * %(MATRIX_SIZE)s + k ] * Nd[ k * %(MATRIX_SIZE)s + col ];
+		}
+	Pd[ row * %(MATRIX_SIZE)s + col ] = Pvalue;
+	//Pd[ ty * Width + tx  ] = Pvalue; 
+}
 """
 
 matadd_kernel_temp = """
@@ -350,7 +365,7 @@ def concatConfVec( lst ):
 #END of function
 ########################################################################
 #START of function
-def genCks( allValidSpikVec, MATRIX_SIZE, configVec_str, spikTransMatFile) :
+def genCks( allValidSpikVec, MATRIX_SIZE, tileWidth, configVec_str, spikTransMatFile) :
 	#using all generated valid spiking vector files, 'feed' the files to the CUDA C kernels to evaluate (1)
 	for spikVec in  allValidSpikVec[ 0 ] :
 		# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
@@ -383,7 +398,7 @@ def genCks( allValidSpikVec, MATRIX_SIZE, configVec_str, spikTransMatFile) :
 		matrixmul = mulmod.get_function( "MatrixMulKernel" )
 		matrixadd = addmod.get_function( "MatrixAddKernel" )
 		#call kernel functions
-		matrixmul( Skgpu, Mgpu, SkMgpu, block = (MATRIX_SIZE, MATRIX_SIZE, 1), )
+		matrixmul( Skgpu, Mgpu, SkMgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
 		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
 		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
 		#write ND array into a file
@@ -431,7 +446,12 @@ def printMatrix( spikTransMat ) :
 		#print matRowElms
 		x += 1
 #END of function
-
+########################################################################
+#START of function
+#def isOddEven( num ) :
+#	return bool( num & 1 ) #get logical AND of num and 1
+#END of function
+########################################################################
 ######################
 #END of AUX functions#
 ######################
@@ -525,7 +545,8 @@ else :
 
 	#print confVec
 	print ' spikTransMat len ', len( spikTransMat )
-	sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) )
+	sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) ) #input matrix is 'manually squared' for now, AND multiple of 2!
+	
 
 #####
 #{3}#	using all generated valid spiking vector files, 'feed' the files to the CUDA C kernel to evaluate (1)
@@ -535,7 +556,7 @@ else :
 	createConfVecFiles( spikTransMat, allGenCk )
 	
 	#use PyCUDA to evaluate equation (1) in parallel
-	genCks( allValidSpikVec, sqrMatWidth, concatConfVec( confVec ),  spikTransMatFile )
+	genCks( allValidSpikVec, sqrMatWidth, tileWidth, concatConfVec( confVec ),  spikTransMatFile )
 
 	#add all Cks generated from C0
 	for spikVec in allValidSpikVec[ 0 ] :
@@ -616,7 +637,7 @@ else :
 			createConfVecFiles( spikTransMat, allGenCk )
 
 			#print 'allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile ' , allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile
-			genCks( allValidSpikVec, sqrMatWidth, Ck, spikTransMatFile)
+			genCks( allValidSpikVec, sqrMatWidth, tileWidth, Ck, spikTransMatFile)
 
 			#add all Cks generated from C0
 			for spikVec in allValidSpikVec[ 0 ] :
