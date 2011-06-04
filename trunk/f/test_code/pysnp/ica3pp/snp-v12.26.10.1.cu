@@ -45,7 +45,7 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int Width, int TIL
 	//dim3 dimBlock( Width, Width ); dim3 dimGrid( 1, 1 );
 	//int tx = threadIdx.x;
 	int row = blockIdx.y * TILE_WIDTH + threadIdx.y;
-	int col = blockIdx.x * TILE_WIDTH + threadIdx.x;
+	//int col = blockIdx.x * TILE_WIDTH + threadIdx.x;
 	//int ty = threadIdx.y;
 	//due to row-major ordering of matrix elements
 	//int Pvalue = 0;
@@ -53,7 +53,7 @@ __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd, int Width, int TIL
 	//	int Mdelement = Md[ ty * Width + k ];
 	//	int Ndelement = Nd[ ty * Width + k ];
 	//	Pd[ ty * Width + k ] = Mdelement + Ndelement;
-		Pd[ row * Width + col  ] = Md[ row * Width + k ] + Nd[ row * Width + k ];
+		Pd[ row * Width + k  ] = Md[ row * Width + k ] + Nd[ row * Width + k ];
 	}
 	//Pd[ ty * Width + tx  ] = Pvalue;
 }							
@@ -170,7 +170,7 @@ void MatrixMul( char *filename0, char *filename1, char *filename2, int Width, in
 	cudaMemcpy( Md, matA, size, cudaMemcpyHostToDevice );
 
 	cudaMalloc( ( void** ) &Nd, size );//spikTransMat
-        cudaMemcpy( Nd, matB, size, cudaMemcpyHostToDevice );
+	cudaMemcpy( Nd, matB, size, cudaMemcpyHostToDevice );
 
 	//Ck = spikVec * spikTransMat
 	cudaMalloc( ( void** ) &Pd, size );	
