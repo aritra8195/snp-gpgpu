@@ -105,7 +105,7 @@ def toNumpyArr( filename, sqrMatWidth ) :
 	#print 'filename = ', filename
 	#remove extraneous 1st 2 integers in the vector's/matrix' contents, then loads the remaining ints as a numpy
 	#array, then reshapes the 1D array to a square matrix
-	print fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( sqrMatWidth, sqrMatWidth )
+	#print fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( sqrMatWidth, sqrMatWidth )
 	return fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( sqrMatWidth, sqrMatWidth )
 	#returns a file of the form 
 	#array([[-1,  1,  1,  0,  0],
