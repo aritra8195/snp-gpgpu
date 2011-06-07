@@ -28,7 +28,7 @@ import re
  
 #START of CUDA C kernels
 matmul_kernel_temp = """
- __global__ void MatrixMulKernel(int *a, int *b, int *c)
+/* __global__ void MatrixMulKernel(int *a, int *b, int *c)
  {
   int tx = threadIdx.x;
   int ty = threadIdx.y;
@@ -41,7 +41,7 @@ matmul_kernel_temp = """
  }
   c[ty * %(MATRIX_SIZE)s + tx] = Pvalue;
  }
-
+*/
 __global__ void MatrixMulKernel ( int  *Md, int *Nd, int *Pd /*, int Width, int TILE_WIDTH */){
 	int row = blockIdx.y * %(TILE_WIDTH)s + threadIdx.y;
 	int col = blockIdx.x * %(TILE_WIDTH)s + threadIdx.x;
@@ -391,7 +391,9 @@ def genCks( allValidSpikVec, MATRIX_SIZE, tileWidth, configVec_str, spikTransMat
 		Ckgpu = gpuarray.empty( ( MATRIX_SIZE, MATRIX_SIZE), np.int32 )
 		#get kernel code from template by specifying the constant MATRIX_SIZE
 		matmul_kernel = matmul_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
+		#this should now be: matmul_kernel = matmul_kernel_temp %{'MATRIX_SIZE': MATRIX_SIZE, 'TILE_WIDTH':TILE_WIDTH}
 		matadd_kernel = matadd_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
+		#this should now be: matadd_kernel = matadd_kernel_temp %{'MATRIX_SIZE': MATRIX_SIZE, 'TILE_WIDTH':TILE_WIDTH}
 		# compile the kernel code 
 		mulmod = compiler.SourceModule(matmul_kernel)
 		addmod = compiler.SourceModule(matadd_kernel)
@@ -399,7 +401,9 @@ def genCks( allValidSpikVec, MATRIX_SIZE, tileWidth, configVec_str, spikTransMat
 		matrixadd = addmod.get_function( "MatrixAddKernel" )
 		#call kernel functions
 		matrixmul( Skgpu, Mgpu, SkMgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
+		#this should now be: matrixmul( Skgpu, Mgpu, SkMgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
 		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
+		#this shoud now be: matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
 		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
 		#write ND array into a file
 		NDarrToFile( Ck, Ckgpu )
