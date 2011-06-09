@@ -92,7 +92,7 @@ def chkRegExp( regexp, spikNum ) :
 def NDarrToFile( Ck, Ck_1gpu ) :
 		#write ND array into a file
 		outfile = open( Ck, "w" )
-		outfile.write( '2 7' )
+		outfile.write( '2 7' ) #padding from earlier days of the snpgpu-sim, should remove this soon...
 		for row in Ck_1gpu.get( ) :
 			for elem in row :
 				outfile.write( ' ' + str( elem ) )
@@ -391,20 +391,20 @@ def genCks( allValidSpikVec, MATRIX_SIZE, tileWidth, configVec_str, spikTransMat
 		SkMgpu = gpuarray.empty( ( MATRIX_SIZE, MATRIX_SIZE), np.int32 )
 		Ckgpu = gpuarray.empty( ( MATRIX_SIZE, MATRIX_SIZE), np.int32 )
 		#get kernel code from template by specifying the constant MATRIX_SIZE
-		matmul_kernel = matmul_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
-		#this should now be: matmul_kernel = matmul_kernel_temp %{'MATRIX_SIZE': MATRIX_SIZE, 'TILE_WIDTH':TILE_WIDTH}
-		matadd_kernel = matadd_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
-		#this should now be: matadd_kernel = matadd_kernel_temp %{'MATRIX_SIZE': MATRIX_SIZE, 'TILE_WIDTH':TILE_WIDTH}
+		#matmul_kernel = matmul_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
+		matmul_kernel = matmul_kernel_temp %{'MATRIX_SIZE': MATRIX_SIZE, 'TILE_WIDTH':TILE_WIDTH}
+		#matadd_kernel = matadd_kernel_temp % { 'MATRIX_SIZE': MATRIX_SIZE}
+		matadd_kernel = matadd_kernel_temp %{'MATRIX_SIZE': MATRIX_SIZE, 'TILE_WIDTH':TILE_WIDTH}
 		# compile the kernel code 
 		mulmod = compiler.SourceModule(matmul_kernel)
 		addmod = compiler.SourceModule(matadd_kernel)
 		matrixmul = mulmod.get_function( "MatrixMulKernel" )
 		matrixadd = addmod.get_function( "MatrixAddKernel" )
 		#call kernel functions
-		matrixmul( Skgpu, Mgpu, SkMgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
-		#this should now be: matrixmul( Skgpu, Mgpu, SkMgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
-		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
-		#this shoud now be: matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
+		#matrixmul( Skgpu, Mgpu, SkMgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
+		matrixmul( Skgpu, Mgpu, SkMgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
+		#matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
+		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
 		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
 		#write ND array into a file
 		NDarrToFile( Ck, Ckgpu )
