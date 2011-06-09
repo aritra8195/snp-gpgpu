@@ -1,3 +1,6 @@
+//replace '\n' with empty string (essentially remove '\n'):
+cat file | tr '\n' '\0'
+
 //replace tabs and newlines w/ whitespace
 cat file | tr '\t' ' '
 
