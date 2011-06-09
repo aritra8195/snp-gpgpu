@@ -60,7 +60,7 @@ __global__ void MatrixMulKernel ( int  *Md, int *Nd, int *Pd /*, int Width, int 
 
 matadd_kernel_temp = """
 __global__ void MatrixAddKernel ( int  *Md, int *Nd, int *Pd ){
-    int row = blockIdx.y * TILE_WIDTH + threadIdx.y;
+    int row = blockIdx.y * %(TILE_WIDTH)s + threadIdx.y;
     for ( int k = 0; k < %(MATRIX_SIZE)s; ++k ){
             //int Mdelement = Md[ ty * %(MATRIX_SIZE)s + k ];
             //int Ndelement = Nd[ ty * %(MATRIX_SIZE)s + k ];
