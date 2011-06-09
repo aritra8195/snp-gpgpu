@@ -366,7 +366,7 @@ def concatConfVec( lst ):
 #END of function
 ########################################################################
 #START of function
-def genCks( allValidSpikVec, MATRIX_SIZE, tileWidth, configVec_str, spikTransMatFile) :
+def genCks( allValidSpikVec, MATRIX_SIZE, TILE_WIDTH, configVec_str, spikTransMatFile) :
 	#using all generated valid spiking vector files, 'feed' the files to the CUDA C kernels to evaluate (1)
 	for spikVec in  allValidSpikVec[ 0 ] :
 		# string concatenation of the configVec, Ck-1, from configVec = [ '2', '2', '1', '0', '0', ...]
@@ -551,7 +551,7 @@ else :
 	#print confVec
 	print ' spikTransMat len ', len( spikTransMat )
 	sqrMatWidth = int( math.sqrt( len( spikTransMat ) ) ) #input matrix is 'manually squared' for now, AND multiple of 2!
-	
+	tileWidth = 2 #default TILE_WIDTH value for now...
 
 #####
 #{3}#	using all generated valid spiking vector files, 'feed' the files to the CUDA C kernel to evaluate (1)
