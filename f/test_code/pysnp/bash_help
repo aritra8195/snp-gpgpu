@@ -1,3 +1,6 @@
+//display only a range of characters in a file:
+cut -c 1-100 < file
+
 //replace '\n' with empty string (essentially remove '\n'):
 cat file | tr '\n' '\0'
 
