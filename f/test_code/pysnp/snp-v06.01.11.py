@@ -92,7 +92,7 @@ def chkRegExp( regexp, spikNum ) :
 def NDarrToFile( Ck, Ck_1gpu ) :
 		#write ND array into a file
 		outfile = open( Ck, "w" )
-		outfile.write( '$ $' )
+		outfile.write( '2 7' )
 		for row in Ck_1gpu.get( ) :
 			for elem in row :
 				outfile.write( ' ' + str( elem ) )
