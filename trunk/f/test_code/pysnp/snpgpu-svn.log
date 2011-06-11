@@ -1,4 +1,9 @@
 ------------------------------------------------------------------------
+r219 | jounin.f@gmail.com | 2011-06-11 14:20:53 +0800 (Sat, 11 Jun 2011) | 2 lines
+
+- added snpgpu-svn.log to add logs for offline usage.
+
+------------------------------------------------------------------------
 r218 | jounin.f@gmail.com | 2011-06-11 14:05:50 +0800 (Sat, 11 Jun 2011) | 2 lines
 
 - added isConfVecNeg to check for negative Ck values properly.

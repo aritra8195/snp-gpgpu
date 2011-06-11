@@ -86,31 +86,17 @@ def genSpikVec( confVec, rules  ) :
 #END of function
 ########################################################################
 #START of function
-	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-def genSpikRuleList( confVec, rules ) :
+	#output: list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
+	#e.g. [['1', '2', '2'], ['0', '1'], ['9', '1', '2']]
+	#output: spikRuleList = ['2', '1', '1']
+def genSpikRuleList( confVec ) :
+#	ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
+	#print ' Function genSpikRuleList'
+	#print 'rules ', rules
 	spikRuleList = [ ]
-	x = y = 0	
-	z = 1
-	w = 0
-	for elem in confVec :
-		if elem == '-' :
-			del confVec[ x ]
-		x += 1
-	#print 'In genSpikRuleList() confVec =', confVec
-	for conf in confVec[ 2 : 2 + neurNum ] : #loop starts @ index 2
-		spikRuleList.append( [ conf ] ) #append first conf/spike for first neuron
-		for rule in rules[ w: ] :
-			if rule == '$' :
-				w += 1
-				break
-			else :
-				#print z
-				spikRuleList[ y ].append( rule ) #append rule criteria to neuron's spike/s in the list
-				#print spikRuleList
-			w += 1
-		#if conf == '0' :
-		#	break
-		y += 1
+	for spike in confVec[ 2: 2 + neurNum ] :
+		spikRuleList.append( spike )
+	print 'spikRuleList ',spikRuleList
 	return spikRuleList
 #END of function
 ########################################################################
@@ -127,41 +113,40 @@ def prNeurons( spikeRuleList ) :
 #END of function
 ########################################################################
 #START of function
-	#generate a list of spikes + rules they are applicable to, in order
-	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
-	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-
 def genPotentialSpikrule( spikRuleList, ruleregexp ) :
 	#generate a list of spikes + rules they are applicable to via, in order
 	#e.g. C0 = 2 1 1, r = 2 2 $ 1 $ 1 2
-	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]]  
-	tmpList = spikRuleList
+	#input spikRuleList = [['2', '2', '2'], ['1', '1'], ['1', '1', '2']] and
+	#ruleregexp = [['aa 1 1', 'aa 2 1'], ['a 1 1'], ['a 1 1', 'aa 1 0']]
+	#output should be : [['2', 1, 2], ['1', 1], ['1', 1, 0]], NEW spikRuleList =  ['2', '1', '1']
+	tmpList = [ ]
+	for neuron in ruleregexp : #produces list of list similar to OLD spikRuleList, but empty
+		tmp = [ [ ' ' ] * ( len( neuron) + 1 ) ]
+		tmpList.append( tmp[ 0 ] )
 	#print tmpList
 	x = sameCnt = 0
 	y = 1
-	for idx, neuron in enumerate( spikRuleList ) :
-		spike = neuron[ 0 ]
-		#print spike
-		for idx2, rule in enumerate( neuron[ 1: ] ) :
-			#print int( rule ) + spike
-			# currently the SRS for rules of type 1) for now...
-			regexp = ruleregexp[ idx ][ idx2 ]
+#	for idx, spike in enumerate( spikRuleList ) :
+#		tmpList[ idx ][ 0 ] = spike
+	for idx2, neuron in enumerate( ruleregexp ) :
+		tmpList[ idx2 ][ 0 ] = spike  = spikRuleList[ idx2 ]
+		for idx3, rule in enumerate( neuron ) :
+			#print ' neuron =', neuron
+			#print ' idx2, idx3: ', idx2, idx3
+			regexp = ruleregexp[ idx2 ][ idx3 ]
 			regexp = regexp.split( )
-			#print 'regexp = ', regexp
-			#check more general regular expressions
 			if chkRegExp( regexp[ 0 ], int( spike ) ) :
-				#print ' A %d %d ' % ( x, y )
-				#print tmpList
 				sameCnt += 1
-				tmpList[ x ][ y ] = sameCnt
+				tmpList[ idx2 ][ y ] = sameCnt
 			else :
-				#print ' B %d %d ' % ( x, y )
-				#print tmpList
-				tmpList[ x ][ y ] = 0
+				tmpList[ idx2 ][ y ] = 0
+			#print 'tmpList =', tmpList
 			y += 1
 		x += 1
 		y = 1
+		#print ' x, y: ', x, y
 		sameCnt = 0
+	#print 'tmpList =', tmpList
 	return tmpList
 #END of function
 ########################################################################
