@@ -413,16 +413,18 @@ def genCks( allValidSpikVec, MATRIX_SIZE, TILE_WIDTH, configVec_str, spikTransMa
 #START of function
 #add a Ck <type 'str'> into total list of generated Cks + write it into file \n separated
 def addTotalCk( allGenCk, Ck_1_str ) :
-	if Ck_1_str in allGenCk :
-		return allGenCk
-	else :
+	#check first if Ck is a zero vector and has no negative values
+	if not isConfVecZero( Ck_1_str ) and not isConfVecNeg( Ck_1_str ) :
+		if Ck_1_str in allGenCk :
+			return allGenCk
+		else :
 #		Ck_1_str = Ck_1_str.replace( '-', '')
-		allGenCk += [ Ck_1_str ]
-		totalCkFile = open( allGenCkFile, 'a' )
-		totalCkFile.write( Ck_1_str + '\n' )
-		totalCkFile.close( )
-		print 'Ck ', Ck_1_str, 'was written into file', allGenCkFile
-		return allGenCk
+			allGenCk += [ Ck_1_str ]
+			totalCkFile = open( allGenCkFile, 'a' )
+			totalCkFile.write( Ck_1_str + '\n' )
+			totalCkFile.close( )
+			print 'Ck ', Ck_1_str, 'was written into file', allGenCkFile
+			return allGenCk
 #END of function
 ########################################################################
 #START of function
@@ -438,11 +440,12 @@ def isConfVecZero( Ck ) :
 #START of function
 #works for strings 
 def isConfVecNeg( Ck ) :
+	Ck = Ck.split( '-' )
 	for x in Ck :
-		if x != '-' :
-			if int( x ) >= 0 :
-				return False
-	return True
+		if x == '' :
+			#if int( x ) <= 0 :
+			return True
+	return False
 #END of function
 ########################################################################
 #START of function
@@ -512,7 +515,7 @@ else :
 	print '\nNumber of neurons for the SN P system is %d ' % ( neurNum )
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-	spikRuleList = genSpikRuleList( confVec, rules )
+	spikRuleList = genSpikRuleList( confVec )
 	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
@@ -594,7 +597,8 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
-	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
+	while  ( Ck != '' ) :
+#	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
 #	while ( Ck != '') & ( CkCnt != 20 ) :
 		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
@@ -618,7 +622,7 @@ else :
 			C_k = concatConfVec( C_k_vec )
 
 			#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-			spikRuleList = genSpikRuleList( C_k_vec, rules )
+			spikRuleList = genSpikRuleList( C_k_vec )
 			#print '\tList of lists w/ spike + rule criterion, spikRuleList = ', spikRuleList, ' for Ck = ', C_k
 
 			#generate a list of spikes + rules they are applicable to, in order
