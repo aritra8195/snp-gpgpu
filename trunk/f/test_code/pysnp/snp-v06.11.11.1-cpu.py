@@ -338,17 +338,18 @@ def genCks( allValidSpikVec, sqrMatWidth, configVec_str, allGenCk ) :
 #START of function
 #add a Ck <type 'str'> into total list of generated Cks + write it into file \n separated
 def addTotalCk( allGenCk, Ck_1_str ) :
-	if Ck_1_str in allGenCk :
-		return allGenCk
-	else :
+	#check first if Ck is a zero vector and has no negative values
+	if not isConfVecZero( Ck_1_str ) and not isConfVecNeg( Ck_1_str ) :
+		if Ck_1_str in allGenCk :
+			return allGenCk
+		else :
 #		Ck_1_str = Ck_1_str.replace( '-', '')
-		allGenCk += [ Ck_1_str ]
-		totalCkFile = open( allGenCkFile, 'a' )
-		totalCkFile.write( Ck_1_str + '\n' )
-		totalCkFile.close( )
-		print 'Ck ', Ck_1_str, 'was written into file', allGenCkFile
-		return allGenCk
-
+			allGenCk += [ Ck_1_str ]
+			totalCkFile = open( allGenCkFile, 'a' )
+			totalCkFile.write( Ck_1_str + '\n' )
+			totalCkFile.close( )
+			print 'Ck ', Ck_1_str, 'was written into file', allGenCkFile
+			return allGenCk
 #END of function
 ########################################################################
 #START of function
@@ -364,11 +365,12 @@ def isConfVecZero( Ck ) :
 #START of function
 #works for strings 
 def isConfVecNeg( Ck ) :
+	Ck = Ck.split( '-' )
 	for x in Ck :
-		if x != '-' :
-			if int( x ) >= 0 :
-				return False
-	return True
+		if x == '' :
+			#if int( x ) <= 0 :
+			return True
+	return False
 #END of function
 ########################################################################
 #START of function
@@ -427,7 +429,7 @@ else :
 	print '\nSpiking transition Matrix: '
 	printMatrix( spikTransMat )
 	print '\nSpiking transition Matrix in row-major order (converted into a square matrix):\n', spikTransMat[ 2: ]
-	print '\nRules of the form a^n/a^m -> a or a^n ->a loaded:\n', rules
+	#print '\nRules of the form a^n/a^m -> a or a^n ->a loaded:\n', rules
 	print '\nInitial configuration vector:\n', confVec, '\nor in dash delimited format:', concatConfVec( confVec )
 
 
@@ -441,7 +443,7 @@ else :
 	#genSpikVec( confVec, rules )
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-	spikRuleList = genSpikRuleList( confVec, rules )
+	spikRuleList = genSpikRuleList( confVec )
 #	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
@@ -546,7 +548,7 @@ else :
 			C_k = concatConfVec( C_k_vec )
 
 			#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-			spikRuleList = genSpikRuleList( C_k_vec, rules )
+			spikRuleList = genSpikRuleList( C_k_vec )
 			#print '\tList of lists w/ spike + rule criterion, spikRuleList = ', spikRuleList, ' for Ck = ', C_k
 
 			#generate a list of spikes + rules they are applicable to, in order

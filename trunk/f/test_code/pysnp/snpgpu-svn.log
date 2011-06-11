@@ -1,4 +1,9 @@
 ------------------------------------------------------------------------
+r220 | jounin.f@gmail.com | 2011-06-11 14:27:46 +0800 (Sat, 11 Jun 2011) | 2 lines
+
+- updated snpcpu-sim: snp-v06.11.11.1-cpu.py
+
+------------------------------------------------------------------------
 r219 | jounin.f@gmail.com | 2011-06-11 14:20:53 +0800 (Sat, 11 Jun 2011) | 2 lines
 
 - added snpgpu-svn.log to add logs for offline usage.
