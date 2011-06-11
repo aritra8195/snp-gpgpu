@@ -57,7 +57,7 @@ def importVec( filename ) :
 	Vec = filePtr.read( )
 	return Vec.split( )
 #END of function to import vectors/matrices from file/s	
-
+########################################################################
 #START of function
 def getNeurNum( rules ) :
 #to get number of neurons, count the number of '$' instances + 1
@@ -362,6 +362,16 @@ def isConfVecZero( Ck ) :
 #END of function
 ########################################################################
 #START of function
+#works for strings 
+def isConfVecNeg( Ck ) :
+	for x in Ck :
+		if x != '-' :
+			if int( x ) >= 0 :
+				return False
+	return True
+#END of function
+########################################################################
+#START of function
 def printMatrix( spikTransMat ) :
 #takes as input a matrix in row-major format of <type 'list'> and prints the matrix 'nicely'
 	#get dimensions of matrix
@@ -389,15 +399,15 @@ def printMatrix( spikTransMat ) :
 ############################
 
 #Check if correct number of cl args are entered
-if ( len( sys.argv ) < 5 ) :
+if ( len( sys.argv ) < 4 ) :
 	print '\n Program usage:\n'+sys.argv[ 0 ] + ' confVec spikTransMat rules rules-in-reg-exp\n'
 
 #if correct, proceed
 else :
 	confVecFile = sys.argv[ 1 ]
 	spikTransMatFile = sys.argv[ 2 ]
-	rulesFile = sys.argv[ 3 ]
-	ruleRegExpFile = sys.argv[ 4 ]
+	#rulesFile = sys.argv[ 3 ]
+	ruleRegExpFile = sys.argv[ 3 ]
 
 #####
 #{1}#	Input Ck (C0 initially), spiking transition matrix, rules
@@ -405,11 +415,12 @@ else :
 	confVec = importVec( confVecFile )
 	#spikVec = importVec( sys.argv[ 2 ] )
 	spikTransMat  = importVec( spikTransMatFile )
-	rules = importVec( rulesFile )
+	#rules = importVec( rulesFile )
 	ruleregexp = importRule( ruleRegExpFile )
 	
 	#first, determine number of neurons
-	neurNum = getNeurNum( rules )
+	#neurNum = getNeurNum( rules )
+	neurNum = len( ruleregexp )
 
 	#preliminary prints
 	print '\n********************************SN P system simulation run STARTS here********************************\n'
@@ -510,7 +521,8 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
-	while (Ck != '') & ( CkCnt != 20 ) :
+	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
+#	while (Ck != '') & ( CkCnt != 20 ) :
 			print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 			Ck = Ck.replace( '\n', '' )

@@ -462,11 +462,6 @@ def printMatrix( spikTransMat ) :
 		x += 1
 #END of function
 ########################################################################
-#START of function
-#def isOddEven( num ) :
-#	return bool( num & 1 ) #get logical AND of num and 1
-#END of function
-########################################################################
 ######################
 #END of AUX functions#
 ######################
@@ -517,7 +512,7 @@ else :
 	print '\nNumber of neurons for the SN P system is %d ' % ( neurNum )
 	
 	#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-	spikRuleList = genSpikRuleList( confVec )
+	spikRuleList = genSpikRuleList( confVec, rules )
 	print 'genSpikRuleList(): spikeRuleList =',spikRuleList
 	
 	#function to print neurons + rules criterion and total order
@@ -623,7 +618,7 @@ else :
 			C_k = concatConfVec( C_k_vec )
 
 			#generate list of list of form [ [spike/s, rule1 criterion1, rule1 criterion2, ...], ... ]
-			spikRuleList = genSpikRuleList( C_k_vec )
+			spikRuleList = genSpikRuleList( C_k_vec, rules )
 			#print '\tList of lists w/ spike + rule criterion, spikRuleList = ', spikRuleList, ' for Ck = ', C_k
 
 			#generate a list of spikes + rules they are applicable to, in order
