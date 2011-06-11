@@ -1,3 +1,6 @@
+//for loop for testing
+time for i in {1..3}; do time python snp.py c0 M rer > /dev/null ; done
+
 //display only a range of characters in a file:
 cut -c 1-100 < file
 
