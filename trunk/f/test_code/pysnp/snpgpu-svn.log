@@ -1,0 +1,568 @@
+------------------------------------------------------------------------
+r218 | jounin.f@gmail.com | 2011-06-11 14:05:50 +0800 (Sat, 11 Jun 2011) | 2 lines
+
+- added isConfVecNeg to check for negative Ck values properly.
+
+------------------------------------------------------------------------
+r217 | jounin.f | 2011-06-09 14:48:43 +0800 (Thu, 09 Jun 2011) | 2 lines
+
+- updated bash_help.
+
+------------------------------------------------------------------------
+r216 | jounin.f@gmail.com | 2011-06-09 14:38:33 +0800 (Thu, 09 Jun 2011) | 4 lines
+
+- updated bash_help to include nice tr command
+- finalized Rica3pp reg exp rule file
+- defined TILE_WIDTH = 2 in snp-v06*.py for now...
+
+------------------------------------------------------------------------
+r215 | jounin.f@gmail.com | 2011-06-09 14:29:26 +0800 (Thu, 09 Jun 2011) | 2 lines
+
+- added Rica3pp to ica3pp folder.
+
+------------------------------------------------------------------------
+r214 | jounin.f@gmail.com | 2011-06-09 14:10:28 +0800 (Thu, 09 Jun 2011) | 2 lines
+
+- updated PyCUDA codes in snp-v06*.py
+
+------------------------------------------------------------------------
+r213 | jounin.f@gmail.com | 2011-06-09 12:46:01 +0800 (Thu, 09 Jun 2011) | 2 lines
+
+- replaced "$ $" with "2 7" instead, since there's an error in importing the files to int32 type afterwards.
+
+------------------------------------------------------------------------
+r212 | jounin.f | 2011-06-09 09:51:16 +0800 (Thu, 09 Jun 2011) | 2 lines
+
+- changed TILE_WIDTH in add kernel to %(TILE_WIDTH)s
+
+------------------------------------------------------------------------
+r211 | jounin.f | 2011-06-08 23:22:27 +0800 (Wed, 08 Jun 2011) | 2 lines
+
+- updated matrix add kernel function to use new and actual inter-thread block code.
+
+------------------------------------------------------------------------
+r210 | jounin.f@gmail.com | 2011-06-07 20:59:58 +0800 (Tue, 07 Jun 2011) | 3 lines
+
+- Added Sica3pp
+- modified snp-v06*.py to include inter-thread PyCUDA calls. Needs more testing as output using python cli is stil not working properly.
+
+------------------------------------------------------------------------
+r209 | jounin.f@gmail.com | 2011-06-06 20:33:54 +0800 (Mon, 06 Jun 2011) | 2 lines
+
+- updating snp-v06*.py to use TILE_WIDTH + inter-threadblock access, adding input files for ICA3PP simulation.
+
+------------------------------------------------------------------------
+r208 | jounin.f@gmail.com | 2011-06-04 20:38:09 +0800 (Sat, 04 Jun 2011) | 2 lines
+
+- snp-v06.*.py is still not working properly but still testing in Python cli w/ PyCUDA.
+
+------------------------------------------------------------------------
+r207 | jounin.f@gmail.com | 2011-06-04 14:53:30 +0800 (Sat, 04 Jun 2011) | 1 line
+
+- mat add now works in snp*.cu in ica3pp (inter thread block addition) :)
+------------------------------------------------------------------------
+r206 | jounin.f@gmail.com | 2011-06-04 14:23:38 +0800 (Sat, 04 Jun 2011) | 2 lines
+
+- updated snp*.cu in ica3pp folder. When multiplying \Pi (originally, 5x5 matrix in row major format) use Width = 6, TILE_WIDTH = 2, so dimGrid = 3 x 3 and dimBlock = 2 x 2. Works for mat mult but not yet for mat add.
+
+------------------------------------------------------------------------
+r205 | jounin.f | 2011-06-04 13:29:46 +0800 (Sat, 04 Jun 2011) | 2 lines
+
+- added dir ica3pp for testing and dev for ica3pp
+
+------------------------------------------------------------------------
+r204 | jounin.f@gmail.com | 2011-06-02 20:59:30 +0800 (Thu, 02 Jun 2011) | 2 lines
+
+- removed ruleregexp input from function genSpikRuleList( )
+
+------------------------------------------------------------------------
+r203 | jounin.f@gmail.com | 2011-06-02 18:01:30 +0800 (Thu, 02 Jun 2011) | 2 lines
+
+- removed r as necessary sim input, instead, use reg exp version of r file
+
+------------------------------------------------------------------------
+r202 | jounin.f@gmail.com | 2011-06-02 16:25:56 +0800 (Thu, 02 Jun 2011) | 2 lines
+
+- updated genPotentialSpikrule( ) to use the NEW format of spikRuleList w/c is just a list of the Cks e.g. [ '2', '1', '1' ]
+
+------------------------------------------------------------------------
+r201 | jounin.f@gmail.com | 2011-06-01 22:36:54 +0800 (Wed, 01 Jun 2011) | 3 lines
+
+- updated snp.py to point to latest snp-v*.py code.
+- updating genPotentialSpikrule( ) to take only ruleregexp as input, create an empty list of list tmpList inside the func'n and populate it as with the original func'n's output w/o the need for spikRuleList as func'n input.
+
+------------------------------------------------------------------------
+r200 | jounin.f@gmail.com | 2011-06-01 21:44:28 +0800 (Wed, 01 Jun 2011) | 2 lines
+
+- updated some comments in genPotentialSpikrule()
+
+------------------------------------------------------------------------
+r199 | jounin.f@gmail.com | 2011-06-01 21:30:00 +0800 (Wed, 01 Jun 2011) | 2 lines
+
+- updating genPotentialSpikrule, added snp-v06.02.11.py
+
+------------------------------------------------------------------------
+r198 | jounin.f@gmail.com | 2011-05-31 22:22:47 +0800 (Tue, 31 May 2011) | 2 lines
+
+- trying to remove rules and replace it with ruleregexp in genSpikRuleList
+
+------------------------------------------------------------------------
+r197 | jounin.f@gmail.com | 2011-05-31 21:34:12 +0800 (Tue, 31 May 2011) | 2 lines
+
+- updated snp-v05.02.1.py: removed function getNeurNum by using len( ruleregexp ).
+
+------------------------------------------------------------------------
+r196 | jounin.f@gmail.com | 2011-05-18 20:16:25 +0800 (Wed, 18 May 2011) | 2 lines
+
+- added cmc-test.tar.gz, containing test fiels etc for CMC 2011.
+
+------------------------------------------------------------------------
+r195 | jounin.f@gmail.com | 2011-05-12 22:15:23 +0800 (Thu, 12 May 2011) | 2 lines
+
+- modified snp-v05.02.1.py to have either Ckcnt enabled or not.
+
+------------------------------------------------------------------------
+r194 | jounin.f@gmail.com | 2011-05-12 22:09:54 +0800 (Thu, 12 May 2011) | 3 lines
+
+- updated C0cmc since based on Figure 8, \sigma_1 should have 2n spikes initially
+- removed unnecessary comments in snp-v05.02.1.py
+
+------------------------------------------------------------------------
+r193 | jounin.f@gmail.com | 2011-05-05 18:32:39 +0800 (Thu, 05 May 2011) | 2 lines
+
+- some update in  snp-v05.02.1.py 
+
+------------------------------------------------------------------------
+r192 | jounin.f | 2011-05-05 00:37:40 +0800 (Thu, 05 May 2011) | 2 lines
+
+- updated snp-v05.02.1.py to include Ck count limit.
+
+------------------------------------------------------------------------
+r191 | jounin.f | 2011-05-05 00:33:47 +0800 (Thu, 05 May 2011) | 2 lines
+
+- included Ck count variable to stop simulation at a certain number of Cks.
+
+------------------------------------------------------------------------
+r190 | jounin.f | 2011-05-05 00:14:18 +0800 (Thu, 05 May 2011) | 2 lines
+
+- updated snp-v05.03.11.1-cpu.py to run more general SNPs just like the PyCUDA version.
+
+------------------------------------------------------------------------
+r189 | jounin.f@gmail.com | 2011-05-04 22:19:22 +0800 (Wed, 04 May 2011) | 3 lines
+
+- updated snp*-cpu.py, should do more
+- removed some prints from snp-v05.02*.py
+
+------------------------------------------------------------------------
+r188 | jounin.f@gmail.com | 2011-05-04 22:11:43 +0800 (Wed, 04 May 2011) | 2 lines
+
+- fixed+udpated snp-v05.02.1.py to be more general
+
+------------------------------------------------------------------------
+r187 | jounin.f@gmail.com | 2011-05-04 18:53:58 +0800 (Wed, 04 May 2011) | 2 lines
+
+- corrected Rule files
+
+------------------------------------------------------------------------
+r186 | jounin.f@gmail.com | 2011-05-04 18:09:47 +0800 (Wed, 04 May 2011) | 3 lines
+
+- pointed snp.py to snp-v05.02.1.py
+- updated simulator input files to simulate Figure 8 (FIN module) instead of Figure 14.
+
+------------------------------------------------------------------------
+r185 | jounin.f@gmail.com | 2011-05-04 00:13:14 +0800 (Wed, 04 May 2011) | 2 lines
+
+- updated Mcmc1 + snp*.py
+
+------------------------------------------------------------------------
+r184 | jounin.f@gmail.com | 2011-05-03 23:39:33 +0800 (Tue, 03 May 2011) | 2 lines
+
+- updated bash_help and Mcmc1 (squared).
+
+------------------------------------------------------------------------
+r183 | jounin.f@gmail.com | 2011-05-03 23:18:38 +0800 (Tue, 03 May 2011) | 2 lines
+
+- updated snp-v05.02.1.py to better simulate larger SNPs during concat of {1,0} strings to produce all valid Sks.
+
+------------------------------------------------------------------------
+r182 | jounin.f@gmail.com | 2011-05-03 21:20:20 +0800 (Tue, 03 May 2011) | 2 lines
+
+- added C0cmc
+
+------------------------------------------------------------------------
+r181 | jounin.f@gmail.com | 2011-05-03 18:07:43 +0800 (Tue, 03 May 2011) | 2 lines
+
+- updated input files for CMC
+
+------------------------------------------------------------------------
+r180 | jounin.f@gmail.com | 2011-05-03 17:02:24 +0800 (Tue, 03 May 2011) | 2 lines
+
+- updated R files for CMC.
+
+------------------------------------------------------------------------
+r179 | jounin.f@gmail.com | 2011-05-03 16:31:48 +0800 (Tue, 03 May 2011) | 2 lines
+
+- added M and R files for CMC
+
+------------------------------------------------------------------------
+r178 | jounin.f@gmail.com | 2011-05-03 16:26:26 +0800 (Tue, 03 May 2011) | 4 lines
+
+- corrected file
+rer
+for SNP system Pi.
+
+------------------------------------------------------------------------
+r177 | jounin.f@gmail.com | 2011-05-03 16:23:56 +0800 (Tue, 03 May 2011) | 3 lines
+
+- added sample rule file with reg exp 
+- added snp-v05.03.11.1-cpu.py, updated python CPU only code simulator
+
+------------------------------------------------------------------------
+r176 | jounin.f@gmail.com | 2011-05-03 11:14:59 +0800 (Tue, 03 May 2011) | 2 lines
+
+- updated snp-*-cpu.py to include general reg exp from current snp*.py code.
+
+------------------------------------------------------------------------
+r175 | jounin.f@gmail.com | 2011-05-03 11:04:04 +0800 (Tue, 03 May 2011) | 2 lines
+
+- cleaned up snp-v05.02.1.py code from unnecessary comments and added new ones, TODOs, etc.
+
+------------------------------------------------------------------------
+r174 | jounin.f@gmail.com | 2011-05-03 10:57:03 +0800 (Tue, 03 May 2011) | 3 lines
+
+- added r1, the rule file with regular expressions now
+- updated snp-v05.02.1.py to remove unnecessary prints, plus code update
+
+------------------------------------------------------------------------
+r173 | jounin.f@gmail.com | 2011-05-02 21:33:04 +0800 (Mon, 02 May 2011) | 11 lines
+
+- did 
+
+svn up -r 170 snp-v04.16.1.py
+
+then copied the code, deleted the py file, then 
+
+svn up
+
+then pasted the copied code back into the py file.
+hopefully this does the trick already.
+
+------------------------------------------------------------------------
+r172 | jounin.f@gmail.com | 2011-05-02 21:22:21 +0800 (Mon, 02 May 2011) | 2 lines
+
+- added changes for CMC to file snp-v05.02.1.py instead, should revert 04.16.1 to pristine form prior to CMC.
+
+------------------------------------------------------------------------
+r171 | jounin.f@gmail.com | 2011-05-02 20:44:43 +0800 (Mon, 02 May 2011) | 8 lines
+
+- changed code from BIC-TA:
+
+- r1 now uses new rule file format: aa 1 1@aa 2 1&a 1 1&a 1 1@a 1 0 (for SNP system Pi)
+
+- now uses reg exp module of Python to check if spikes are in L( E )
+
+- importRule function significantly redone, other original functions should follow suite
+
+------------------------------------------------------------------------
+r170 | jounin.f@gmail.com | 2011-04-20 18:33:49 +0800 (Wed, 20 Apr 2011) | 2 lines
+
+- corrected printing errors in previous commit of snp*.py
+
+------------------------------------------------------------------------
+r169 | jounin.f | 2011-04-20 18:31:15 +0800 (Wed, 20 Apr 2011) | 2 lines
+
+- removed unnecessary codes in latest snp*.py + refactored printing of *
+
+------------------------------------------------------------------------
+r168 | jounin.f@gmail.com | 2011-04-16 11:25:04 +0800 (Sat, 16 Apr 2011) | 2 lines
+
+- added latest+greatest snp-gpu code using PyCUDA.
+
+------------------------------------------------------------------------
+r167 | jounin.f@gmail.com | 2011-04-14 20:35:04 +0800 (Thu, 14 Apr 2011) | 13 lines
+
+- done! w/ PyCUDA non-tiled mat mul at least, using Nump. speedups:
+c0 = 2,1,1
+
+trial	CPU only	CPU-GPU
+1	2.3s		1.602s
+
+2	2.798s		2.138s
+
+3	2.835s		1.606s
+
+:) should do more tests
+
+
+------------------------------------------------------------------------
+r166 | jounin.f@gmail.com | 2011-04-14 20:16:12 +0800 (Thu, 14 Apr 2011) | 2 lines
+
+- added entire PyCUDA matrix add/mult to snp*py. stops after C0 though. FIX this.
+
+------------------------------------------------------------------------
+r165 | jounin.f@gmail.com | 2011-04-14 16:31:11 +0800 (Thu, 14 Apr 2011) | 2 lines
+
+- adding PyCUDA code to snp*.py to compte Ck+1 = Ck + Sk * M
+
+------------------------------------------------------------------------
+r164 | jounin.f@gmail.com | 2011-04-14 13:59:50 +0800 (Thu, 14 Apr 2011) | 2 lines
+
+- updated snp.py, from reshape( 5, 5 ) to reshape( width, width )
+
+------------------------------------------------------------------------
+r163 | jounin.f@gmail.com | 2011-04-13 21:55:02 +0800 (Wed, 13 Apr 2011) | 2 lines
+
+- snp*.py can now properly use fromfile function
+
+------------------------------------------------------------------------
+r162 | jounin.f@gmail.com | 2011-04-13 21:51:22 +0800 (Wed, 13 Apr 2011) | 4 lines
+
+- removed importArr
+- created new function toNumpyArr using fromfile( filename, sep=' ', dtype=int32 )[ 2: ].reshape( 5, 5) to produce numpy ND arrays
+- edited some original functions
+
+------------------------------------------------------------------------
+r161 | jounin.f@gmail.com | 2011-04-13 21:11:24 +0800 (Wed, 13 Apr 2011) | 2 lines
+
+- removed allGenCk function parameter in function genCks()
+
+------------------------------------------------------------------------
+r160 | jounin.f@gmail.com | 2011-04-13 20:49:31 +0800 (Wed, 13 Apr 2011) | 2 lines
+
+- just added some visual cues/aides for snp*.py
+
+------------------------------------------------------------------------
+r159 | jounin.f@gmail.com | 2011-04-13 18:59:17 +0800 (Wed, 13 Apr 2011) | 2 lines
+
+- added snp-v04.13.11.1.py to include code from numpy and pycuda.
+
+------------------------------------------------------------------------
+r158 | jounin.f@gmail.com | 2011-04-11 20:06:28 +0800 (Mon, 11 Apr 2011) | 2 lines
+
+- reveted sn-v04.04.11.1 to basic workings
+
+------------------------------------------------------------------------
+r157 | jounin.f@gmail.com | 2011-04-11 16:42:55 +0800 (Mon, 11 Apr 2011) | 2 lines
+
+- reverted snp-v04.04.11.1.py to working status
+
+------------------------------------------------------------------------
+r152 | jounin.f@gmail.com | 2011-04-06 16:43:27 +0800 (Wed, 06 Apr 2011) | 1 line
+
+test commit in Snow Leopard
+------------------------------------------------------------------------
+r151 | jounin.f | 2011-04-06 01:15:17 +0800 (Wed, 06 Apr 2011) | 2 lines
+
+- edited numy to numpy
+
+------------------------------------------------------------------------
+r150 | jounin.f@gmail.com | 2011-04-05 22:04:15 +0800 (Tue, 05 Apr 2011) | 1 line
+
+updated snp.py to create numpy array
+------------------------------------------------------------------------
+r149 | jounin.f | 2011-04-04 20:39:46 +0800 (Mon, 04 Apr 2011) | 2 lines
+
+- added snp python using numpy, PyCUDA etc.
+
+------------------------------------------------------------------------
+r144 | jounin.f@gmail.com | 2011-03-22 13:01:23 +0800 (Tue, 22 Mar 2011) | 1 line
+
+-test commit again
+------------------------------------------------------------------------
+r143 | jounin.f@gmail.com | 2011-03-22 12:10:05 +0800 (Tue, 22 Mar 2011) | 2 lines
+
+- test commit in iMac
+
+------------------------------------------------------------------------
+r142 | jounin.f | 2011-03-22 00:33:05 +0800 (Tue, 22 Mar 2011) | 2 lines
+
+- added snp-*-cpu.py
+
+------------------------------------------------------------------------
+r141 | jounin.f | 2011-03-22 00:32:01 +0800 (Tue, 22 Mar 2011) | 2 lines
+
+- create snp-*-cpu.py to run CUDA CPU only file.
+
+------------------------------------------------------------------------
+r140 | jounin.f | 2011-03-21 23:48:12 +0800 (Mon, 21 Mar 2011) | 1 line
+
+- updated cuda cpu only file
+------------------------------------------------------------------------
+r139 | jounin.f | 2011-03-21 23:03:34 +0800 (Mon, 21 Mar 2011) | 1 line
+
+- added CUDA CPU only code file
+------------------------------------------------------------------------
+r112 | jounin.f | 2011-01-23 16:14:33 +0800 (Sun, 23 Jan 2011) | 7 lines
+
+- snp.py is now just a symbolic link to the latest ( or stable) version of snp-vxx.xx.xx.xx.py
+
+- removed the 
+	if isZeroVector( Ck ) :
+clause since 000 should not stop the simulation from running, only infinite loops.
+
+
+------------------------------------------------------------------------
+r111 | jounin.f | 2011-01-22 03:26:09 +0800 (Sat, 22 Jan 2011) | 4 lines
+
+- removed original snp.py
+
+- added a symb link snp.py that points to first version of snp.py
+
+------------------------------------------------------------------------
+r110 | jounin.f | 2011-01-22 03:20:41 +0800 (Sat, 22 Jan 2011) | 2 lines
+
+- renamed snp.py to snp-v01.22.11.1, the first version for the PCSC paper w/c simulates an SNP system w/ no delays, w/ rules of type a^k/a -> a only
+
+------------------------------------------------------------------------
+r87 | jounin.f | 2011-01-19 02:23:50 +0800 (Wed, 19 Jan 2011) | 2 lines
+
+- added updated version of CUDA C source file
+
+------------------------------------------------------------------------
+r86 | jounin.f | 2011-01-19 02:03:14 +0800 (Wed, 19 Jan 2011) | 2 lines
+
+- fixed error when using Ck = 3, 0, 0 by counting the '$' instances instead to get number of neurons
+
+------------------------------------------------------------------------
+r85 | jounin.f | 2011-01-19 01:47:32 +0800 (Wed, 19 Jan 2011) | 2 lines
+
+- now uses the format (in text file, list) c_2-1-10 and [ '2', '-', '1', '-', '10' ] to account for Cks > 9
+
+------------------------------------------------------------------------
+r84 | jounin.f | 2011-01-18 23:35:17 +0800 (Tue, 18 Jan 2011) | 3 lines
+
+- removed c_211, c_212
+- added c212
+
+------------------------------------------------------------------------
+r83 | jounin.f | 2011-01-18 23:28:46 +0800 (Tue, 18 Jan 2011) | 7 lines
+
+- updated .cu file
+
+- snp.py : variable for snp*.cu compiled binary, i.e. cudaBin = 'snp-cuda'
+
+- nothing wrong with Ck = Ck-1 + Sk-1 * M CUDA code, snp.py must instead handle Cks > 9
+
+
+------------------------------------------------------------------------
+r64 | jounin.f | 2011-01-16 13:51:43 +0800 (Sun, 16 Jan 2011) | 3 lines
+
+- updated bash_help
+- updated printing of output
+
+------------------------------------------------------------------------
+r63 | jounin.f | 2011-01-16 13:36:21 +0800 (Sun, 16 Jan 2011) | 2 lines
+
+- more formatting printing: start/end of simulation run
+
+------------------------------------------------------------------------
+r62 | jounin.f | 2011-01-16 13:17:56 +0800 (Sun, 16 Jan 2011) | 2 lines
+
+- cleaned print outs
+
+------------------------------------------------------------------------
+r61 | jounin.f | 2011-01-16 12:46:51 +0800 (Sun, 16 Jan 2011) | 2 lines
+
+- function in python to print matrix 'nicely'
+
+------------------------------------------------------------------------
+r60 | jounin.f | 2011-01-16 12:14:26 +0800 (Sun, 16 Jan 2011) | 2 lines
+
+- I think I did it :) => at least for rules of type 1)
+
+------------------------------------------------------------------------
+r59 | jounin.f | 2011-01-16 11:30:17 +0800 (Sun, 16 Jan 2011) | 2 lines
+
+- now uses readline( ) to read Cks from a file (allGenCkFile.txt) instead of a <type 'list'>
+
+------------------------------------------------------------------------
+r58 | jounin.f | 2011-01-16 11:00:21 +0800 (Sun, 16 Jan 2011) | 2 lines
+
+- trying to read the generated Cks from a file instead of looping through a list
+
+------------------------------------------------------------------------
+r57 | jounin.f | 2011-01-16 08:51:09 +0800 (Sun, 16 Jan 2011) | 2 lines
+
+- fixed bug in concatConfVec eliminating valid 0s in between non-zero values of a Ck
+
+------------------------------------------------------------------------
+r56 | jounin.f | 2011-01-16 08:40:38 +0800 (Sun, 16 Jan 2011) | 5 lines
+
+- fixed earlier bugs on Ck and Sk files not being created on time
+
+TODO:
+- must loop over all Sks for a given Ck
+
+------------------------------------------------------------------------
+r55 | jounin.f | 2011-01-16 08:17:12 +0800 (Sun, 16 Jan 2011) | 5 lines
+
+- can loop through all initially generated Cks. 
+
+TODO:
+- must exhaustively loop through all succeeding Cks + their Sks untill zercon config vector is reached or some non-terminating Ck/config
+
+------------------------------------------------------------------------
+r54 | jounin.f | 2011-01-15 14:06:17 +0800 (Sat, 15 Jan 2011) | 2 lines
+
+- trying to loop over all Cks, then over all Sks for a given Ck
+
+------------------------------------------------------------------------
+r53 | jounin.f | 2011-01-15 13:53:01 +0800 (Sat, 15 Jan 2011) | 4 lines
+
+- created function to check if confVec <type: list> is a zero vector
+- exhaustively loop over total list of all generated Cks
+- exhaustively loop over all generated spiking vectors for a given Ck
+
+------------------------------------------------------------------------
+r52 | jounin.f | 2011-01-15 12:49:03 +0800 (Sat, 15 Jan 2011) | 3 lines
+
+- created function to populate a total (not globa) list of all the generated/used Ck
+- modified genCks function to do above + added variable confVec
+
+------------------------------------------------------------------------
+r51 | jounin.f | 2011-01-15 12:17:56 +0800 (Sat, 15 Jan 2011) | 2 lines
+
+- fancy formatting + sectioning of program flow
+
+------------------------------------------------------------------------
+r50 | jounin.f | 2011-01-15 02:40:38 +0800 (Sat, 15 Jan 2011) | 6 lines
+
+- can now call snp CUDA C code over a loop
+- bash command to help in viewing of files
+
+TODOs:
+- make snp CUDA C call more dynamic + flexible
+
+------------------------------------------------------------------------
+r49 | jounin.f | 2011-01-15 01:46:51 +0800 (Sat, 15 Jan 2011) | 2 lines
+
+- removed the non-emulated binary of the CUDA C snp-v12.26.10
+
+------------------------------------------------------------------------
+r48 | jounin.f | 2011-01-15 01:43:09 +0800 (Sat, 15 Jan 2011) | 4 lines
+
+- added compiled CUDA C snp-v12.26.10.1 for device emulation (CUDA 3.0) for my non-CUDA enabled laptop
+- function to concat and get valid configuration vector i.e. Ck
+- added CUDA C source code for snp-v12.26.10.1
+
+------------------------------------------------------------------------
+r47 | jounin.f | 2011-01-14 15:43:34 +0800 (Fri, 14 Jan 2011) | 2 lines
+
+- deleted unwanted .cu files in pysnp
+
+------------------------------------------------------------------------
+r46 | jounin.f | 2011-01-14 15:12:05 +0800 (Fri, 14 Jan 2011) | 2 lines
+
+- code to create file given a valid spiking Vector, then write the spiking vector string into that file
+
+------------------------------------------------------------------------
+r45 | jounin.f | 2011-01-14 15:11:19 +0800 (Fri, 14 Jan 2011) | 2 lines
+
+- 
+
+------------------------------------------------------------------------
+r44 | jounin.f | 2011-01-14 14:38:46 +0800 (Fri, 14 Jan 2011) | 2 lines
+
+- created dir pysnp to house all tests related to python implementation
+
+------------------------------------------------------------------------
