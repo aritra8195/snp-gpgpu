@@ -436,6 +436,16 @@ def isConfVecZero( Ck ) :
 #END of function
 ########################################################################
 #START of function
+#works for strings 
+def isConfVecNeg( Ck ) :
+	for x in Ck :
+		if x != '-' :
+			if int( x ) >= 0 :
+				return False
+	return True
+#END of function
+########################################################################
+#START of function
 def printMatrix( spikTransMat ) :
 #takes as input a matrix in row-major format of <type 'list'> and prints the matrix 'nicely'
 	#get dimensions of matrix
@@ -589,8 +599,8 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
-	while (Ck != '') :
-#	while (Ck != '') & ( CkCnt != 20 ) :
+	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
+#	while ( Ck != '') & ( CkCnt != 20 ) :
 		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 		Ck = Ck.replace( '\n', '' )
