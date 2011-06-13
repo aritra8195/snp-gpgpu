@@ -403,13 +403,21 @@ def genCks( allValidSpikVec, MATRIX_SIZE, TILE_WIDTH, configVec_str, spikTransMa
 		matrixadd = addmod.get_function( "MatrixAddKernel" )
 		#call kernel functions
 		#matrixmul( Skgpu, Mgpu, SkMgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
-		print ' BEFORE DEVICE CALLS. Time is '
-		print str(datetime.now())
+		#print ' BEFORE DEVICE CALLS. Time is '
+		#print str(datetime.now())
+		#create PyCUDA events to record time of kernel execution
+		startTime = driver.Event()
+		endTime = driver.Event()
+		startTime.record( ) #start the timer
 		matrixmul( Skgpu, Mgpu, SkMgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
 		#matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
 		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
-		print ' AFTER DEVICE CALLS. Time is '
-		print str(datetime.now())
+		endTime.record( ) #start the end time timer.
+		endTime.synchronize( ) # synchronize end of threads
+		simTime = startTime.time_till( endTime ) * 1e-3
+		print " Kernel call exec time is ", simTime
+		#print ' AFTER DEVICE CALLS. Time is '
+		#print str(datetime.now())
 		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
 		#write ND array into a file
 		NDarrToFile( Ck, Ckgpu )
