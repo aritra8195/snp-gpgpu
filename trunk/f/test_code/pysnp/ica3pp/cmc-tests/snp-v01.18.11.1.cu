@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <cuda.h>
+//#include "common/inc/cutil.h"
+//#include "cutil.h"
 
 //This is the working matrix multiplication code - very basic
 /****
@@ -178,6 +181,18 @@ Ck = Od + Pd => Qd
 	
 // final matrix: Ck+1 = confVec + Ck
 	cudaMalloc( ( void** ) &Qd, size );
+
+// CUDA timer
+/*	unsigned int timer = 0;
+	cutCreateTimer(&timer) ;
+	cutStartTimer(timer) ;
+*/
+
+cudaEvent_t start, stop;
+cudaEventRecord(start, 0);
+cudaEventRecord(stop, 0);
+cudaEventRecord(start, 0);
+
 	
 // Pd = spikVec * spikTransMat => Pd = Md * Nd
 	MatrixMulKernel<<< dimGrid, dimBlock >>>( Md, Nd, Pd, Width );
@@ -189,6 +204,20 @@ Ck = Od + Pd => Qd
 
 // Ck+1 = confVec + Ck => Qd = Od + Pd
 	MatrixAddKernel<<< dimGrid, dimBlock >>>( Od, Pd, Qd, Width );
+
+// End CUDA timer
+/*	cudaThreadSynchronize();
+	CUT_SAFE_CALL( cutStopTimer(timer) );
+	printf("Kernel: %f seconds\n", cutGetTimerValue(timer) / 1000);
+	CUT_SAFE_CALL( cutDeleteTimer(timer) ); */
+cudaEventRecord(stop, 0);
+cudaEventSynchronize(stop);
+float elapsedTime;
+cudaEventElapsedTime(&elapsedTime, start, stop);
+printf( "Elapsed time after mat mul and add: %f", elapsedTime );
+cudaEventDestroy(start);
+cudaEventDestroy(stop);
+
 
 	cudaMemcpy( matE, Qd, size, cudaMemcpyDeviceToHost );
 //	printf( " \n%s + %s * %s : \n", filename0, filename1, filename2 );
