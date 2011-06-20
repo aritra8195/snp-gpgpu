@@ -523,8 +523,8 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
-	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
-#	while (Ck != '') & ( CkCnt != 20 ) :
+#	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
+	while (Ck != '') & ( CkCnt != 20 ) :
 			print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 			Ck = Ck.replace( '\n', '' )
