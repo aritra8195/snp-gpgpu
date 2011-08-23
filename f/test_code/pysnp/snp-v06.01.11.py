@@ -6,6 +6,7 @@ from numpy import *
 from pycuda import driver, compiler, gpuarray, tools
 import pycuda.autoinit
 import re
+from datetime import datetime
 
 #
 #TODOs:
@@ -402,9 +403,21 @@ def genCks( allValidSpikVec, MATRIX_SIZE, TILE_WIDTH, configVec_str, spikTransMa
 		matrixadd = addmod.get_function( "MatrixAddKernel" )
 		#call kernel functions
 		#matrixmul( Skgpu, Mgpu, SkMgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
+		#print ' BEFORE DEVICE CALLS. Time is '
+		#print str(datetime.now())
+		#create PyCUDA events to record time of kernel execution
+		startTime = driver.Event()
+		endTime = driver.Event()
+		startTime.record( ) #start the timer
 		matrixmul( Skgpu, Mgpu, SkMgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
 		#matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( MATRIX_SIZE, MATRIX_SIZE, 1 ), )
 		matrixadd( Ck_1gpu, SkMgpu, Ckgpu, block = ( TILE_WIDTH, TILE_WIDTH, 1 ), grid = ( MATRIX_SIZE / TILE_WIDTH, MATRIX_SIZE / TILE_WIDTH ) )
+		endTime.record( ) #start the end time timer.
+		endTime.synchronize( ) # synchronize end of threads
+		simTime = startTime.time_till( endTime ) * 1e-3
+		print " Kernel call exec time is ", simTime
+		#print ' AFTER DEVICE CALLS. Time is '
+		#print str(datetime.now())
 		#print Ck_1gpu.get()[ 4 ] #this is a numpy ND array
 		#write ND array into a file
 		NDarrToFile( Ck, Ckgpu )
@@ -597,9 +610,9 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
-	while  ( Ck != '' ) :
+#	while  ( Ck != '' ) :
 #	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
-#	while ( Ck != '') & ( CkCnt != 20 ) :
+	while ( Ck != '') & ( CkCnt != 20 ) :
 		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 		Ck = Ck.replace( '\n', '' )
