@@ -29,20 +29,6 @@ import re
  
 #START of CUDA C kernels
 matmul_kernel_temp = """
-/* __global__ void MatrixMulKernel(int *a, int *b, int *c)
- {
-  int tx = threadIdx.x;
-  int ty = threadIdx.y;
- 
- int Pvalue = 0;
- for (int k = 0; k < %(MATRIX_SIZE)s; ++k) {
- int Aelement = a[ty * %(MATRIX_SIZE)s + k];
-  int Belement = b[k * %(MATRIX_SIZE)s + tx];
- Pvalue += Aelement * Belement;
- }
-  c[ty * %(MATRIX_SIZE)s + tx] = Pvalue;
- }
-*/
 __global__ void MatrixMulKernel ( int  *Md, int *Nd, int *Pd /*, int Width, int TILE_WIDTH */){
 	int row = blockIdx.y * %(TILE_WIDTH)s + threadIdx.y;
 	int col = blockIdx.x * %(TILE_WIDTH)s + threadIdx.x;
