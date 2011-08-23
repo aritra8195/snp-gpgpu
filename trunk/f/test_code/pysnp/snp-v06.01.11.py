@@ -1,12 +1,12 @@
 import sys
-import os
-import math
+#import os
+#import math
 import numpy as np
 from numpy import *
 from pycuda import driver, compiler, gpuarray, tools
 import pycuda.autoinit
 import re
-from datetime import datetime
+#from datetime import datetime
 
 #
 #TODOs:
@@ -610,9 +610,8 @@ else :
 	Ck = allGenCkFilePtr.readline( )	
 	strlen = len( Ck.replace( '-', '') )
 	CkCnt = 0
-#	while  ( Ck != '' ) :
-#	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
-	while ( Ck != '') & ( CkCnt != 20 ) :
+	while  ( Ck != '' ) and not ( isConfVecNeg( Ck ) ) :
+#	while ( Ck != '') & ( CkCnt != 20 ) :
 		print 'Current spikVec:', spikVec, ' and Ck:', Ck
 		#for Cks whose string length exceeds the number of neurons e.g. neurons = 3 Ck = 2110 (2,1,10)
 		Ck = Ck.replace( '\n', '' )
